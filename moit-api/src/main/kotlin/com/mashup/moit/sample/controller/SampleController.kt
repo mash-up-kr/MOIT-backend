@@ -1,5 +1,6 @@
 package com.mashup.moit.sample.controller
 
+import com.mashup.moit.sample.controller.common.ApiResponse
 import com.mashup.moit.sample.controller.dto.SampleCreateRequest
 import com.mashup.moit.sample.controller.dto.SampleResponse
 import com.mashup.moit.sample.service.SampleService
@@ -11,13 +12,23 @@ class SampleController(
     private val sampleService: SampleService,
 ) {
     @PostMapping
-    fun createSample(@RequestBody request: SampleCreateRequest): SampleResponse {
-        return sampleService.createSample(request.name).let { SampleResponse.of(it) }
+    fun createSample(@RequestBody request: SampleCreateRequest): ApiResponse<SampleResponse> {
+        return ApiResponse.success(
+            sampleService.createSample(request.name).let { SampleResponse.of(it) }
+        )
     }
 
+    @GetMapping("/{sampleId}/nullable")
+    fun findBySampleIdOrNull(@PathVariable sampleId: Long): ApiResponse<SampleResponse?> {
+        return ApiResponse.success(
+            sampleService.findBySampleIdOrNull(sampleId)?.let { SampleResponse.of(it) }
+        )
+    }
 
-    @GetMapping("/{sampleId}")
-    fun findBySampleIdOrNull(@PathVariable sampleId: Long): SampleResponse? {
-        return sampleService.findBySampleIdOrNull(sampleId)?.let { SampleResponse.of(it) }
+    @GetMapping("/{sampleId}/not-null")
+    fun findBySampleId(@PathVariable sampleId: Long): ApiResponse<SampleResponse> {
+        return ApiResponse.success(
+            sampleService.findBySampleId(sampleId).let { SampleResponse.of(it) }
+        )
     }
 }

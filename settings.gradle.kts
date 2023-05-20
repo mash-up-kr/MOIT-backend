@@ -2,7 +2,8 @@ rootProject.name = "moit"
 
 include(
     "moit-api",
-    "moit-domain"
+    "moit-domain",
+    "moit-common"
 )
 
 pluginManagement {

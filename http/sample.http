@@ -7,4 +7,7 @@ Content-Type: application/json
 }
 
 ### Sample 조회
-GET {{moit-api}}/api/v1/samples/2
+GET {{moit-api}}/api/v1/samples/1/nullable
+
+### Sample 조회
+GET {{moit-api}}/api/v1/samples/2/not-null
