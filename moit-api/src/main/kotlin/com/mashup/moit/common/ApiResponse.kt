@@ -1,4 +1,4 @@
-package com.mashup.moit.sample.controller.common
+package com.mashup.moit.common
 
 data class ApiResponse<T>(
     val success: Boolean = true,

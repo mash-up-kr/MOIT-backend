@@ -1,4 +1,4 @@
-package com.mashup.moit.sample.controller.common
+package com.mashup.moit.common
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType

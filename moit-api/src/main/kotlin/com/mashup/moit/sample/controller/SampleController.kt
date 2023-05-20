@@ -1,6 +1,6 @@
 package com.mashup.moit.sample.controller
 
-import com.mashup.moit.sample.controller.common.ApiResponse
+import com.mashup.moit.common.ApiResponse
 import com.mashup.moit.sample.controller.dto.SampleCreateRequest
 import com.mashup.moit.sample.controller.dto.SampleResponse
 import com.mashup.moit.sample.service.SampleService
