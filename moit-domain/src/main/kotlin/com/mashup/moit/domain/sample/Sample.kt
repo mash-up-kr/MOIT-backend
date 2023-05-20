@@ -1,9 +1,9 @@
-package com.mashup.moit.domain.user
+package com.mashup.moit.domain.sample
 
 import com.mashup.moit.domain.common.BaseEntity
 import jakarta.persistence.Entity
 
 @Entity
-class UserEntity(
-    val name: String
+class Sample(
+    val name: String,
 ) : BaseEntity()
