@@ -1,7 +1,8 @@
 rootProject.name = "moit"
 
 include(
-    "moit-api"
+    "moit-api",
+    "moit-domain"
 )
 
 pluginManagement {
@@ -14,6 +15,7 @@ pluginManagement {
             when (requested.id.id) {
                 "org.jetbrains.kotlin.jvm" -> useVersion(kotlinVersion)
                 "org.jetbrains.kotlin.plugin.spring" -> useVersion(kotlinVersion)
+                "org.jetbrains.kotlin.plugin.jpa" -> useVersion(kotlinVersion)
                 "org.springframework.boot" -> useVersion(springBootVersion)
                 "io.spring.dependency-management" -> useVersion(springDependencyManagementVersion)
             }
