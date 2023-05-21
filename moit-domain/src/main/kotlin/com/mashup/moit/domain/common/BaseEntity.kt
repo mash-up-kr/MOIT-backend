@@ -19,4 +19,5 @@ abstract class BaseEntity {
     @LastModifiedDate
     lateinit var updatedAt: LocalDateTime
 
+    val deleted: Boolean = false
 }

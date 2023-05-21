@@ -25,7 +25,7 @@ class ControllerExceptionAdvice {
     }
 
     @ExceptionHandler(MoitException::class)
-    fun handleDoriDoriException(exception: MoitException): ResponseEntity<ApiResponse<Any>> {
+    fun handleMoitException(exception: MoitException): ResponseEntity<ApiResponse<Any>> {
         return ResponseEntity.status(HttpStatus.OK)
             .body(
                 ApiResponse(
