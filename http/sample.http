@@ -1,0 +1,13 @@
+### Sample 생성
+POST {{moit-api}}/api/v1/samples
+Content-Type: application/json
+
+{
+  "name": "test1"
+}
+
+### Sample 조회
+GET {{moit-api}}/api/v1/samples/1/nullable
+
+### Sample 조회
+GET {{moit-api}}/api/v1/samples/2/not-null
