@@ -2,6 +2,10 @@ package com.mashup.moit.sample.controller.dto
 
 import com.mashup.moit.domain.sample.Sample
 
+data class SampleCreateRequest(
+    val name: String,
+)
+
 data class SampleResponse(
     val id: Long,
     val name: String,

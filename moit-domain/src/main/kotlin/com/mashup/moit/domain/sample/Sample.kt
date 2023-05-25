@@ -1,9 +1,11 @@
 package com.mashup.moit.domain.sample
 
-import com.mashup.moit.domain.common.BaseEntity
-import jakarta.persistence.Entity
+import java.time.LocalDateTime
 
-@Entity
-class Sample(
+data class Sample(
+    val id: Long,
     val name: String,
-) : BaseEntity()
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime,
+    val deleted: Boolean,
+)
