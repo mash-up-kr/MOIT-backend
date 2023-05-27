@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.jpa") apply false
     id("org.springframework.boot") apply false
     id("io.spring.dependency-management") apply false
+    id("com.google.cloud.tools.jib") apply false
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_17
