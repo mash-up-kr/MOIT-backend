@@ -1,17 +1,19 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    driver-class-name: org.h2.Driver
+    url: ENC(rYUDSxIUuNMbQuZ8ZiyMKNnz8WjUnPkobGzT4HN2USLWV0HD3VI43GrqEWft/fGOLX4NpTxsYnzx2Mi6ocup6Y102wqtotVEd+54X0+Vypa8FZNeZIDxpZ7BBhNm+Z2ZaK27PQgySSs2EA4sZJ2AeATgrohnmGWti3As3aOdkAviTBNT/6LYpolusSmr8cwOwrF1sWKqZ+uR8dN7A34cIw==)
+    username: ENC(S15YPWgV6Q0/Q+5vFIm2BA1MrMpwobIByFummkx64mvQkIb1sS9k8V5pYNTsCKki)
+    password: ENC(bNk0/MtmiFzRpWZAXjATJCUSLjFgcsfv9OYxrJGDCuqHCjcpvscstVbr2uhS3OPN)
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update # 추후 엔티티 설정 완료 후, none 으로 변경 (필요시에만 update)
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         use_sql_comments: true
+        jdbc.lob.non_contextual_creation: true # if not, error occurs Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented.
     database-platform: org.hibernate.dialect.H2Dialect
 
   h2:
