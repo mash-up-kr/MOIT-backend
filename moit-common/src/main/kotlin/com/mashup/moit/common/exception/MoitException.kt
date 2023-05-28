@@ -1,7 +1,5 @@
 package com.mashup.moit.common.exception
 
-import java.lang.RuntimeException
-
 class MoitException(
     val errorCode: String,
     val httpStatusCode: Int,
