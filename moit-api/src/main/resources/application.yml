@@ -4,3 +4,27 @@ spring:
   config:
     import:
       - application-domain.yml
+
+# Actuator 정보
+management:
+  endpoints:
+    enabled-by-default: false
+    jmx:
+      exposure:
+        exclude: "*"
+    web:
+      exposure:
+        include: info, health, metrics, prometheus
+      base-path: "/am-i-alive"
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      show-details : always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  server:
+    port: 8077
