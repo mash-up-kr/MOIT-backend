@@ -3,7 +3,7 @@ POST {{moit-api}}/api/v1/samples
 Content-Type: application/json
 
 {
-  "name": "test1"
+    "name": "test1"
 }
 
 ### Sample 조회
