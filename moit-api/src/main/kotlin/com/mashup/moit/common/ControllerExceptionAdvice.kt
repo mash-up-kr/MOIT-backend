@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class ControllerExceptionAdvice {
     @ExceptionHandler(Exception::class)
-    fun handleException(exception: Exception): ResponseEntity<ApiResponse<Any>> {
+    fun handleException(exception: Exception): ResponseEntity<MoitApiResponse<Any>> {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(
-                ApiResponse(
+                MoitApiResponse(
                     success = false,
                     data = null,
-                    error = ApiErrorResponse(
+                    error = MoitApiErrorResponse(
                         code = MoitExceptionType.SYSTEM_FAIL.name,
                         message = exception.message,
                     ),
@@ -25,10 +25,10 @@ class ControllerExceptionAdvice {
     }
 
     @ExceptionHandler(MoitException::class)
-    fun handleMoitException(exception: MoitException): ResponseEntity<ApiResponse<Any>> {
+    fun handleMoitException(exception: MoitException): ResponseEntity<MoitApiResponse<Any>> {
         return ResponseEntity.status(exception.httpStatusCode)
             .body(
-                ApiResponse(
+                MoitApiResponse(
                     success = false,
                     data = null,
                     error = exception.toApiErrorResponse(),
@@ -36,7 +36,7 @@ class ControllerExceptionAdvice {
             )
     }
 
-    private fun MoitException.toApiErrorResponse() = ApiErrorResponse(
+    private fun MoitException.toApiErrorResponse() = MoitApiErrorResponse(
         code = errorCode,
         message = message,
     )
