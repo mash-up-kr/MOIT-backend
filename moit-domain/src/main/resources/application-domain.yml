@@ -14,8 +14,3 @@ spring:
         format_sql: true
         use_sql_comments: true
         jdbc.lob.non_contextual_creation: true # if not, error occurs Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented.
-    database-platform: org.hibernate.dialect.H2Dialect
-
-  h2:
-    console:
-      enabled: true
