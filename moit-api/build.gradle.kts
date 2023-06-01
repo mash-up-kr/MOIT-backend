@@ -8,6 +8,8 @@ tasks.getByName("jar") {
     enabled = false
 }
 
+val swaggerVersion: String by project.extra
+
 apply(plugin = "com.google.cloud.tools.jib")
 
 dependencies {
@@ -17,6 +19,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+
+    // swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$swaggerVersion")
 }
 
 configure<JibExtension> {

@@ -5,6 +5,16 @@ spring:
     import:
       - application-domain.yml
 
+# swagger doc 
+springdoc:
+  packages-to-scan: com.mashup.moit
+  swagger-ui:
+    path: /api-docs
+    operations-sorter: alpha
+  api-docs:
+    groups:
+      enabled: true
+
 # Actuator 정보
 management:
   endpoints:
