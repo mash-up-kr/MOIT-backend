@@ -5,8 +5,6 @@ import com.mashup.moit.sample.controller.dto.SampleCreateRequest
 import com.mashup.moit.sample.controller.dto.SampleResponse
 import com.mashup.moit.sample.facade.SampleFacade
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.media.Content
-import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -19,11 +17,7 @@ class SampleController(
     private val sampleFacade: SampleFacade,
 ) {
     @Operation(summary = "create API", description = "sample 생성 요청 메서드")
-    @ApiResponses(
-        value = [
-            ApiResponse(responseCode = "201", description = "CREATED", content = [Content(schema = Schema(implementation = SampleResponse::class))]),
-        ]
-    )
+    @ApiResponses(value = [ApiResponse(responseCode = "201", description = "CREATED")])
     @PostMapping
     fun createSample(@RequestBody request: SampleCreateRequest): MoitApiResponse<SampleResponse> {
         return MoitApiResponse.success(sampleFacade.createSample(request))

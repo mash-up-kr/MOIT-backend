@@ -9,7 +9,7 @@ spring:
 springdoc:
   packages-to-scan: com.mashup.moit
   swagger-ui:
-    path: /api
+    path: /api-docs
     operations-sorter: alpha
   api-docs:
     groups:

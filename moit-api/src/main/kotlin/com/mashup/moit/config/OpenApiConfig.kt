@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class OpenApiConfig {
     @Bean
-    fun openAPI(): OpenAPI {
+    fun openApi(): OpenAPI {
         val info = Info().title(SwaggerConstant.API_NAME)
             .version(SwaggerConstant.API_VERSION)
             .description(SwaggerConstant.API_DESCRIPTION)
