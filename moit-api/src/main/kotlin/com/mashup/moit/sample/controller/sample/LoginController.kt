@@ -1,4 +1,4 @@
-package com.mashup.moit.sample.controller
+package com.mashup.moit.sample.controller.sample
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
