@@ -6,7 +6,8 @@ enum class MoitExceptionType(
     val httpStatusCode: Int,
 ) {
     // USER
-    NOT_VALID_USER_AUTH_TOKEN("Not Valid JWT Token", "U001_NOT_VALID_TOKEN", 400),
+    INVALID_USER_AUTH_TOKEN("Invalid JWT Token", "U001_INVALID_TOKEN", 400),
+    INVALID_AUTH_PROVIDER("Invalid provider by auth0. Check social section of auth0", "U002_INVALID_AUTH_PROVIDER", 500),
     
     // COMMON
     NOT_EXIST("존재하지 않습니다.", "C001_NOT_EXIST", 404),
