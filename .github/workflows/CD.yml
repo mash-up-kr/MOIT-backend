@@ -40,8 +40,6 @@ jobs:
           context: .
           push: true
           tags: electroncorps/moit-api:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
           
       - run: |
           cd deploy && zip -r deploy.zip .
