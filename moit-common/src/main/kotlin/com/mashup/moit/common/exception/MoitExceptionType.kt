@@ -5,8 +5,11 @@ enum class MoitExceptionType(
     val errorCode: String,
     val httpStatusCode: Int,
 ) {
+    // USER
+    NOT_VALID_USER_AUTH_TOKEN("Not Valid JWT Token", "U001_NOT_VALID_TOKEN", 400),
+    
     // COMMON
-    NOT_EXIST("존재하지 않습니다.", "NOT_EXIST", 404),
-    SYSTEM_FAIL("Internal Server Error.", "SYSTEM_FAIL", 500),
+    NOT_EXIST("존재하지 않습니다.", "C001_NOT_EXIST", 404),
+    SYSTEM_FAIL("Internal Server Error.", "C002_SYSTEM_FAIL", 500),
     ;
 }
