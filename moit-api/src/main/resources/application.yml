@@ -1,9 +1,11 @@
 spring:
   application:
     name: moit-api
+  profiles:
+    default: dev
   config:
     import:
-      - application-domain.yml
+      - classpath:/application-domain.yml
 
 # swagger doc 
 springdoc:
