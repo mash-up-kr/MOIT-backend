@@ -5,6 +5,22 @@ spring:
     import:
       - application-domain.yml
 
+  # OAuth login
+  security:
+    oauth2:
+      client:
+        registration:
+          auth0:
+            client-id: ${AUTH0_CLIENT_ID}
+            client-secret: ${AUTH0_CLIENT_SECRET}
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          auth0:
+            issuer-uri: ${AUTH0_ISSUER_URI}
+
 # swagger doc 
 springdoc:
   packages-to-scan: com.mashup.moit
