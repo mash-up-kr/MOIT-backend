@@ -1,0 +1,14 @@
+### All actautor
+GET {{moit-api-actuator}}/am-i-alive
+
+### Info
+GET {{moit-api-actuator}}/am-i-alive/info
+
+### Health
+GET {{moit-api-actuator}}/am-i-alive/health
+
+### Metrics
+GET {{moit-api-actuator}}/am-i-alive/metrics
+
+### Prometheus
+GET {{moit-api-actuator}}/am-i-alive/prometheus

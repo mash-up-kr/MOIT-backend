@@ -1,0 +1,29 @@
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+trim_trailing_whitespace = false
+insert_final_newline = true
+max_line_length = 200
+tab_width = 4
+ij_continuation_indent_size = 8
+ij_smart_tabs = false
+ij_visual_guides = 200
+ij_wrap_on_typing = false
+ij_formatter_off_tag = @formatter:off
+ij_formatter_on_tag = @formatter:on
+ij_formatter_tags_enabled = false
+
+[*.md]
+trim_trailing_whitespace = false
+
+[{*.yml,*.yaml,*.json}]
+indent_size = 2
+
+[{*.kt,*.kts}]
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = false
+ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
+ij_kotlin_name_count_to_use_star_import = 99
+ij_kotlin_name_count_to_use_star_import_for_members = 99

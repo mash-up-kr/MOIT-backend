@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: moit-api
+  config:
+    import:
+      - application-domain.yml
+
+# swagger doc 
+springdoc:
+  packages-to-scan: com.mashup.moit
+  swagger-ui:
+    path: /api-docs
+    operations-sorter: alpha
+  api-docs:
+    groups:
+      enabled: true
+
+# Actuator 정보
+management:
+  endpoints:
+    enabled-by-default: false
+    jmx:
+      exposure:
+        exclude: "*"
+    web:
+      exposure:
+        include: info, health, metrics, prometheus
+      base-path: "/am-i-alive"
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      show-details : always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  server:
+    port: 8077
