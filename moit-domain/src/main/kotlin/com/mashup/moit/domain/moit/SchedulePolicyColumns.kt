@@ -24,7 +24,7 @@ data class SchedulePolicyColumns(
 
     @Enumerated(EnumType.STRING)
     @Column(name = "repeat_cycle", nullable = false)
-    val repeatCycle: RepeatCycle,
+    val repeatCycle: ScheduleRepeatCycle,
 
     @Column(name = "start_time", nullable = false)
     val startTime: LocalTime,
@@ -32,8 +32,3 @@ data class SchedulePolicyColumns(
     @Column(name = "end_time", nullable = false)
     val endTime: LocalTime,
 )
-
-// 반복 주기: 없음, 1주, 2주, 3주, 4주
-enum class RepeatCycle {
-    NONE, ONE, TWO, THREE, FOUR
-}
