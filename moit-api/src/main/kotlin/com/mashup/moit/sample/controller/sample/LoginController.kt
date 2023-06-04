@@ -1,5 +1,6 @@
 package com.mashup.moit.sample.controller.sample
 
+import com.mashup.moit.security.JwtTokenProvider
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
@@ -15,14 +16,16 @@ import java.net.URI
 @Tag(name = "Sample", description = "Sample Login Api 입니다.")
 @RequestMapping("/api/v1/sample/login")
 @RestController
-class LoginController {
+class LoginController(
+    private val jwtTokenProvider: JwtTokenProvider
+) {
 
     @Operation(summary = "login API", description = "Login API")
     @ApiResponses(value = [ApiResponse(responseCode = "200", description = "OK")])
     @GetMapping
     fun login(@AuthenticationPrincipal principal: OidcUser?): ResponseEntity<String> {
         if (principal != null) {
-            return ResponseEntity.ok(principal.toString())
+            return ResponseEntity.ok(jwtTokenProvider.createToken(principal))
         }
         val headers = HttpHeaders()
         headers.location = URI.create("/oauth2/authorization/auth0")
