@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "electroncorps/moit-api",
+    "Name": "electroncorps/moit-api:latest",
     "Update": "true"
   },
   "Ports": [
