@@ -15,12 +15,12 @@ import java.time.LocalDateTime
 @Entity
 class FineEntity(
     @OneToOne
-    @JoinColumn(name = "attendance_id")
+    @JoinColumn(name = "attendance_id", nullable = false)
     var attendance: AttendanceEntity,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "approve_status")
-    val approveStatus: ApproveStatus,
+    @Column(name = "approve_status", nullable = false)
+    val approveStatus: FineApproveStatus,
 
     @Column(name = "approved_at")
     val approvedAt: LocalDateTime?,

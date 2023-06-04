@@ -12,6 +12,6 @@ class SampleEntity(
         name = name,
         createdAt = createdAt,
         updatedAt = updatedAt,
-        deleted = deleted,
+        isDeleted = isDeleted,
     )
 }

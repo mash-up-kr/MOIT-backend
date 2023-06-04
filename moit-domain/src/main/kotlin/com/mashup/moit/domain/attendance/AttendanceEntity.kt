@@ -17,17 +17,17 @@ import java.time.LocalDateTime
 @Entity
 class AttendanceEntity(
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_id")
+    @JoinColumn(name = "study_id", nullable = false)
     var study: StudyEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     var user: UserEntity,
 
-    @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    val status: Status,
+    @Column(name = "status", nullable = false)
+    val status: AttendanceStatus,
 
     @Column(name = "attendance_at")
-    val attendanceAt: LocalDateTime
+    val attendanceAt: LocalDateTime?,
 ) : BaseEntity()
