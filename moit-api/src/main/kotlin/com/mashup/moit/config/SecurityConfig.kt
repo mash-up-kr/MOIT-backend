@@ -26,8 +26,8 @@ class SecurityConfig(
             .formLogin { it.disable() }
             .oauth2Login { it.defaultSuccessUrl(LOGIN_ENDPOINT) }
             .logout { it.logoutRequestMatcher(AntPathRequestMatcher("/logout")).addLogoutHandler(logoutHandler) }
-            .authorizeHttpRequests { 
-                it.anyRequest().authenticated() 
+            .authorizeHttpRequests {
+                it.anyRequest().authenticated()
             }
             .addFilterBefore(JwtTokenFilter(jwtTokenSupporter), UsernamePasswordAuthenticationFilter::class.java)
             .build()
@@ -37,6 +37,7 @@ class SecurityConfig(
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer {
             it.ignoring().requestMatchers(
+                "/**", // TODO: update to authenticated() when complete security settings
                 "/am-i-alive/**",
             )
         }
