@@ -11,15 +11,15 @@ spring:
       client:
         registration:
           auth0:
-            client-id: ${AUTH0_CLIENT_ID}
-            client-secret: ${AUTH0_CLIENT_SECRET}
+            client-id: ENC(6jkKllTGxVAzzWlIpGfYWOi/8xNw1/BYMDURjaq/W5WDk9mpxQT/m1ONh5hnOUl/dQwSAA7ZzGdItniu3xH7vFdHGSmpl5lDYiV7VEfRBd0=)
+            client-secret: ENC(ut0qWQvWin/brPbolIE6FWQEOYm73alrD9QkzkGWFqwjIHzjGtABrniR8VB5n+BmTe2lJuQ9x5KsjyKZ+Qu5Vy0KUNc42LhtWO+y8y3FwK5nwri5lnPEXR1Hg0sXQItoDGLOym79bHsvGQVRTCTHvg==)
             scope:
               - openid
               - profile
               - email
         provider:
           auth0:
-            issuer-uri: ${AUTH0_ISSUER_URI}
+            issuer-uri: ENC(FjcoFhmUB80mv7Ko4HuZqEyjEJ+Nr1rEF5/Ml2oSxYDG3W1F6Lw/fM19GIt4s41d7467ujASDQjd8FZnGksdnRukTGCQLFEYOrb3iYnIX2w=)
 
 # swagger doc 
 springdoc:
