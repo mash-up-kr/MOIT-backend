@@ -23,9 +23,12 @@ class LoginController(
     @Operation(summary = "login API", description = "Login API")
     @ApiResponses(value = [ApiResponse(responseCode = "200", description = "OK")])
     @GetMapping
-    fun login(@AuthenticationPrincipal principal: OidcUser?): ResponseEntity<String> {
-        if (principal != null) {
-            return ResponseEntity.ok(jwtTokenSupporter.createToken(principal))
+    fun login(@AuthenticationPrincipal user: OidcUser?): ResponseEntity<Void> {
+        if (user != null) {
+            val jwtToken = jwtTokenSupporter.createToken(user)
+            return ResponseEntity.noContent()
+                .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_TYPE} $jwtToken")
+                .build()
         }
         val headers = HttpHeaders()
         headers.location = URI.create("/oauth2/authorization/auth0")
