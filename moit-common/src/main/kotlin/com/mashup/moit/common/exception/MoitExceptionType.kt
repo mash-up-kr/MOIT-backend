@@ -6,6 +6,7 @@ enum class MoitExceptionType(
     val httpStatusCode: Int,
 ) {
     // USER
+    AUTH_ERROR("유저 프로세스에서 오류가 발생했습니다.", "U000_AUTH_ERROR", 500),
     INVALID_USER_AUTH_TOKEN("Invalid JWT Token", "U001_INVALID_TOKEN", 400),
     INVALID_AUTH_PROVIDER("Invalid provider by auth0. Check social section of auth0", "U002_INVALID_AUTH_PROVIDER", 500),
     
