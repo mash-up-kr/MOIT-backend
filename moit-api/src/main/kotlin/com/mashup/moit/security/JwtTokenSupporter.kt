@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.domain.sample.SampleUser
+import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
@@ -17,11 +18,13 @@ import java.util.Date
 class JwtTokenSupporter(key: String, mapper: ObjectMapper) {
     private val secretKey: Key
     private val mapper: ObjectMapper
+    private val jwtParser: JwtParser
 
     init {
         val encodedKey = Base64.getEncoder().encodeToString(key.toByteArray())
         this.secretKey = Keys.hmacShaKeyFor(encodedKey.toByteArray())
         this.mapper = mapper
+        this.jwtParser = Jwts.parserBuilder().setSigningKey(secretKey).build()
     }
 
     /**
@@ -45,6 +48,18 @@ class JwtTokenSupporter(key: String, mapper: ObjectMapper) {
             .claim(CLAIM_INFO_KEY, convertToUser(user))
             .signWith(secretKey)
             .compact()
+    }
+
+    /**
+     * Moit JWT Token 으로부터 User 추출
+     *
+     * @param token Moit Jwt Token
+     * @return MoitUser
+     */
+    fun extractUserFromToken(token: String): SampleUser {
+        return jwtParser.parseClaimsJws(token).body?.let {
+            mapper.convertValue(it[CLAIM_INFO_KEY], SampleUser::class.java)
+        } ?: throw MoitException.of(MoitExceptionType.INVALID_USER_AUTH_TOKEN)
     }
 
     /**
@@ -83,12 +98,12 @@ class JwtTokenSupporter(key: String, mapper: ObjectMapper) {
     /**
      * jjwt 지원을 위해 LocalDateTime to Date 변환하는 확장함수
      *
-     * @param dateTime LocalDateTime
      * @return date
      */
     private fun LocalDateTime.convertToDate(): Date = Date.from(this.toInstant(ZoneOffset.of("+09:00")))
 
     companion object {
+        const val BEARER_TOKEN_TYPE = "BEARER"
         private const val PROVIDER_SPLIT_DELIMITER = "|"
         private const val DAY_30 = 30L
         private const val CLAIM_INFO_KEY = "info"
