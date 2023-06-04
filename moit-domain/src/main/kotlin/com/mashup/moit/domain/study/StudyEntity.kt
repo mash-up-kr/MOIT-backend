@@ -39,7 +39,7 @@ class StudyEntity(
     @Column(name = "absence_at", nullable = false)
     val absenceAt: LocalDateTime,
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "first_attendance_user_id")
     val firstAttendanceUser: UserEntity?,
 
