@@ -1,6 +1,6 @@
 package com.mashup.moit.sample.controller.sample
 
-import com.mashup.moit.security.JwtTokenProvider
+import com.mashup.moit.security.JwtTokenSupporter
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
@@ -17,7 +17,7 @@ import java.net.URI
 @RequestMapping("/api/v1/sample/login")
 @RestController
 class LoginController(
-    private val jwtTokenProvider: JwtTokenProvider
+    private val jwtTokenSupporter: JwtTokenSupporter
 ) {
 
     @Operation(summary = "login API", description = "Login API")
@@ -25,7 +25,7 @@ class LoginController(
     @GetMapping
     fun login(@AuthenticationPrincipal principal: OidcUser?): ResponseEntity<String> {
         if (principal != null) {
-            return ResponseEntity.ok(jwtTokenProvider.createToken(principal))
+            return ResponseEntity.ok(jwtTokenSupporter.createToken(principal))
         }
         val headers = HttpHeaders()
         headers.location = URI.create("/oauth2/authorization/auth0")

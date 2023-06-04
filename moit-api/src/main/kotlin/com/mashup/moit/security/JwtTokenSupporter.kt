@@ -14,7 +14,7 @@ import java.time.ZoneOffset
 import java.util.Base64
 import java.util.Date
 
-class JwtTokenProvider(key: String, mapper: ObjectMapper) {
+class JwtTokenSupporter(key: String, mapper: ObjectMapper) {
     private val secretKey: Key
     private val mapper: ObjectMapper
 
