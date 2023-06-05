@@ -22,6 +22,8 @@ allprojects {
     }
 }
 
+val kotestVersion: String by project.extra
+val mockkVersion: String by project.extra
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
@@ -33,6 +35,10 @@ subprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+        testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+        testImplementation("io.kotest:kotest-property:$kotestVersion")
+        testImplementation("io.kotest.extensions:kotest-extensions-spring:$mockkVersion")
     }
 
     tasks.getByName("bootJar") {
