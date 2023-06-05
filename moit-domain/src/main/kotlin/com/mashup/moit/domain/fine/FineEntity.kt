@@ -20,7 +20,7 @@ class FineEntity(
 
     @Enumerated(EnumType.STRING)
     @Column(name = "approve_status", nullable = false)
-    val approveStatus: FineApproveStatus,
+    val approveStatus: FineApproveStatus = FineApproveStatus.NEW,
 
     @Column(name = "approved_at")
     val approvedAt: LocalDateTime?,
