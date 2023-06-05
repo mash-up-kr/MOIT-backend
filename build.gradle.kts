@@ -34,11 +34,15 @@ subprojects {
     dependencies {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
+        
+        // test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
         testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
         testImplementation("io.kotest:kotest-property:$kotestVersion")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:$mockkVersion")
+        testImplementation("io.mockk:mockk:${mockkVersion}")
+
     }
 
     tasks.getByName("bootJar") {
