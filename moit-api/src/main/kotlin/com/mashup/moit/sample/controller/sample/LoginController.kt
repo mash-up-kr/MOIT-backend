@@ -23,7 +23,7 @@ class LoginController(
     @Operation(summary = "login API", description = "Login API")
     @ApiResponses(value = [ApiResponse(responseCode = "200", description = "OK")])
     @GetMapping
-    fun login(@AuthenticationPrincipal user: OidcUser?): ResponseEntity<Void> {
+    fun login(@AuthenticationPrincipal user: OidcUser?): ResponseEntity<Unit> {
         if (user != null) {
             val jwtToken = jwtTokenSupporter.createToken(user)
             return ResponseEntity.noContent()
