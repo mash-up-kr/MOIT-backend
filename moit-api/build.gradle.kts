@@ -26,6 +26,7 @@ dependencies {
 
 configure<JibExtension> {
     val registryUsername = System.getenv("DOCKERHUB_USERNAME")
+    val jasyptPassword = System.getenv("JASYPT_ENCRYPTOR_PASSWORD")
     val (activeProfile, containerImageName) = getProfileAndImageName(registryUsername)
 
     from {
@@ -51,6 +52,7 @@ configure<JibExtension> {
             "-Dfile.encoding=UTF-8",
             "-Djava.awt.headless=true",
             "-Dspring.profiles.active=${activeProfile}",
+            "-Djasypt.encryptor.password=${jasyptPassword}"
         )
         ports = listOf("8080")
     }
