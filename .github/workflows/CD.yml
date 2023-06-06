@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - feat/fix-jib-cd
 
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
@@ -33,7 +32,7 @@ jobs:
 
       - name: 도커 이미지 빌드 & 푸시 by jib
         run: |
-          ./gradlew :moit-api:jib -Prelease -Djib.container.environment=jasypt.encryptor.password="$JASYPT_ENCRYPTOR_PASSWORD"
+          ./gradlew :moit-api:jib -Prelease
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
