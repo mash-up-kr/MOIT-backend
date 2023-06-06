@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ENC(k96tYIOmMfKx0YFXWwOfjVmFlXi1pyPmpyQlWVVg8fj6MaSy/vn4KmbpvZ4Var+MYVMpqz1XpNgzIy1cixUZwma+KNbKzRPjrd8B4xktBan2GRsPT9tgpzfhTWeCM5LaZS+O98w+XLZ2dsIVG6l1hhomxULqtzRmLhB+aFhvBGv6LS3aTgKCeuleOAbDSyAs+3/x/is049B/egivUc2m4Q==)
+    url: ENC(YHCmSxRsh/mNe2/HVmKiX9eBOZXK+OlPutbs0Wtm/qp73TGc063LLm3nsvg1TY3fK6ysYgVJxsUqqAyMRNeaku2XU3/RBkEreFcyBO2u2M8273M//TiEKDyuomu5KG6QzbpKTuHezhaclr5D8tv7wQ+7DDzrkAczr8WcIoMWGKvvil349mKZMPJY2UQmNcTL/9OJ/OWkTJyGuFpMyPPLew==)
     username: ENC(S15YPWgV6Q0/Q+5vFIm2BA1MrMpwobIByFummkx64mvQkIb1sS9k8V5pYNTsCKki)
     password: ENC(bNk0/MtmiFzRpWZAXjATJCUSLjFgcsfv9OYxrJGDCuqHCjcpvscstVbr2uhS3OPN)
     driver-class-name: org.postgresql.Driver
