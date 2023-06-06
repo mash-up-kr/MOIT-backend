@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - feat/fix-eb-deploy-env
 
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
