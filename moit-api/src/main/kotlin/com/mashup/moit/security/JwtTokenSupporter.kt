@@ -101,7 +101,7 @@ class JwtTokenSupporter(
      *
      * @return date
      */
-    private fun LocalDateTime.convertToDate(): Date = Date.from(this.toInstant(ZoneOffset.of("+09:00")))
+    private fun LocalDateTime.convertToDate(): Date = Date.from(this.toInstant(ASIA_SEOUL_OFFSET))
 
     companion object {
         const val BEARER_TOKEN_TYPE = "BEARER"
@@ -111,6 +111,7 @@ class JwtTokenSupporter(
         private const val CLAIM_AUD_KEY = "aud"
         private const val CLAIM_SUB_KEY = "sub"
         private val ASIA_SEOUL_ZONE = ZoneId.of("Asia/Seoul")
+        private val ASIA_SEOUL_OFFSET = ZoneOffset.of("+09:00")
     }
 
 }
