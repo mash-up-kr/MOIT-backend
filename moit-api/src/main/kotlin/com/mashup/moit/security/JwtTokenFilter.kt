@@ -20,20 +20,26 @@ class JwtTokenFilter(
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         if (!request.requestURI.startsWith(SecurityConfig.LOGIN_ENDPOINT)) {
-            extractUserAndSetAuth(request)
+            extractToken(request)?.run {
+                val user = jwtTokenSupporter.extractUserFromToken(this)
+                SecurityContextHolder.getContext().authentication = JwtAuthentication(user)
+            }
         }
         filterChain.doFilter(request, response)
     }
 
-    private fun extractUserAndSetAuth(request: HttpServletRequest) {
+    /**
+     * 요청으로부터 Token 추출
+     * - Authorization Header value 로 부터 BEARER 이후 값 추출
+     *
+     * @return JWT token String
+     */
+    private fun extractToken(request: HttpServletRequest): String? {
         val authorization = request.getAuthorization()
         log.debug("Parsing token in header: $authorization - Request path: ${request.requestURI}")
-        authorization.split(AUTH_PROVIDER_SPLIT_DELIMITER)
-            .takeIf { it[0] == JwtTokenSupporter.BEARER_TOKEN_PREFIX }?.get(1)
-            ?.run {
-                val user = jwtTokenSupporter.extractUserFromToken(this)
-                SecurityContextHolder.getContext().authentication = JwtAuthentication(user)
-            }
+        return authorization.split(AUTH_PROVIDER_SPLIT_DELIMITER)
+            .takeIf { it[0] == JwtTokenSupporter.BEARER_TOKEN_PREFIX }
+            ?.get(1)
     }
 
     private fun HttpServletRequest.getAuthorization() =
