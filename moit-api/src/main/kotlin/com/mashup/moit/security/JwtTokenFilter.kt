@@ -29,7 +29,7 @@ class JwtTokenFilter(
         val authorization = request.getAuthorization()
         log.debug("Parsing token in header: $authorization - Request path: ${request.requestURI}")
         authorization.split(AUTH_PROVIDER_SPLIT_DELIMITER)
-            .takeIf { it[0] == JwtTokenSupporter.BEARER_TOKEN_TYPE }?.get(1)
+            .takeIf { it[0] == JwtTokenSupporter.BEARER_TOKEN_PREFIX }?.get(1)
             ?.run {
                 val user = jwtTokenSupporter.extractUserFromToken(this)
                 SecurityContextHolder.getContext().authentication = JwtAuthentication(user)

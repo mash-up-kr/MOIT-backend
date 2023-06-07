@@ -27,7 +27,7 @@ class LoginController(
         if (user != null) {
             val jwtToken = jwtTokenSupporter.createToken(user)
             return ResponseEntity.noContent()
-                .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_TYPE} $jwtToken")
+                .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken")
                 .build()
         }
         val headers = HttpHeaders()

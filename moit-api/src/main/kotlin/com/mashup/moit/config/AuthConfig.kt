@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 class AuthConfig {
     
     @Bean
-    fun jwtTokenProvider(mapper: ObjectMapper): JwtTokenSupporter {
+    fun jwtTokenSupporter(mapper: ObjectMapper): JwtTokenSupporter {
         return JwtTokenSupporter("secret-key-temporary-for-test-123", mapper) // TODO: Secret key 정의 및 주입 필요
     }
     

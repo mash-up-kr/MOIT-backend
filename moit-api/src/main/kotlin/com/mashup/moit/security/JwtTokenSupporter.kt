@@ -104,7 +104,7 @@ class JwtTokenSupporter(
     private fun LocalDateTime.convertToDate(): Date = Date.from(this.toInstant(ASIA_SEOUL_OFFSET))
 
     companion object {
-        const val BEARER_TOKEN_TYPE = "BEARER"
+        const val BEARER_TOKEN_PREFIX = "BEARER"
         private const val PROVIDER_SPLIT_DELIMITER = "|"
         private const val DAY_30 = 30L
         private const val CLAIM_INFO_KEY = "info"
