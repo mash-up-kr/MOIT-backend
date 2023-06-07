@@ -15,15 +15,16 @@ import java.time.ZoneOffset
 import java.util.Base64
 import java.util.Date
 
-class JwtTokenSupporter(key: String, mapper: ObjectMapper) {
-    private val secretKey: Key
+class JwtTokenSupporter(
+    key: String,
     private val mapper: ObjectMapper
+) {
+    private val secretKey: Key
     private val jwtParser: JwtParser
 
     init {
         val encodedKey = Base64.getEncoder().encodeToString(key.toByteArray())
         this.secretKey = Keys.hmacShaKeyFor(encodedKey.toByteArray())
-        this.mapper = mapper
         this.jwtParser = Jwts.parserBuilder().setSigningKey(secretKey).build()
     }
 
