@@ -20,25 +20,20 @@ class JwtTokenFilter(
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         if (!request.requestURI.startsWith(SecurityConfig.LOGIN_ENDPOINT)) {
-            val token = request.extractToken()
-            jwtTokenSupporter.extractUserFromToken(token).run {
-                SecurityContextHolder.getContext().authentication = JwtAuthentication(this)
-            }
+            extractUserAndSetAuth(request)
         }
         filterChain.doFilter(request, response)
     }
 
-    /**
-     * 요청으로부터 Token 추출
-     * - Authorization Header value 로 부터 BEARER 이후 값 추출
-     *
-     * @param request 유저 요청
-     * @return JWT token String
-     */
-    private fun HttpServletRequest.extractToken(): String {
-        val authorization = this.getAuthorization()
-        log.debug("Parsing token in header: $authorization - Request path: ${this.requestURI}")
-        return authorization.split(AUTH_PROVIDER_SPLIT_DELIMITER)[1]
+    private fun extractUserAndSetAuth(request: HttpServletRequest) {
+        val authorization = request.getAuthorization()
+        log.debug("Parsing token in header: $authorization - Request path: ${request.requestURI}")
+        authorization.split(AUTH_PROVIDER_SPLIT_DELIMITER)
+            .takeIf { it[0] == JwtTokenSupporter.BEARER_TOKEN_TYPE }?.get(1)
+            ?.run {
+                val user = jwtTokenSupporter.extractUserFromToken(this)
+                SecurityContextHolder.getContext().authentication = JwtAuthentication(user)
+            }
     }
 
     private fun HttpServletRequest.getAuthorization() =
