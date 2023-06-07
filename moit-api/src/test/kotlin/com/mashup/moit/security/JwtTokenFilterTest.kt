@@ -4,8 +4,10 @@ import com.mashup.moit.config.SecurityConfig
 import com.mashup.moit.domain.sample.SampleUser
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import jakarta.servlet.FilterChain
@@ -24,7 +26,7 @@ class JwtTokenFilterTest : DescribeSpec() {
         this.jwtTokenFilter = JwtTokenFilter(jwtTokenSupporter)
 
         beforeContainer {
-            every { filterChain.doFilter(any(), any()) } answers { }
+            every { filterChain.doFilter(any(), any()) } just Runs
         }
 
         afterContainer {
@@ -57,10 +59,10 @@ class JwtTokenFilterTest : DescribeSpec() {
                     profileImage = "",
                     nickname = testNickName
                 )
-                every { jwtTokenSupporter.extractUserFromToken(testToken) } answers { testUser }
+                every { jwtTokenSupporter.extractUserFromToken(testToken) } returns testUser
 
                 val request = MockHttpServletRequest("GET", "/must/login-user/test").apply {
-                    addHeader(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_TYPE} $testToken")
+                    addHeader(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $testToken")
                 }
                 val response = MockHttpServletResponse()
                 jwtTokenFilter.doFilter(request, response, filterChain)
