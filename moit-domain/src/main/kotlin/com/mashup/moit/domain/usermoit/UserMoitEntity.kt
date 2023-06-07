@@ -26,4 +26,12 @@ class UserMoitEntity(
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     val role: UserMoitRole,
-) : BaseEntity()
+) : BaseEntity() {
+    fun toDomain() =
+        UserMoit(
+            id = id,
+            moitId = moit.id,
+            userId = user.id,
+            role = role.name
+        )
+}

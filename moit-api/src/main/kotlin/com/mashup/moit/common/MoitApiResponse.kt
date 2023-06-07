@@ -9,7 +9,7 @@ data class MoitApiResponse<T>(
         fun <T> success(data: T): MoitApiResponse<T> {
             return MoitApiResponse(
                 success = true,
-                data = data,
+                data = data
             )
         }
     }

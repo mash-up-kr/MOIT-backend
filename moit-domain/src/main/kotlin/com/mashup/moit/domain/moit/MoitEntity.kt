@@ -41,4 +41,26 @@ class MoitEntity(
 
     @OneToMany(mappedBy = "moit")
     val userMoits: List<UserMoitEntity> = emptyList()
-}
+
+    fun toDomain() =
+        Moit(
+            id = id,
+            name = name,
+            description = description,
+            invitationCode = invitationCode,
+            isEnd = isEnd,
+            scheduleDayOfWeeks = schedulePolicy.dayOfWeeks,
+            scheduleRepeatCycle = schedulePolicy.repeatCycle,
+            scheduleStartTime = schedulePolicy.startTime,
+            scheduleEndTime = schedulePolicy.endTime,
+            fineLateTime = finePolicy.lateTime,
+            fineLateAmount = finePolicy.lateAmount,
+            fineAbsenceTime = finePolicy.absenceTime,
+            fineAbsenceAmount = finePolicy.absenceAmount,
+            notificationIsRemindActive = notificationPolicy.isRemindActive,
+            notificationRemindOption = notificationPolicy.remindOption,
+            notificationRemindLevel = notificationPolicy.remindLevel,
+            startDate = schedulePolicy.startDate,
+            endDate = schedulePolicy.endDate
+        )
+} 

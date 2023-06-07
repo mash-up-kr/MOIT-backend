@@ -17,7 +17,7 @@ class SampleController(
     private val sampleFacade: SampleFacade,
 ) {
     @Operation(summary = "create API", description = "sample 생성 요청 메서드")
-    @ApiResponses(value = [ApiResponse(responseCode = "201", description = "CREATED")])
+    @ApiResponses(value = [ApiResponse(responseCode = "200", description = "CREATED")])
     @PostMapping
     fun createSample(@RequestBody request: SampleCreateRequest): MoitApiResponse<SampleResponse> {
         return MoitApiResponse.success(sampleFacade.createSample(request))
