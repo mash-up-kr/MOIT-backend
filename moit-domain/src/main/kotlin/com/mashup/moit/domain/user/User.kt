@@ -10,6 +10,8 @@ class User(
     private var updatedAt: LocalDateTime,
     private val isDeleted: Boolean,
     private val providerUniqueKey: String,
+    private val nickname: String,
+    private val profileImage: Int,
     private val attendances: List<AttendanceEntity>,
     val userMoits: List<UserMoitEntity>
 )

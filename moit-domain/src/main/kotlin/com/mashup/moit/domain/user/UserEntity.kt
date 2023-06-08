@@ -13,6 +13,12 @@ import jakarta.persistence.Table
 class UserEntity(
     @Column(name = "provider_unique_key")
     val providerUniqueKey: String,
+
+    @Column(name = "nickname")
+    val nickname: String,
+
+    @Column(name = "profile_image")
+    val profileImage: Int,
 ) : BaseEntity() {
     @OneToMany(mappedBy = "user")
     val attendances: List<AttendanceEntity> = emptyList()
@@ -27,9 +33,11 @@ class UserEntity(
             updatedAt = updatedAt,
             isDeleted = isDeleted,
             providerUniqueKey = providerUniqueKey,
+            nickname = nickname,
+            profileImage = profileImage,
             attendances = attendances,
             userMoits = userMoits
         )
     }
-    
+
 }
