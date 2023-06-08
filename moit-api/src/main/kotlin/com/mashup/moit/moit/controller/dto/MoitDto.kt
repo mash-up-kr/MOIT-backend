@@ -1,5 +1,6 @@
 package com.mashup.moit.moit.controller.dto
 
+import com.mashup.moit.common.util.DateTimeUtils
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.NotificationRemindLevel
 import com.mashup.moit.domain.moit.NotificationRemindOption
@@ -8,7 +9,6 @@ import com.mashup.moit.domain.usermoit.UserMoit
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.LocalTime
 
 @Schema(description = "moit 가입 응답")
 data class MoitJoinResponse(
@@ -18,16 +18,16 @@ data class MoitJoinResponse(
     val moitId: Long,
     @Schema(description = "가입한 userId")
     val userId: Long,
-    @Schema(description = "moit 내 권한")
+    @Schema(description = "moit 내 권한", allowableValues = ["ADMIN", "MEMBER"])
     val role: String,
     @Schema(description = "moit 반복 요일")
     val scheduleDayOfWeeks: Set<DayOfWeek>,
     @Schema(description = "moit 반복 주기")
     val scheduleRepeatCycle: ScheduleRepeatCycle,
-    @Schema(description = "moit 시작 시간")
-    val scheduleStartTime: LocalTime,
-    @Schema(description = "moit 종료 시간")
-    val scheduleEndTime: LocalTime,
+    @Schema(description = "moit 시작 시간", example = "HH:mm")
+    val scheduleStartTime: String,
+    @Schema(description = "moit 종료 시간", example = "HH:mm")
+    val scheduleEndTime: String,
     @Schema(description = "moit 지각 시간")
     val fineLateTime: Int,
     @Schema(description = "moit 지각 벌금")
@@ -42,9 +42,9 @@ data class MoitJoinResponse(
     val notificationRemindOption: NotificationRemindOption?,
     @Schema(description = "moit 알람 리마인드 매운맛")
     val notificationRemindLevel: NotificationRemindLevel?,
-    @Schema(description = "moit 시작 일자")
+    @Schema(description = "moit 시작 일자", example = "YYYY-MM-dd")
     val startDate: LocalDate,
-    @Schema(description = "moit 종료 일자")
+    @Schema(description = "moit 종료 일자", example = "YYYY-MM-dd")
     val endDate: LocalDate,
 ) {
     companion object {
@@ -55,8 +55,8 @@ data class MoitJoinResponse(
             role = userMoit.role,
             scheduleDayOfWeeks = moit.scheduleDayOfWeeks,
             scheduleRepeatCycle = moit.scheduleRepeatCycle,
-            scheduleStartTime = moit.scheduleStartTime,
-            scheduleEndTime = moit.scheduleEndTime,
+            scheduleStartTime = DateTimeUtils.formatLocalTime(moit.scheduleStartTime),
+            scheduleEndTime = DateTimeUtils.formatLocalTime(moit.scheduleEndTime),
             fineLateTime = moit.fineLateTime,
             fineLateAmount = moit.fineLateAmount,
             fineAbsenceAmount = moit.fineAbsenceAmount,
