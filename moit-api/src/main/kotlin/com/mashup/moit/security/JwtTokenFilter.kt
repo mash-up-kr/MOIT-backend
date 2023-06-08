@@ -2,7 +2,7 @@ package com.mashup.moit.security
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
-import com.mashup.moit.config.SecurityConfig
+import com.mashup.moit.controller.LoginController
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -19,7 +19,7 @@ class JwtTokenFilter(
     private val log: Logger = LoggerFactory.getLogger(JwtTokenFilter::class.java)
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        if (!request.requestURI.startsWith(SecurityConfig.LOGIN_ENDPOINT)) {
+        if (!isNotCheckEndpoint(request)) {
             extractToken(request)?.run {
                 val user = jwtTokenSupporter.extractUserFromToken(this)
                 SecurityContextHolder.getContext().authentication = JwtAuthentication(user)
@@ -42,11 +42,14 @@ class JwtTokenFilter(
             ?.get(1)
     }
 
+    private fun isNotCheckEndpoint(request: HttpServletRequest) = NOT_CHECK_ENDPOINTS.stream().anyMatch { request.requestURI.startsWith(it) }
+
     private fun HttpServletRequest.getAuthorization() =
         this.getHeader(HttpHeaders.AUTHORIZATION) ?: throw MoitException.of(MoitExceptionType.INVALID_USER_AUTH_TOKEN)
 
     companion object {
-        const val AUTH_PROVIDER_SPLIT_DELIMITER: String = " "
+        private const val AUTH_PROVIDER_SPLIT_DELIMITER: String = " "
+        private val NOT_CHECK_ENDPOINTS = listOf(LoginController.LOGIN_ENDPOINT, LoginController.LOGIN_SUCCESS_ENDPOINT)
     }
 
 }
