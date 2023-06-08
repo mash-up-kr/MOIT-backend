@@ -1,5 +1,6 @@
 package com.mashup.moit.domain.common
 
+import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -15,13 +16,17 @@ import java.time.LocalDateTime
 abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     val id: Long = 0L
 
     @CreatedDate
+    @Column(name = "created_at", nullable = false)
     lateinit var createdAt: LocalDateTime
 
     @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
     lateinit var updatedAt: LocalDateTime
 
-    val deleted: Boolean = false
+    @Column(name = "is_deleted", nullable = false)
+    val isDeleted: Boolean = false
 }
