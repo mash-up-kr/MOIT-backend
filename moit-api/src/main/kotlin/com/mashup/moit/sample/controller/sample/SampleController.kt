@@ -1,8 +1,8 @@
-package com.mashup.moit.sample.controller
+package com.mashup.moit.sample.controller.sample
 
 import com.mashup.moit.common.MoitApiResponse
-import com.mashup.moit.sample.controller.dto.SampleCreateRequest
-import com.mashup.moit.sample.controller.dto.SampleResponse
+import com.mashup.moit.sample.controller.sample.dto.SampleCreateRequest
+import com.mashup.moit.sample.controller.sample.dto.SampleResponse
 import com.mashup.moit.sample.facade.SampleFacade
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
