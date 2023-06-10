@@ -23,7 +23,6 @@ data class Moit(
     val imageUrl: String?,
     val invitationCode: String,
     val isEnd: Boolean,
-    val masterId: Long, 
     val scheduleDayOfWeeks: Set<DayOfWeek>,
     val scheduleRepeatCycle: ScheduleRepeatCycle,
     val scheduleStartTime: LocalTime,

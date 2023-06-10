@@ -67,10 +67,10 @@ data class MoitDetailsResponse(
     val endDate: LocalDate,
 ) {
     companion object {
-        fun of(moit: Moit) = MoitDetailsResponse(
+        fun of(moit: Moit, masterId: Long) = MoitDetailsResponse(
             moitId = moit.id,
             name = moit.name,
-            masterId = moit.masterId,
+            masterId = masterId,
             description = moit.description,
             imageUrl = moit.imageUrl,
             scheduleDayOfWeeks = moit.scheduleDayOfWeeks,
