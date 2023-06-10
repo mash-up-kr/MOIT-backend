@@ -2,10 +2,14 @@ package com.mashup.moit.domain.moit
 
 import com.mashup.moit.domain.common.BaseEntity
 import com.mashup.moit.domain.study.StudyEntity
+import com.mashup.moit.domain.user.UserEntity
 import com.mashup.moit.domain.usermoit.UserMoitEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
@@ -27,6 +31,10 @@ class MoitEntity(
     @Column(name = "is_end", nullable = false)
     val isEnd: Boolean = false,
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "master_id", nullable = false)
+    val masterId: UserEntity,
+
     @Embedded
     val schedulePolicy: SchedulePolicyColumns,
 
@@ -47,8 +55,10 @@ class MoitEntity(
             id = id,
             name = name,
             description = description,
+            imageUrl = profileUrl,
             invitationCode = invitationCode,
             isEnd = isEnd,
+            masterId = masterId.id,
             scheduleDayOfWeeks = schedulePolicy.dayOfWeeks,
             scheduleRepeatCycle = schedulePolicy.repeatCycle,
             scheduleStartTime = schedulePolicy.startTime,

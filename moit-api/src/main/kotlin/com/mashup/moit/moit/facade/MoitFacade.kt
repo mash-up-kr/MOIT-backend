@@ -13,7 +13,7 @@ class MoitFacade(
 ) {
     fun join(userId: Long, invitationCode: String): MoitJoinResponse {
         val moit = getMoitByInvitationCode(invitationCode)
-        return userMoitService.join(userId, moit.id).let { MoitJoinResponse.of(moit, it) }
+        return userMoitService.join(userId, moit.id).let { MoitJoinResponse.of(it.moitId) }
     }
 
     private fun getMoitByInvitationCode(invitationCode: String): Moit {

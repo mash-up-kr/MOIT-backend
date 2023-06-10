@@ -33,7 +33,7 @@ class FineEntity(
     val approveImageUrl: String?,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     val user: UserEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
