@@ -6,7 +6,6 @@ import com.mashup.moit.moit.controller.dto.MoitJoinRequest
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
 import com.mashup.moit.moit.facade.MoitFacade
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.parameters.RequestBody
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -24,16 +23,13 @@ class MoitController(
 ) {
     @Operation(summary = "Moit join API", description = "moit 가입 요청")
     @PostMapping("/join")
-    fun joinMoit(
-        @Parameter(hidden = true) userId: Long,
-        @RequestBody(description = "초대코드") @Valid request: MoitJoinRequest
-    ): MoitApiResponse<MoitJoinResponse> {
-        return MoitApiResponse.success(moitFacade.join(userId, request.invitationCode))
+    fun joinMoit(@RequestBody(description = "초대코드") @Valid request: MoitJoinRequest): MoitApiResponse<MoitJoinResponse> {
+        return MoitApiResponse.success(moitFacade.join(request.userId, request.invitationCode))
     }
 
     @Operation(summary = "Moit Details API", description = "moit 상세 조회")
     @GetMapping("/{moitId}")
-    fun getDetails(@Parameter(hidden = true) userId: Long, @PathVariable moitId: Long): MoitApiResponse<MoitDetailsResponse> {
+    fun getDetails(@PathVariable moitId: Long): MoitApiResponse<MoitDetailsResponse> {
         return MoitApiResponse.success(MoitDetailsResponse.sample())
     }
 }

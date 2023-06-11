@@ -12,6 +12,9 @@ import java.time.LocalDate
 
 @Schema(description = "moit 가입 RequestBody")
 data class MoitJoinRequest(
+    @Schema(description = "유저 id")
+    val userId: Long,
+    
     @Schema(description = "moit 초대 코드")
     @field:NotBlank
     @Size(min = 8, max = 8)

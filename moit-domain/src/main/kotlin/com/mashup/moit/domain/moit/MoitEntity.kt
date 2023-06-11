@@ -54,14 +54,14 @@ class MoitEntity(
             scheduleRepeatCycle = schedulePolicy.repeatCycle,
             scheduleStartTime = schedulePolicy.startTime,
             scheduleEndTime = schedulePolicy.endTime,
+            startDate = schedulePolicy.startDate,
+            endDate = schedulePolicy.endDate,
             fineLateTime = finePolicy.lateTime,
             fineLateAmount = finePolicy.lateAmount,
             fineAbsenceTime = finePolicy.absenceTime,
             fineAbsenceAmount = finePolicy.absenceAmount,
             notificationIsRemindActive = notificationPolicy.isRemindActive,
             notificationRemindOption = notificationPolicy.remindOption,
-            notificationRemindLevel = notificationPolicy.remindLevel,
-            startDate = schedulePolicy.startDate,
-            endDate = schedulePolicy.endDate
+            notificationRemindLevel = notificationPolicy.remindLevel
         )
 } 
