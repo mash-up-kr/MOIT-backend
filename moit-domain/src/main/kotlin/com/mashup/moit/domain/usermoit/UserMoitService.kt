@@ -22,7 +22,7 @@ class UserMoitService(
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
 
         if (userMoitRepository.existsByUserAndMoit(user, moit)) {
-            throw MoitException.of(MoitExceptionType.EXIST_ENTITY)
+            throw MoitException.of(MoitExceptionType.ALREADY_EXIST)
         }
 
         val userMoit = UserMoitEntity(moit, user, UserMoitRole.MEMBER)

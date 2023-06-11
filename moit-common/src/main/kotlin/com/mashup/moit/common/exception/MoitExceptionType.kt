@@ -14,8 +14,6 @@ enum class MoitExceptionType(
     NOT_EXIST("존재하지 않습니다.", "C001_NOT_EXIST", 404),
     SYSTEM_FAIL("Internal Server Error.", "C002_SYSTEM_FAIL", 500),
     INVALID_ACCESS("Invalid Access", "C003_INVALID_ACCESS", 403),
-    
-    // Duplicated
-    EXIST_ENTITY("Already Exist Entity", "D001_ALREADY_EXIST", 409),
+    ALREADY_EXIST("Already Exist", "C004_ALREADY_EXIST", 409),
     ;
 }
