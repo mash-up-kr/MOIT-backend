@@ -1,6 +1,6 @@
 package com.mashup.moit.config
 
-import com.mashup.moit.controller.LoginController
+import com.mashup.moit.controller.AuthController
 import com.mashup.moit.security.JwtTokenFilter
 import com.mashup.moit.security.JwtTokenSupporter
 import org.springframework.context.annotation.Bean
@@ -25,7 +25,7 @@ class SecurityConfig(
         return http
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
-            .oauth2Login { it.defaultSuccessUrl(LoginController.LOGIN_SUCCESS_ENDPOINT) }
+            .oauth2Login { it.defaultSuccessUrl(AuthController.SIGN_IN_SUCCESS_ENDPOINT) }
             .logout { it.logoutRequestMatcher(AntPathRequestMatcher("/logout")).addLogoutHandler(logoutHandler) }
             .authorizeHttpRequests {
                 it.anyRequest().authenticated()

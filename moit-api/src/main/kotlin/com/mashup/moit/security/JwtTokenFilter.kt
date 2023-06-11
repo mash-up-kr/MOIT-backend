@@ -2,7 +2,7 @@ package com.mashup.moit.security
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
-import com.mashup.moit.controller.LoginController
+import com.mashup.moit.controller.AuthController
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -49,7 +49,7 @@ class JwtTokenFilter(
 
     companion object {
         private const val AUTH_PROVIDER_SPLIT_DELIMITER: String = " "
-        private val NOT_CHECK_ENDPOINTS = listOf(LoginController.LOGIN_ENDPOINT, LoginController.LOGIN_SUCCESS_ENDPOINT)
+        private val NOT_CHECK_ENDPOINTS = listOf(AuthController.SIGN_IN_ENDPOINT, AuthController.SIGN_IN_SUCCESS_ENDPOINT)
     }
 
 }
