@@ -4,9 +4,9 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 object DateTimeUtils {
-    private val TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+    private val TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_TIME
 
-    fun formatLocalTime(localTime: LocalTime): String {
-        return localTime.format(TIME_FORMATTER)
+    fun LocalTime.responseFormatTime(): String {
+        return this.format(TIME_FORMATTER)
     }
 }

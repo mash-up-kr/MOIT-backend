@@ -1,6 +1,6 @@
 package com.mashup.moit.moit.controller.dto
 
-import com.mashup.moit.common.util.DateTimeUtils
+import com.mashup.moit.common.util.DateTimeUtils.responseFormatTime
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.NotificationRemindOption
 import com.mashup.moit.domain.moit.ScheduleRepeatCycle
@@ -75,8 +75,8 @@ data class MoitDetailsResponse(
             imageUrl = moit.imageUrl,
             scheduleDayOfWeeks = moit.scheduleDayOfWeeks,
             scheduleRepeatCycle = moit.scheduleRepeatCycle,
-            scheduleStartTime = DateTimeUtils.formatLocalTime(moit.scheduleStartTime),
-            scheduleEndTime = DateTimeUtils.formatLocalTime(moit.scheduleEndTime),
+            scheduleStartTime = moit.scheduleStartTime.responseFormatTime(),
+            scheduleEndTime = moit.scheduleEndTime.responseFormatTime(),
             fineLateTime = moit.fineLateTime,
             fineLateAmount = moit.fineLateAmount,
             fineAbsenceAmount = moit.fineAbsenceAmount,
