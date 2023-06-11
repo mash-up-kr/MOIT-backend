@@ -5,8 +5,6 @@ import com.mashup.moit.sample.controller.sample.dto.SampleCreateRequest
 import com.mashup.moit.sample.controller.sample.dto.SampleResponse
 import com.mashup.moit.sample.facade.SampleFacade
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.responses.ApiResponse
-import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
 
@@ -17,7 +15,6 @@ class SampleController(
     private val sampleFacade: SampleFacade,
 ) {
     @Operation(summary = "create API", description = "sample 생성 요청 메서드")
-    @ApiResponses(value = [ApiResponse(responseCode = "200", description = "CREATED")])
     @PostMapping
     fun createSample(@RequestBody request: SampleCreateRequest): MoitApiResponse<SampleResponse> {
         return MoitApiResponse.success(sampleFacade.createSample(request))
