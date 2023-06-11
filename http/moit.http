@@ -1,0 +1,11 @@
+### Moit Join
+POST {{moit-api}}/api/v1/moit/join
+Content-Type: application/json
+
+{   
+    "userId" : 1,
+    "invitationCode": "SP2231RI"
+}
+
+### Moit Details 
+GET {{moit-api}}/api/v1/moit/{{moitId}}
