@@ -1,6 +1,8 @@
 package com.mashup.moit.controller
 
+import com.mashup.moit.facade.UserFacade
 import com.mashup.moit.security.JwtTokenSupporter
+import com.mashup.moit.security.OidcUser.toBeforeSignUpInfo
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
@@ -17,7 +19,8 @@ import java.net.URI
 @RequestMapping
 @RestController
 class LoginController(
-    private val jwtTokenSupporter: JwtTokenSupporter
+    private val userFacade: UserFacade,
+    private val jwtTokenSupporter: JwtTokenSupporter,
 ) {
 
     @Operation(summary = "login API", description = "Login API")
@@ -32,10 +35,12 @@ class LoginController(
     @Operation(summary = "login success page", description = "Login Success API")
     @ApiResponses(value = [ApiResponse(responseCode = "200", description = "OK")])
     @GetMapping(LOGIN_SUCCESS_ENDPOINT)
-    fun loginSuccess(@AuthenticationPrincipal user: OidcUser): ResponseEntity<Unit> {
-        val jwtToken = jwtTokenSupporter.createToken(user)
-        // TODO: client와 야이기하고 no_content로 맞출지 이야기하보기
-        return ResponseEntity.ok()
+    fun loginSuccess(@AuthenticationPrincipal oidcUser: OidcUser): ResponseEntity<Any> {
+        val user = userFacade.findByProviderUniqueKey(oidcUser) 
+            ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(oidcUser.toBeforeSignUpInfo())
+        
+        val jwtToken = jwtTokenSupporter.createToken(oidcUser, user)
+        return ResponseEntity.ok() // TODO: client와 야이기하고 no_content로 맞출지 이야기하보기
             .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken")
             .build()
     }
