@@ -12,6 +12,7 @@ class User(
     private val providerUniqueKey: String,
     private val nickname: String,
     private val profileImage: Int,
-    private val attendances: List<AttendanceEntity>,
-    val userMoits: List<UserMoitEntity>
+    private val email: String,
+    private val attendances: List<AttendanceEntity>? = null,
+    val userMoits: List<UserMoitEntity>? = null
 )

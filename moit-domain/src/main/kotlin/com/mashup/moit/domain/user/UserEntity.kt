@@ -19,6 +19,9 @@ class UserEntity(
 
     @Column(name = "profile_image")
     val profileImage: Int,
+    
+    @Column(name = "email")
+    val email: String
 ) : BaseEntity() {
     @OneToMany(mappedBy = "user")
     val attendances: List<AttendanceEntity> = emptyList()
@@ -35,6 +38,7 @@ class UserEntity(
             providerUniqueKey = providerUniqueKey,
             nickname = nickname,
             profileImage = profileImage,
+            email = email,
             attendances = attendances,
             userMoits = userMoits
         )
