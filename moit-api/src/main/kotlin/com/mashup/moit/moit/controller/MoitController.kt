@@ -4,6 +4,7 @@ import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinRequest
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
+import com.mashup.moit.moit.controller.dto.MoitListResponse
 import com.mashup.moit.moit.facade.MoitFacade
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.parameters.RequestBody
@@ -32,4 +33,11 @@ class MoitController(
     fun getDetails(@PathVariable moitId: Long): MoitApiResponse<MoitDetailsResponse> {
         return MoitApiResponse.success(MoitDetailsResponse.sample())
     }
+
+    @Operation(summary = "My Moit List API", description = "내 Moit List 조회")
+    @GetMapping
+    fun moitList(): MoitApiResponse<MoitListResponse> {
+        return MoitApiResponse.success(MoitListResponse.sample())
+    }
+
 }
