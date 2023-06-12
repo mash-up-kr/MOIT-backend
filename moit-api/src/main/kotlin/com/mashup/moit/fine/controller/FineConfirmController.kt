@@ -1,12 +1,14 @@
 package com.mashup.moit.fine.controller
 
 import com.mashup.moit.common.MoitApiResponse
+import com.mashup.moit.fine.controller.dto.FineEvaluateRequest
 import com.mashup.moit.fine.facade.FineConfirmFacade
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -29,6 +31,16 @@ class FineConfirmController(
         @PathVariable("moitId") moitId: Long,
         @PathVariable("fineId") fineId: Long,
         @RequestParam("fineRemittanceImage") fineRemittanceImage: MultipartFile
+    ): MoitApiResponse<Unit> {
+        return MoitApiResponse.success()
+    }
+
+    @Operation(summary = "벌금 인증 평가 API", description = "벌금 송금 인증을 평가하는 API - 스터디장만 가능")
+    @PostMapping("/{moitId}/fine/{fineId}/evaluate")
+    fun evaluateFine(
+        @PathVariable("moitId") moitId: Long,
+        @PathVariable("fineId") fineId: Long,
+        @RequestBody fineEvaluateRequest: FineEvaluateRequest
     ): MoitApiResponse<Unit> {
         return MoitApiResponse.success()
     }
