@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController
 class StudyController(
     private val studyFacade: StudyFacade
 ) {
-
     @Operation(summary = "Study Keyword API", description = "study 키워드 조회")
     @GetMapping("/{studyId}/attendance/keyword")
     fun getAttendanceKeyword(@PathVariable studyId: Long): MoitApiResponse<StudyAttendanceKeywordResponse> {
@@ -42,5 +41,4 @@ class StudyController(
             )
         )
     }
-
 }
