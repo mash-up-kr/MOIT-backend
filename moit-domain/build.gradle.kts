@@ -5,7 +5,8 @@ allOpen {
 }
 
 val postgresqlVersion : String by project.extra
-val jasyptVersion : String by project.extra 
+val jasyptVersion: String by project.extra
+val commonsLangVersion: String by project.extra
 
 dependencies {
     implementation(project(":moit-common"))
@@ -16,4 +17,6 @@ dependencies {
     implementation("org.postgresql:postgresql:$postgresqlVersion")
     // jasypt
     api("com.github.ulisesbocchio:jasypt-spring-boot-starter:$jasyptVersion")
+    // commons-lang
+    implementation("org.apache.commons:commons-lang3:$commonsLangVersion")
 }

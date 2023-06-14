@@ -1,9 +1,33 @@
+### Moit Create
+POST {{moit-api}}/api/v1/moit
+Content-Type: application/json
+
+{
+    "name": "모잇 이름",
+    "description": "모잇 설명",
+    "dayOfWeeks": [
+        "MONDAY",
+        "FRIDAY"
+    ],
+    "startDate": "2023-06-14",
+    "endDate": "2023-08-30",
+    "repeatCycle": "TWO_WEEK",
+    "startTime": "11:00",
+    "endTime": "13:00",
+    "lateTime": 10,
+    "lateAmount": 300,
+    "absenceTime": 30,
+    "absenceAmount": 4000,
+    "isRemindActive": true,
+    "remindOption": "BEFORE_30_MINUTE"
+}
+
 ### Moit Join
 POST {{moit-api}}/api/v1/moit/join
 Content-Type: application/json
 
-{   
-    "userId" : 1,
+{
+    "userId": 1,
     "invitationCode": "SP2231RI"
 }
 

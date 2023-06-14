@@ -15,7 +15,7 @@ class UserMoitService(
     private val userRepository: UserRepository,
 ) {
     @Transactional
-    fun join(userId: Long, moitId: Long): UserMoit {
+    fun join(userId: Long, moitId: Long, userMoitRole: UserMoitRole): UserMoit {
         val user = userRepository.findById(userId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
         val moit = moitRepository.findById(moitId)
@@ -25,7 +25,7 @@ class UserMoitService(
             throw MoitException.of(MoitExceptionType.ALREADY_EXIST)
         }
 
-        val userMoit = UserMoitEntity(moit, user, UserMoitRole.MEMBER)
+        val userMoit = UserMoitEntity(moit, user, userMoitRole)
         return userMoitRepository.save(userMoit).toDomain()
     }
 }

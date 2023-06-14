@@ -1,20 +1,9 @@
 package com.mashup.moit.domain.moit
 
 import java.time.DayOfWeek
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
-
-enum class ScheduleRepeatCycle {
-    NONE, ONE_WEEK, TWO_WEEK, THREE_WEEK, FOUR_WEEK;
-}
-
-enum class NotificationRemindOption {
-    BEFORE_TEN_MINUTE, BEFORE_TWENTY_MINUTE, AFTER_TEN_MINUTE;
-}
-
-enum class NotificationRemindLevel {
-    WEAK, NORMAL, HARD;
-}
 
 data class Moit(
     val id: Long,
@@ -24,6 +13,8 @@ data class Moit(
     val invitationCode: String,
     val isEnd: Boolean,
     val scheduleDayOfWeeks: Set<DayOfWeek>,
+    val scheduleStartDate: LocalDate,
+    val scheduleEndDate: LocalDate,
     val scheduleRepeatCycle: ScheduleRepeatCycle,
     val scheduleStartTime: LocalTime,
     val scheduleEndTime: LocalTime,
@@ -34,6 +25,23 @@ data class Moit(
     val notificationIsRemindActive: Boolean,
     val notificationRemindOption: NotificationRemindOption?,
     val notificationRemindLevel: NotificationRemindLevel?,
-    val startDate: LocalDate,
-    val endDate: LocalDate,
 )
+
+enum class ScheduleRepeatCycle(
+    val duration: Duration?,
+) {
+    NONE(null),
+    ONE_WEEK(Duration.ofDays(7)),
+    TWO_WEEK(Duration.ofDays(14)),
+    FOUR_WEEK(Duration.ofDays(28)),
+    ;
+}
+
+enum class NotificationRemindOption(
+) {
+    STUDY_DAY_10_AM, BEFORE_1_HOUR, BEFORE_30_MINUTE, BEFORE_10_MINUTE;
+}
+
+enum class NotificationRemindLevel {
+    WEAK, NORMAL, HARD;
+}
