@@ -10,8 +10,8 @@ class UserService(
 ) {
 
     @Transactional
-    fun createUser(user: UserEntity): User {
-        return userRepository.save(user).toDomain()
+    fun createUser(providerUniqueKey: String, nickname: String, profileImage: Int, email: String): User {
+        return userRepository.save(UserEntity(providerUniqueKey, nickname, profileImage, email)).toDomain()
     }
 
     fun findByProviderUniqueKey(providerUniqueKey: String): User? {
