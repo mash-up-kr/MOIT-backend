@@ -16,35 +16,35 @@ import java.time.LocalTime
 
 @Schema(description = "moit 생성 RequestBody")
 data class MoitCreateRequest(
-//    @NotBlank
+    @field:NotBlank
     val name: String,
     val description: String?,
-//    @NotEmpty
+    @field:NotEmpty
     val dayOfWeeks: Set<DayOfWeek>,
-//    @NotNull
+    @field:NotNull
     val startDate: LocalDate,
-//    @NotNull
+    @field:NotNull
     val endDate: LocalDate,
-//    @NotNull
+    @field:NotNull
     val repeatCycle: ScheduleRepeatCycle,
-//    @NotNull
+    @field:NotNull
     val startTime: LocalTime,
-//    @NotNull
+    @field:NotNull
     val endTime: LocalTime,
-//    @NotNull
-//    @PositiveOrZero
+    @field:NotNull
+    @field:PositiveOrZero
     val lateTime: Int,
-//    @NotNull
-//    @PositiveOrZero
+    @field:NotNull
+    @field:PositiveOrZero
     val lateAmount: Int,
-//    @NotNull
-//    @PositiveOrZero
+    @field:NotNull
+    @field:PositiveOrZero
     val absenceTime: Int,
-//    @NotNull
-//    @PositiveOrZero
+    @field:NotNull
+    @field:PositiveOrZero
     val absenceAmount: Int,
-//    @NotNull
-    val isRemindActive: Boolean = true,
+    @field:NotNull
+    val isRemindActive: Boolean,
     val remindOption: NotificationRemindOption?,
 )
 
