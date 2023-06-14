@@ -4,11 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.domain.sample.SampleUser
-import com.mashup.moit.domain.user.User
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import java.security.Key
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -32,22 +30,20 @@ class JwtTokenSupporter(
     /**
      * Moit JWT Token 생성
      *
-     * @param oidcUser 로그인 유저
+     * @param userInfo 로그인 유저
      * @return JWT Token
      */
-    fun createToken(oidcUser: OidcUser, moitUser: User): String {
+    fun createToken(userInfo: UserInfo): String {
         val issuerDateTime = LocalDateTime.now(ASIA_SEOUL_ZONE)
         val expiredDateTime = issuerDateTime.plusDays(DAY_30)
-        val subject = oidcUser.getAttribute<String>(CLAIM_SUB_KEY)
-        val audience = oidcUser.getAttribute<List<String>>(CLAIM_AUD_KEY)?.get(0)
         return Jwts.builder()
             .setHeaderParam("typ", "JWT")
-            .setSubject(subject)
-            .setAudience(audience)
+            .setSubject("jwt-user-${userInfo.nickname}")
+            .setAudience("${userInfo.providerUniqueKey}|${userInfo.id}|${userInfo.nickname}")
             .setIssuer("https://github.com/mash-up-kr/MOIT-backend")
             .setIssuedAt(issuerDateTime.convertToDate())
             .setExpiration(expiredDateTime.convertToDate())
-            .claim(CLAIM_INFO_KEY, moitUser)
+            .claim(CLAIM_INFO_KEY, userInfo)
             .signWith(secretKey)
             .compact()
     }
@@ -74,8 +70,6 @@ class JwtTokenSupporter(
     companion object {
         const val BEARER_TOKEN_PREFIX = "BEARER"
         const val CLAIM_INFO_KEY = "info"
-        const val CLAIM_AUD_KEY = "aud"
-        const val CLAIM_SUB_KEY = "sub"
         private const val DAY_30 = 30L
         private val ASIA_SEOUL_ZONE = ZoneId.of("Asia/Seoul")
         private val ASIA_SEOUL_OFFSET = ZoneOffset.of("+09:00")
