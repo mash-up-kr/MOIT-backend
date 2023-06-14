@@ -5,14 +5,14 @@ import com.mashup.moit.domain.usermoit.UserMoitEntity
 import java.time.LocalDateTime
 
 class User(
-    private val id: Long,
-    private var createdAt: LocalDateTime,
-    private var updatedAt: LocalDateTime,
-    private val isDeleted: Boolean,
-    private val providerUniqueKey: String,
-    private val nickname: String,
-    private val profileImage: Int,
-    private val email: String,
-    private val attendances: List<AttendanceEntity>? = null,
+    val id: Long,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime,
+    val isDeleted: Boolean,
+    val providerUniqueKey: String,
+    val nickname: String,
+    val profileImage: Int,
+    val email: String,
+    val attendances: List<AttendanceEntity>? = null,
     val userMoits: List<UserMoitEntity>? = null
 )
