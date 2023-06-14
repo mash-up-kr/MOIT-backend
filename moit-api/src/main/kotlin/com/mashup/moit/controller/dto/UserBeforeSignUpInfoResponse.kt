@@ -1,7 +1,7 @@
 package com.mashup.moit.controller.dto
 
-class UserBeforeSignUpInfoResponse(
+data class UserBeforeSignUpInfoResponse(
     val providerUniqueKey: String,
     val nickname: String,
-    val eamil: String
+    val email: String
 )
