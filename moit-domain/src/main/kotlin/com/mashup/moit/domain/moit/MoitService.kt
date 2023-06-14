@@ -62,7 +62,7 @@ class MoitService(
 
     private fun generateInvitationCode(): String {
         while (true) {
-            val randomString = RandomStringUtils.randomAlphanumeric(6)
+            val randomString = RandomStringUtils.randomAlphanumeric(6).uppercase()
             if (moitRepository.findByInvitationCode(randomString) == null) {
                 return randomString
             }

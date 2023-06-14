@@ -1,9 +1,9 @@
 package com.mashup.moit.domain.moit
 
 import java.time.DayOfWeek
-import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.Period
 
 data class Moit(
     val id: Long,
@@ -28,12 +28,12 @@ data class Moit(
 )
 
 enum class ScheduleRepeatCycle(
-    val duration: Duration?,
+    val period: Period?,
 ) {
     NONE(null),
-    ONE_WEEK(Duration.ofDays(7)),
-    TWO_WEEK(Duration.ofDays(14)),
-    FOUR_WEEK(Duration.ofDays(28)),
+    ONE_WEEK(Period.ofDays(7)),
+    TWO_WEEK(Period.ofDays(14)),
+    FOUR_WEEK(Period.ofDays(28)),
     ;
 }
 
