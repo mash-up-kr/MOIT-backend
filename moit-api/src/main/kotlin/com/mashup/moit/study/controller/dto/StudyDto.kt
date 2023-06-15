@@ -30,7 +30,7 @@ data class StudyUserAttendanceStatusResponse(
     val nickname: String,
     val profileImage: Int,
     val attendanceStatus: AttendanceStatus,
-    val attendanceAt: LocalDateTime
+    val attendanceAt: LocalDateTime?
 ) {
     companion object {
         fun sample() = StudyUserAttendanceStatusResponse(
