@@ -3,6 +3,7 @@ package com.mashup.moit.study.controller
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.study.controller.dto.StudyAttendanceCodeRequest
 import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordResponse
+import com.mashup.moit.study.controller.dto.StudyDetailsResponse
 import com.mashup.moit.study.controller.dto.StudyFirstAttendanceResponse
 import com.mashup.moit.study.controller.dto.StudyUserAttendanceStatusResponse
 import com.mashup.moit.study.facade.StudyFacade
@@ -22,6 +23,13 @@ import org.springframework.web.bind.annotation.RestController
 class StudyController(
     private val studyFacade: StudyFacade
 ) {
+
+    @Operation(summary = "Study Detail API", description = "Study 상세 조회")
+    @GetMapping("/{studyId}")
+    fun getDetail(@PathVariable studyId: Long): MoitApiResponse<StudyDetailsResponse> {
+        return MoitApiResponse.success(StudyDetailsResponse.sample())
+    }
+
     @Operation(summary = "Study Keyword API", description = "study 키워드 조회")
     @GetMapping("/{studyId}/attendance/keyword")
     fun getAttendanceKeyword(@PathVariable studyId: Long): MoitApiResponse<StudyAttendanceKeywordResponse> {
