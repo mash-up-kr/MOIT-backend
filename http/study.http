@@ -1,0 +1,2 @@
+### 스터디 출석 키워드 조회
+GET {{moit-api}}/api/v1/study/{{studyId}}/attendance/keyword
