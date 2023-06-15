@@ -1,7 +1,6 @@
 package com.mashup.moit.study.controller.dto
 
 import com.mashup.moit.domain.attendance.AttendanceStatus
-import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -9,8 +8,8 @@ import java.time.LocalDateTime
 
 @Schema(description = "Study 상세 조회 응답")
 data class StudyDetailsResponse(
-    @Schema(description = "Study가 속한 Moit 정보")
-    val moit: MoitDetailsResponse,
+    @Schema(description = "Study가 속한 Moit 이름")
+    val moitName: String,
     @Schema(description = "Study 회차")
     val order: Int,
     @Schema(description = "Study 시작 날짜 및 시간")
@@ -24,18 +23,18 @@ data class StudyDetailsResponse(
     @Schema(description = "Study 결석 날짜 및 시간")
     val absenceAt: LocalDateTime,
     @Schema(description = "첫 번째 출석한 유저 아이디")
-    val firstAttendanceUserId: Long? = null
+    val firstAttendanceUserNickname: String? = null
 ) {
     companion object {
         fun sample(): StudyDetailsResponse = StudyDetailsResponse(
-            moit = MoitDetailsResponse.sample(),
+            moitName = "전자군단",
             order = 1,
             startAt = LocalDateTime.of(2023, 6, 15, 16, 0),
             endAt = LocalDateTime.of(2023, 6, 15, 19, 0),
             remindAt = LocalDateTime.of(2023, 6, 15, 15, 30),
             lateAt = LocalDateTime.of(2023, 6, 15, 16, 30),
             absenceAt = LocalDateTime.of(2023, 6, 15, 17, 0),
-            firstAttendanceUserId = null
+            firstAttendanceUserNickname = null
         )
     }
 }
