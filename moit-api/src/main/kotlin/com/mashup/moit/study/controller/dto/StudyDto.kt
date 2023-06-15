@@ -8,9 +8,18 @@ import java.time.LocalDateTime
 
 @Schema(description = "Study 참석 코드 요청")
 data class StudyAttendanceCodeRequest(
+<<<<<<< HEAD
     @Schema(description = "Study 참석 코드")
     @field:NotBlank
     @Size(min = 4, max = 4)
+=======
+    @Schema(description = "유저 id")
+    val userId: Long,
+
+    @Schema(description = "Study 참석 코드")
+    @field:NotBlank
+    @Size(min = 8, max = 8)
+>>>>>>> 2a0e340 (Add registerAttendnaceKeyword API to StudyController)
     val attendanceKeyword: String
 )
 
