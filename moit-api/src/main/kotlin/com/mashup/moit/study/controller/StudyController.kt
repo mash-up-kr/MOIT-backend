@@ -45,7 +45,7 @@ class StudyController(
             )
         )
     }
-    
+
     @Operation(summary = "Register Study Keyword API", description = "Study 키워드 등록")
     @PostMapping("/{studyId}/attendance/code/register")
     fun registerAttendanceKeyword(@PathVariable studyId: Long, @RequestBody @Valid request: StudyAttendanceCodeRequest): MoitApiResponse<Unit> {
