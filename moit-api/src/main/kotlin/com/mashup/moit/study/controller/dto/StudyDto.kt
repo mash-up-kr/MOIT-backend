@@ -11,3 +11,14 @@ data class StudyAttendanceKeywordResponse(
         fun sample() = StudyAttendanceKeywordResponse("벌금환영")
     }
 }
+
+@Schema(description = "study 첫 출석자 존재 유무 응답")
+data class StudyFirstAttendanceResponse(
+    @Schema(description = "Study 첫 출석자 존재 유무")
+    val isFirstAttendance: Boolean,
+) {
+    companion object {
+        fun sample() = StudyFirstAttendanceResponse(true)
+    }
+}
+
