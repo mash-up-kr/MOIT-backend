@@ -251,9 +251,9 @@ data class MoitStudyResponse(
         fun sample(): MoitStudyResponse = MoitStudyResponse(
             studyId = 1L,
             attendances = listOf(
-                MoitStudyAttendanceResponse.of(AttendanceStatus.ABSENCE),
+                MoitStudyAttendanceResponse.sample().copy(status = AttendanceStatus.ABSENCE),
                 MoitStudyAttendanceResponse.sample(),
-                MoitStudyAttendanceResponse.of(
+                MoitStudyAttendanceResponse.sample().copy(
                     status = AttendanceStatus.LATE,
                     attendanceAt = LocalDateTime.of(2023, 6, 15, 17, 30)
                 )
@@ -264,21 +264,22 @@ data class MoitStudyResponse(
 
 @Schema(description = "Moit 스터디 출결 정보 응답")
 data class MoitStudyAttendanceResponse(
-    @Schema(description = "Attendance id")
+    @Schema(description = "출석 유저 아이디")
+    val userId: Long,
+    @Schema(description = "출석 유저 닉네임")
+    val nickname: String,
+    @Schema(description = "출석 유저 프로필 이미지")
+    val profileImage: Int,
+    @Schema(description = "출석 상태")
     val status: AttendanceStatus,
     @Schema(description = "출석 시간")
-    val attendanceAt: LocalDateTime? = null
+    val attendanceAt: LocalDateTime? = null,
 ) {
     companion object {
-        fun of(
-            status: AttendanceStatus = AttendanceStatus.ATTENDANCE,
-            attendanceAt: LocalDateTime? = null
-        ): MoitStudyAttendanceResponse = MoitStudyAttendanceResponse(
-            status = status,
-            attendanceAt = attendanceAt
-        )
-
-        fun sample(): MoitStudyAttendanceResponse = MoitStudyAttendanceResponse.of(
+        fun sample(): MoitStudyAttendanceResponse = MoitStudyAttendanceResponse(
+            userId = 1L,
+            nickname = "전자군단",
+            profileImage = 3,
             status = AttendanceStatus.ATTENDANCE,
             attendanceAt = LocalDateTime.now()
         )
