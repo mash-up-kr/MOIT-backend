@@ -1,13 +1,11 @@
 package com.mashup.moit.domain.study
 
 import com.mashup.moit.domain.moit.NotificationRemindOption
-import org.springframework.stereotype.Component
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-@Component
-class StudyRemindAtCalculator {
+object StudyRemindAtCalculator {
     fun calculate(
         studyStartAt: LocalDateTime,
         notificationRemindOption: NotificationRemindOption,

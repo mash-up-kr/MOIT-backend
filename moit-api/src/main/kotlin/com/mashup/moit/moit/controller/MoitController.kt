@@ -32,7 +32,7 @@ class MoitController(
     @Operation(summary = "Moit join API", description = "moit 가입 요청")
     @PostMapping("/join")
     fun joinMoit(@RequestBody @Valid request: MoitJoinRequest): MoitApiResponse<MoitJoinResponse> {
-        return MoitApiResponse.success(moitFacade.join(request.userId, request.invitationCode))
+        return MoitApiResponse.success(moitFacade.joinAsMember(request.userId, request.invitationCode))
     }
 
     @Operation(summary = "Moit Details API", description = "moit 상세 조회")

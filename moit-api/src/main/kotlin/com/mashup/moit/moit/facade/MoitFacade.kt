@@ -41,7 +41,7 @@ class MoitFacade(
         return moit.id
     }
 
-    fun join(userId: Long, invitationCode: String): MoitJoinResponse {
+    fun joinAsMember(userId: Long, invitationCode: String): MoitJoinResponse {
         val moit = getMoitByInvitationCode(invitationCode)
         return userMoitService.join(userId, moit.id, UserMoitRole.MEMBER).let { MoitJoinResponse.of(it.moitId) }
     }

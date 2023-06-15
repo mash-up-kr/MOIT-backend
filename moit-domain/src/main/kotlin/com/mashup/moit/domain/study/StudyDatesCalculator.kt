@@ -1,14 +1,12 @@
 package com.mashup.moit.domain.study
 
 import com.mashup.moit.domain.moit.ScheduleRepeatCycle
-import org.springframework.stereotype.Component
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-@Component
-class StudyDatesCalculator {
+object StudyDatesCalculator {
     fun calculateStudyDates(
         dayOfWeeks: Set<DayOfWeek>,
         startDate: LocalDate,
@@ -35,11 +33,9 @@ class StudyDatesCalculator {
         startDate: LocalDate,
         startTime: LocalTime,
     ): List<LocalDate> {
+        val now = LocalDateTime.now()
         return generateSequence(startDate) { date -> date.plusDays(1) }
-            .filter { date ->
-                date.dayOfWeek in dayOfWeeks
-                        && LocalDateTime.of(date, startTime).isAfter(LocalDateTime.now())
-            }
+            .filter { it.dayOfWeek in dayOfWeeks && LocalDateTime.of(it, startTime).isAfter(now) }
             .take(dayOfWeeks.size).toList()
     }
 }

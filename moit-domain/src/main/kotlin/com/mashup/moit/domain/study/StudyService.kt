@@ -3,6 +3,7 @@ package com.mashup.moit.domain.study
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.domain.moit.MoitRepository
+import com.mashup.moit.domain.moit.NotificationPolicyColumns
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -10,8 +11,6 @@ import java.time.LocalDateTime
 @Service
 @Transactional(readOnly = true)
 class StudyService(
-    private val studyDatesCalculator: StudyDatesCalculator,
-    private val studyRemindAtCalculator: StudyRemindAtCalculator,
     private val studyRepository: StudyRepository,
     private val moitRepository: MoitRepository,
 ) {
@@ -19,7 +18,7 @@ class StudyService(
     fun createStudies(moitId: Long) {
         val moit = moitRepository.findById(moitId).orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
 
-        studyDatesCalculator.calculateStudyDates(
+        StudyDatesCalculator.calculateStudyDates(
             dayOfWeeks = moit.schedulePolicy.dayOfWeeks,
             startDate = moit.schedulePolicy.startDate,
             endDate = moit.schedulePolicy.endDate,
@@ -32,12 +31,18 @@ class StudyService(
                 order = index,
                 startAt = startAt,
                 endAt = LocalDateTime.of(studyDate, moit.schedulePolicy.endTime),
-                remindAt = moit.notificationPolicy
-                    .takeIf { it.isRemindActive }
-                    ?.let { studyRemindAtCalculator.calculate(startAt, moit.notificationPolicy.remindOption!!) },
+                remindAt = moit.notificationPolicy.remindAt(startAt),
                 lateAt = startAt.plusMinutes(moit.finePolicy.lateTime.toLong()),
                 absenceAt = startAt.plusMinutes(moit.finePolicy.absenceTime.toLong()),
             )
         }.let { studyRepository.saveAll(it) }
+    }
+
+    private fun NotificationPolicyColumns.remindAt(startAt: LocalDateTime): LocalDateTime? {
+        return if (isRemindActive) {
+            StudyRemindAtCalculator.calculate(startAt, remindOption!!)
+        } else {
+            null
+        }
     }
 }
