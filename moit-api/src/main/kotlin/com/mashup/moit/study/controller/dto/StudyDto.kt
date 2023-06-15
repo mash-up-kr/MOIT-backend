@@ -1,25 +1,50 @@
 package com.mashup.moit.study.controller.dto
 
 import com.mashup.moit.domain.attendance.AttendanceStatus
+import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import java.time.LocalDateTime
 
+@Schema(description = "Study 상세 조회 응답")
+data class StudyDetailsResponse(
+    @Schema(description = "Study가 속한 Moit 정보")
+    val moit: MoitDetailsResponse,
+    @Schema(description = "Study 회차")
+    val order: Int,
+    @Schema(description = "Study 시작 날짜 및 시간")
+    val startAt: LocalDateTime,
+    @Schema(description = "Study 끝나는 날짜 및 시간")
+    val endAt: LocalDateTime,
+    @Schema(description = "Study 리마인드 날짜 및 시간")
+    val remindAt: LocalDateTime,
+    @Schema(description = "Study 지각 날짜 및 시간")
+    val lateAt: LocalDateTime,
+    @Schema(description = "Study 결석 날짜 및 시간")
+    val absenceAt: LocalDateTime,
+    @Schema(description = "첫 번째 출석한 유저 아이디")
+    val firstAttendanceUserId: Long? = null
+) {
+    companion object {
+        fun sample(): StudyDetailsResponse = StudyDetailsResponse(
+            moit = MoitDetailsResponse.sample(),
+            order = 1,
+            startAt = LocalDateTime.of(2023, 6, 15, 16, 0),
+            endAt = LocalDateTime.of(2023, 6, 15, 19, 0),
+            remindAt = LocalDateTime.of(2023, 6, 15, 15, 30),
+            lateAt = LocalDateTime.of(2023, 6, 15, 16, 30),
+            absenceAt = LocalDateTime.of(2023, 6, 15, 17, 0),
+            firstAttendanceUserId = null
+        )
+    }
+}
+
 @Schema(description = "Study 참석 코드 요청")
 data class StudyAttendanceCodeRequest(
-<<<<<<< HEAD
     @Schema(description = "Study 참석 코드")
     @field:NotBlank
     @Size(min = 4, max = 4)
-=======
-    @Schema(description = "유저 id")
-    val userId: Long,
-
-    @Schema(description = "Study 참석 코드")
-    @field:NotBlank
-    @Size(min = 8, max = 8)
->>>>>>> 2a0e340 (Add registerAttendnaceKeyword API to StudyController)
     val attendanceKeyword: String
 )
 
