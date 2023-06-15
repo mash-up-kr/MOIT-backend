@@ -25,8 +25,8 @@ class StudyController(
     }
 
     @Operation(summary = "Study 첫 출석자 존재 유무 확인 API", description = "Study에 출석한 사람이 있는지 유무 조회")
-    @GetMapping("/{studyId}/attendance/request")
-    fun existFirstAttendance(@PathVariable studyId: Long): MoitApiResponse<StudyFirstAttendanceResponse> {
+    @GetMapping("/{studyId}/attendance/is-first")
+    fun isFirstAttendance(@PathVariable studyId: Long): MoitApiResponse<StudyFirstAttendanceResponse> {
         return MoitApiResponse.success(StudyFirstAttendanceResponse.sample())
     }
 
