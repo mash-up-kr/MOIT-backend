@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 data class StudyAttendanceCodeRequest(
     @Schema(description = "Study 참석 코드")
     @field:NotBlank
-    @Size(min = 8, max = 8)
+    @Size(min = 4, max = 4)
     val attendanceKeyword: String
 )
 
