@@ -2,7 +2,17 @@ package com.mashup.moit.study.controller.dto
 
 import com.mashup.moit.domain.attendance.AttendanceStatus
 import io.swagger.v3.oas.annotations.media.Schema
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
 import java.time.LocalDateTime
+
+@Schema(description = "Study 참석 코드 요청")
+data class StudyAttendanceCodeRequest(
+    @Schema(description = "Study 참석 코드")
+    @field:NotBlank
+    @Size(min = 4, max = 4)
+    val attendanceKeyword: String
+)
 
 @Schema(description = "Study 출석 키워드 조회 응답")
 data class StudyAttendanceKeywordResponse(
