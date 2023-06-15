@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - develop
 
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
