@@ -3,6 +3,7 @@ package com.mashup.moit.study.controller
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.study.controller.dto.StudyFirstAttendanceResponse
+import com.mashup.moit.study.controller.dto.StudyUserAttendanceStatusResponse
 import com.mashup.moit.study.facade.StudyFacade
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -28,6 +29,18 @@ class StudyController(
     @GetMapping("/{studyId}/attendance/is-first")
     fun isFirstAttendance(@PathVariable studyId: Long): MoitApiResponse<StudyFirstAttendanceResponse> {
         return MoitApiResponse.success(StudyFirstAttendanceResponse.sample())
+    }
+
+    @Operation(summary = "Study 유저 출석상태 조회 API", description = "Study 참석자 출석 상태 조회. 출석/지각 완료(결과) 페이지에서 사용됨.")
+    @GetMapping("/{studyId}/attendance/status")
+    fun getUserAttendanceStatus(@PathVariable studyId: Long): MoitApiResponse<List<StudyUserAttendanceStatusResponse>> {
+        return MoitApiResponse.success(
+            listOf(
+                StudyUserAttendanceStatusResponse.sample(),
+                StudyUserAttendanceStatusResponse.sample(),
+                StudyUserAttendanceStatusResponse.sample()
+            )
+        )
     }
 
 }
