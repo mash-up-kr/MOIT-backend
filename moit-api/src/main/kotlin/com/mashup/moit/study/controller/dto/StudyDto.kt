@@ -8,9 +8,6 @@ import java.time.LocalDateTime
 
 @Schema(description = "Study 참석 코드 요청")
 data class StudyAttendanceCodeRequest(
-    @Schema(description = "유저 id")
-    val userId: Long,
-
     @Schema(description = "Study 참석 코드")
     @field:NotBlank
     @Size(min = 8, max = 8)
