@@ -3,6 +3,7 @@ package com.mashup.moit.fine.controller.dto
 import com.mashup.moit.domain.attendance.AttendanceStatus
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotNull
+import java.time.LocalDate
 
 
 @Schema(description = "벌금 송금 평가 RequestBody")
@@ -32,7 +33,9 @@ data class FineListResponse(
                     userName = "박재민",
                     attendanceStatus = AttendanceStatus.ABSENCE,
                     studyOrder = 5,
-                    isConfirmed = false
+                    isConfirmed = false,
+                    registerAt = LocalDate.of(2023, 6, 8),
+                    paymentAt = LocalDate.of(2023, 6, 15)
                 )
             ),
             fineComplete = listOf(
@@ -43,7 +46,9 @@ data class FineListResponse(
                     userName = "박재민",
                     attendanceStatus = AttendanceStatus.ABSENCE,
                     studyOrder = 5,
-                    isConfirmed = true
+                    isConfirmed = true,
+                    registerAt = LocalDate.of(2023, 6, 8),
+                    paymentAt = null
                 )
             )
         )
@@ -66,4 +71,8 @@ data class FineResponseForListView(
     val studyOrder: Int,
     @Schema(description = "Fine 납부 인증 유무")
     val isConfirmed: Boolean,
+    @Schema(description = "Fine 등록 일자 YYYY-mm-dd")
+    val registerAt: LocalDate,
+    @Schema(description = "Fine 납부 일자 YYYY-mm-dd")
+    val paymentAt: LocalDate?,
 )
