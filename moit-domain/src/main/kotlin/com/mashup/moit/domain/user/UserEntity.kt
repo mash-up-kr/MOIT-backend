@@ -1,13 +1,10 @@
 package com.mashup.moit.domain.user
 
-import com.mashup.moit.domain.attendance.AttendanceEntity
 import com.mashup.moit.domain.common.BaseEntity
-import com.mashup.moit.domain.usermoit.UserMoitEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
-import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Table(name = "users")
