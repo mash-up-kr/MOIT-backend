@@ -1,13 +1,13 @@
 package com.mashup.moit.domain.moit
 
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.LocalTime
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 
 @Service
@@ -70,11 +70,17 @@ class MoitService(
     }
 
     fun getMoitByInvitationCode(invitationCode: String): Moit {
-        val moit = (moitRepository.findByInvitationCode(invitationCode.uppercase(Locale.getDefault()))
-            ?: throw MoitException.of(MoitExceptionType.NOT_EXIST))
+        val moit = moitRepository.findByInvitationCode(invitationCode.uppercase(Locale.getDefault()))
+            ?: throw MoitException.of(MoitExceptionType.NOT_EXIST)
 
         if (moit.isEnd) throw MoitException.of(MoitExceptionType.INVALID_ACCESS, "종료된 Moit 입니다")
 
         return moit.toDomain()
+    }
+
+    fun getMoitById(moitId: Long): Moit {
+        return moitRepository.findById(moitId)
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+            .toDomain()
     }
 }

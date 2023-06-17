@@ -28,4 +28,9 @@ class UserMoitService(
         val userMoit = UserMoitEntity(moit.id, user.id, userMoitRole)
         return userMoitRepository.save(userMoit).toDomain()
     }
+
+    fun findMasterUserByMoitId(moitId: Long): UserMoit {
+        return userMoitRepository.findMasterByMoitIdAndRole(moitId, UserMoitRole.MASTER)?.toDomain()
+            ?: throw MoitException.of(MoitExceptionType.NOT_EXIST)
+    }
 }
