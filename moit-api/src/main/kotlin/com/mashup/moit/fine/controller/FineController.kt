@@ -50,6 +50,6 @@ class FineController(
     @Operation(summary = "벌금 리스트 조회 API", description = "벌금 리스트 조회 API")
     @GetMapping
     fun fineList(@PathVariable("moitId") moitId: Long): MoitApiResponse<FineListResponse> {
-        return MoitApiResponse.success(FineListResponse.sample())
+        return MoitApiResponse.success(fineFacade.getFineList(moitId))
     }
 }

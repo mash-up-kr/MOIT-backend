@@ -18,6 +18,9 @@ class FineEntity(
     @JoinColumn(name = "attendance_id", nullable = false)
     var attendance: AttendanceEntity,
 
+    @Column(name = "amount", nullable = false)
+    val amount: Long,
+
     @Enumerated(EnumType.STRING)
     @Column(name = "approve_status", nullable = false)
     val approveStatus: FineApproveStatus = FineApproveStatus.NEW,
@@ -33,7 +36,27 @@ class FineEntity(
 
     @Column(name = "moit_id", nullable = false)
     val moitId: Long,
-
     @Column(name = "study_id", nullable = false)
     val studyId: Long,
-) : BaseEntity()
+) : BaseEntity() {
+    fun toDomain(): Fine {
+        val isApproved = when (approveStatus) {
+            FineApproveStatus.APPROVED -> true
+            else -> false
+        }
+
+        return Fine(
+            id = id,
+            moitId = moitId,
+            studyId = attendance.studyId,
+            userId = userId,
+            attendanceStatus = attendance.status,
+            amount = amount,
+            isApproved = isApproved,
+            approveStatus = approveStatus,
+            approvedAt = approvedAt,
+            approveImageUrl = approveImageUrl,
+            registerAt = createdAt
+        )
+    }
+}

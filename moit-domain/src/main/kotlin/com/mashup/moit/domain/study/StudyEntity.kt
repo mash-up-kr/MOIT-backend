@@ -35,4 +35,10 @@ class StudyEntity(
 
     @Column(name = "attendance_code")
     var attendanceCode: String? = null
+
+    fun toDomain() = Study(
+        id = id,
+        moitId = moitId,
+        order = order,
+    )
 }
