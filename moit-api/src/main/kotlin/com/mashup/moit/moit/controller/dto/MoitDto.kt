@@ -6,10 +6,47 @@ import com.mashup.moit.domain.moit.NotificationRemindOption
 import com.mashup.moit.domain.moit.ScheduleRepeatCycle
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.PositiveOrZero
 import jakarta.validation.constraints.Size
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
+
+@Schema(description = "moit 생성 RequestBody")
+data class MoitCreateRequest(
+    @field:NotBlank
+    val name: String,
+    val description: String?,
+    @field:NotEmpty
+    val dayOfWeeks: Set<DayOfWeek>,
+    @field:NotNull
+    val startDate: LocalDate,
+    @field:NotNull
+    val endDate: LocalDate,
+    @field:NotNull
+    val repeatCycle: ScheduleRepeatCycle,
+    @field:NotNull
+    val startTime: LocalTime,
+    @field:NotNull
+    val endTime: LocalTime,
+    @field:NotNull
+    @field:PositiveOrZero
+    val lateTime: Int,
+    @field:NotNull
+    @field:PositiveOrZero
+    val lateAmount: Int,
+    @field:NotNull
+    @field:PositiveOrZero
+    val absenceTime: Int,
+    @field:NotNull
+    @field:PositiveOrZero
+    val absenceAmount: Int,
+    @field:NotNull
+    val isRemindActive: Boolean,
+    val remindOption: NotificationRemindOption?,
+)
 
 @Schema(description = "moit 가입 RequestBody")
 data class MoitJoinRequest(
@@ -18,7 +55,7 @@ data class MoitJoinRequest(
 
     @Schema(description = "moit 초대 코드")
     @field:NotBlank
-    @Size(min = 8, max = 8)
+    @Size(min = 6, max = 6)
     val invitationCode: String,
 )
 
@@ -87,8 +124,8 @@ data class MoitDetailsResponse(
             fineAbsenceTime = moit.fineAbsenceTime,
             notificationIsRemindActive = moit.notificationIsRemindActive,
             notificationRemindOption = moit.notificationRemindOption,
-            startDate = moit.startDate,
-            endDate = moit.endDate
+            startDate = moit.scheduleStartDate,
+            endDate = moit.scheduleEndDate
         )
 
         // TODO: mock data. remove when logic is configured.
@@ -107,7 +144,7 @@ data class MoitDetailsResponse(
             fineAbsenceTime = 30,
             fineAbsenceAmount = 10000,
             notificationIsRemindActive = true,
-            notificationRemindOption = NotificationRemindOption.BEFORE_TEN_MINUTE,
+            notificationRemindOption = NotificationRemindOption.BEFORE_10_MINUTE,
             startDate = LocalDate.of(2023, 5, 30),
             endDate = LocalDate.of(2023, 8, 19)
         )
@@ -141,7 +178,7 @@ data class MoitListResponse(
                         "moit 😃",
                         null,
                         true,
-                        ScheduleRepeatCycle.THREE_WEEK,
+                        ScheduleRepeatCycle.TWO_WEEK,
                         setOf(DayOfWeek.THURSDAY),
                         now.plusMinutes(30).responseFormatTime(),
                         now.plusHours(4).responseFormatTime(),

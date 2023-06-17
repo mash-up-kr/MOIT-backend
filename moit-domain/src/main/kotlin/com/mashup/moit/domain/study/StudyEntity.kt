@@ -10,7 +10,6 @@ import jakarta.persistence.FetchType
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
-import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
 import java.time.LocalDateTime
 
@@ -30,22 +29,22 @@ class StudyEntity(
     @Column(name = "end_at", nullable = false)
     val endAt: LocalDateTime,
 
-    @Column(name = "remind_at", nullable = false)
-    val remindAt: LocalDateTime,
+    @Column(name = "remind_at")
+    val remindAt: LocalDateTime?,
 
     @Column(name = "late_at", nullable = false)
     val lateAt: LocalDateTime,
 
     @Column(name = "absence_at", nullable = false)
     val absenceAt: LocalDateTime,
-
+) : BaseEntity() {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "first_attendance_user_id")
-    val firstAttendanceUser: UserEntity?,
+    var firstAttendanceUser: UserEntity? = null
 
     @Column(name = "attendance_code")
-    val attendanceCode: String?,
-) : BaseEntity() {
+    var attendanceCode: String? = null
+
     @OneToMany(mappedBy = "study")
     val attendances: List<AttendanceEntity> = emptyList()
 }
