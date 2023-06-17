@@ -2,10 +2,12 @@ package com.mashup.moit.fine.controller
 
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.fine.controller.dto.FineEvaluateRequest
+import com.mashup.moit.fine.controller.dto.FineListResponse
 import com.mashup.moit.fine.facade.FineFacade
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -45,4 +47,9 @@ class FineController(
         return MoitApiResponse.success()
     }
 
+    @Operation(summary = "벌금 리스트 조회 API", description = "벌금 리스트 조회 API")
+    @GetMapping
+    fun fineList(@PathVariable("moitId") moitId: Long): MoitApiResponse<FineListResponse> {
+        return MoitApiResponse.success(FineListResponse.sample())
+    }
 }
