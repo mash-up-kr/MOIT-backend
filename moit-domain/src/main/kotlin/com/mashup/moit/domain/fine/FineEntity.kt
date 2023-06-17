@@ -33,4 +33,7 @@ class FineEntity(
 
     @Column(name = "moit_id", nullable = false)
     val moitId: Long,
+
+    @Column(name = "study_id", nullable = false)
+    val studyId: Long,
 ) : BaseEntity()
