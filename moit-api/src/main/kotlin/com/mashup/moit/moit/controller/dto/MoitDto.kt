@@ -127,27 +127,6 @@ data class MoitDetailsResponse(
             startDate = moit.scheduleStartDate,
             endDate = moit.scheduleEndDate
         )
-
-        // TODO: mock data. remove when logic is configured.
-        fun sample() = MoitDetailsResponse(
-            moitId = 1,
-            name = "전자군단 1등 시상 스터디",
-            masterId = 1,
-            description = "해커톤에서 1등 시상한다",
-            imageUrl = "ABCDEFG",
-            scheduleDayOfWeeks = setOf(DayOfWeek.MONDAY, DayOfWeek.THURSDAY),
-            scheduleRepeatCycle = ScheduleRepeatCycle.ONE_WEEK,
-            scheduleStartTime = "20:00",
-            scheduleEndTime = "22:00",
-            fineLateTime = 10,
-            fineLateAmount = 3000,
-            fineAbsenceTime = 30,
-            fineAbsenceAmount = 10000,
-            notificationIsRemindActive = true,
-            notificationRemindOption = NotificationRemindOption.BEFORE_10_MINUTE,
-            startDate = LocalDate.of(2023, 5, 30),
-            endDate = LocalDate.of(2023, 8, 19)
-        )
     }
 }
 
