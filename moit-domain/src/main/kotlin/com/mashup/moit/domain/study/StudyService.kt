@@ -27,7 +27,7 @@ class StudyService(
         ).mapIndexed { index, studyDate ->
             val startAt = LocalDateTime.of(studyDate, moit.schedulePolicy.startTime)
             StudyEntity(
-                moit = moit,
+                moitId = moit.id,
                 order = index,
                 startAt = startAt,
                 endAt = LocalDateTime.of(studyDate, moit.schedulePolicy.endTime),

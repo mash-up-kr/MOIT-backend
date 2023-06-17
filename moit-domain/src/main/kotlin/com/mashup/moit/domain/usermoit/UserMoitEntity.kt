@@ -1,27 +1,20 @@
 package com.mashup.moit.domain.usermoit
 
 import com.mashup.moit.domain.common.BaseEntity
-import com.mashup.moit.domain.moit.MoitEntity
-import com.mashup.moit.domain.user.UserEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
-import jakarta.persistence.FetchType
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
 @Table(name = "user_moit")
 @Entity
 class UserMoitEntity(
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "moit_id", nullable = false)
-    val moit: MoitEntity,
+    @Column(name = "moit_id", nullable = false)
+    val moitId: Long,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    val user: UserEntity,
+    @Column(name = "user_id", nullable = false)
+    val userId: Long,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
@@ -30,8 +23,8 @@ class UserMoitEntity(
     fun toDomain() =
         UserMoit(
             id = id,
-            moitId = moit.id,
-            userId = user.id,
+            moitId = moitId,
+            userId = userId,
             role = role.name
         )
 }

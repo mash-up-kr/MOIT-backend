@@ -23,12 +23,6 @@ class UserEntity(
     @Column(name = "kakao_id")
     val kakaoId: Long? = null,
 ) : BaseEntity() {
-    @OneToMany(mappedBy = "user")
-    val attendances: List<AttendanceEntity> = emptyList()
-
-    @OneToMany(mappedBy = "user")
-    val userMoits: List<UserMoitEntity> = emptyList()
-
     companion object {
         fun createAppleUser(appleId: Long): UserEntity = UserEntity(
             appleId = appleId,

@@ -21,11 +21,11 @@ class UserMoitService(
         val moit = moitRepository.findById(moitId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
 
-        if (userMoitRepository.existsByUserAndMoit(user, moit)) {
+        if (userMoitRepository.existsByUserIdAndMoitId(user.id, moit.id)) {
             throw MoitException.of(MoitExceptionType.ALREADY_EXIST)
         }
 
-        val userMoit = UserMoitEntity(moit, user, userMoitRole)
+        val userMoit = UserMoitEntity(moit.id, user.id, userMoitRole)
         return userMoitRepository.save(userMoit).toDomain()
     }
 }
