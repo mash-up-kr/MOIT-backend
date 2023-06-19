@@ -8,10 +8,17 @@ data class MoitApiResponse<T>(
     val error: MoitApiErrorResponse? = null,
 ) {
     companion object {
+        fun success(): MoitApiResponse<Unit> {
+            return MoitApiResponse(
+                success = true,
+                data = null
+            )
+        }
+
         fun <T> success(data: T): MoitApiResponse<T> {
             return MoitApiResponse(
                 success = true,
-                data = data,
+                data = data
             )
         }
 

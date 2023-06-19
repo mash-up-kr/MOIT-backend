@@ -19,16 +19,10 @@ class UserEntity(
 
     @Column(name = "profile_image")
     val profileImage: Int,
-    
+
     @Column(name = "email")
     val email: String
 ) : BaseEntity() {
-    @OneToMany(mappedBy = "user")
-    val attendances: List<AttendanceEntity> = emptyList()
-
-    @OneToMany(mappedBy = "user")
-    val userMoits: List<UserMoitEntity> = emptyList()
-
     fun toDomain(): User {
         return User(
             id = id,
@@ -39,8 +33,6 @@ class UserEntity(
             nickname = nickname,
             profileImage = profileImage,
             email = email,
-            attendances = attendances,
-            userMoits = userMoits
         )
     }
 

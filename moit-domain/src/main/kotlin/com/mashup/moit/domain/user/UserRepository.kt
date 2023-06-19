@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository
 interface UserRepository : JpaRepository<UserEntity, Long> {
 
     fun findByProviderUniqueKey(providerUniqueKey: String): UserEntity?
-    
+
 }

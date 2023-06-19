@@ -26,5 +26,14 @@ class FineEntity(
     val approvedAt: LocalDateTime?,
 
     @Column(name = "approve_image_url")
-    val approveImageUrl: String?
+    val approveImageUrl: String?,
+
+    @Column(name = "user_id", nullable = false)
+    val userId: Long,
+
+    @Column(name = "moit_id", nullable = false)
+    val moitId: Long,
+
+    @Column(name = "study_id", nullable = false)
+    val studyId: Long,
 ) : BaseEntity()
