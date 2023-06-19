@@ -1,15 +1,15 @@
 package com.mashup.moit.config
 
+import com.mashup.moit.security.HttpStatusAccessDeniedHandler
+import com.mashup.moit.security.HttpStatusAuthenticationEntryPoint
 import com.mashup.moit.security.JwtTokenFilter
 import com.mashup.moit.security.JwtTokenSupporter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.authentication.logout.LogoutHandler
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
@@ -32,6 +32,10 @@ class SecurityConfig(
                 it.anyRequest().authenticated() // TODO: 추후 인가 추가
             }
             .addFilterBefore(JwtTokenFilter(jwtTokenSupporter), UsernamePasswordAuthenticationFilter::class.java)
+            .exceptionHandling {
+                it.authenticationEntryPoint(HttpStatusAuthenticationEntryPoint())
+                it.accessDeniedHandler(HttpStatusAccessDeniedHandler())
+            }
             .build()
     }
 
