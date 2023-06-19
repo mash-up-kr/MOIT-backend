@@ -59,13 +59,12 @@ class MoitEntity(
             notificationRemindLevel = notificationPolicy.remindLevel
         )
 
-     fun validateDateForJoin(): MoitEntity {
+    fun validateDateForJoin() {
         if (isEnd) {
             throw MoitException.of(MoitExceptionType.INVALID_ACCESS, "종료된 Moit 입니다")
         }
         if (schedulePolicy.startDate.isBefore(LocalDate.now())) {
             throw MoitException.of(MoitExceptionType.INVALID_ACCESS, "이미 시작된 Moit 입니다")
         }
-        return this
     }
 } 
