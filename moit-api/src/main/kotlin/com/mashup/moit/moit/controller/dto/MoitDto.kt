@@ -1,6 +1,7 @@
 package com.mashup.moit.moit.controller.dto
 
 import com.mashup.moit.common.util.DateTimeUtils.responseFormatTime
+import com.mashup.moit.domain.attendance.AttendanceStatus
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.NotificationRemindOption
 import com.mashup.moit.domain.moit.ScheduleRepeatCycle
@@ -12,6 +13,7 @@ import jakarta.validation.constraints.PositiveOrZero
 import jakarta.validation.constraints.Size
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 @Schema(description = "moit 생성 RequestBody")
@@ -222,3 +224,64 @@ class MoitResponseForListView(
     @Schema(description = "제일 가까운 Moit Study D-day")
     val dday: Int
 )
+
+@Schema(description = "Moit 스터디 조회 응답")
+data class MoitStudyListResponse(
+    @Schema(description = "Moit 내 모든 스터디 리스트")
+    val studies: List<MoitStudyResponse>
+) {
+    companion object {
+        fun sample(): MoitStudyListResponse = MoitStudyListResponse(
+            studies = listOf(
+                MoitStudyResponse.sample(),
+                MoitStudyResponse.sample().copy(studyId = 2L)
+            )
+        )
+    }
+}
+
+@Schema(description = "출결 정보를 담은 Moit 스터디 간단 정보")
+data class MoitStudyResponse(
+    @Schema(description = "출결 정보를 담은 스터디 id")
+    val studyId: Long,
+    @Schema(description = "스터디에 포함된 출결 리스트")
+    val attendances: List<MoitStudyAttendanceResponse>
+) {
+    companion object {
+        fun sample(): MoitStudyResponse = MoitStudyResponse(
+            studyId = 1L,
+            attendances = listOf(
+                MoitStudyAttendanceResponse.sample().copy(status = AttendanceStatus.ABSENCE),
+                MoitStudyAttendanceResponse.sample(),
+                MoitStudyAttendanceResponse.sample().copy(
+                    status = AttendanceStatus.LATE,
+                    attendanceAt = LocalDateTime.of(2023, 6, 15, 17, 30)
+                )
+            )
+        )
+    }
+}
+
+@Schema(description = "Moit 스터디 출결 정보 응답")
+data class MoitStudyAttendanceResponse(
+    @Schema(description = "출석 유저 아이디")
+    val userId: Long,
+    @Schema(description = "출석 유저 닉네임")
+    val nickname: String,
+    @Schema(description = "출석 유저 프로필 이미지")
+    val profileImage: Int,
+    @Schema(description = "출석 상태")
+    val status: AttendanceStatus,
+    @Schema(description = "출석 시간")
+    val attendanceAt: LocalDateTime? = null,
+) {
+    companion object {
+        fun sample(): MoitStudyAttendanceResponse = MoitStudyAttendanceResponse(
+            userId = 1L,
+            nickname = "전자군단",
+            profileImage = 3,
+            status = AttendanceStatus.ATTENDANCE,
+            attendanceAt = LocalDateTime.now()
+        )
+    }
+}
