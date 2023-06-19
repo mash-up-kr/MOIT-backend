@@ -20,6 +20,11 @@ class UserEntity(
     @Column(name = "kakao_id")
     val kakaoId: Long? = null,
 ) : BaseEntity() {
+    fun toDomain() = User(
+        id = id,
+        socialType = socialType,
+    )
+
     companion object {
         fun createAppleUser(appleId: Long): UserEntity = UserEntity(
             appleId = appleId,

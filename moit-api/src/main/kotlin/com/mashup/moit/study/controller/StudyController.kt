@@ -45,13 +45,7 @@ class StudyController(
     @Operation(summary = "Study 유저 출석상태 조회 API", description = "Study 참석자 출석 상태 조회. 출석/지각 완료(결과) 페이지에서 사용됨.")
     @GetMapping("/{studyId}/attendance/status")
     fun getUserAttendanceStatus(@PathVariable studyId: Long): MoitApiResponse<List<StudyUserAttendanceStatusResponse>> {
-        return MoitApiResponse.success(
-            listOf(
-                StudyUserAttendanceStatusResponse.sample(),
-                StudyUserAttendanceStatusResponse.sample(),
-                StudyUserAttendanceStatusResponse.sample()
-            )
-        )
+        return MoitApiResponse.success(studyFacade.getUserAttendanceStatus(studyId))
     }
 
     @Operation(summary = "Register Study Keyword API", description = "Study 키워드 등록")

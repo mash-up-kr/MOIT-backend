@@ -1,6 +1,8 @@
 package com.mashup.moit.study.controller.dto
 
+import com.mashup.moit.domain.attendance.Attendance
 import com.mashup.moit.domain.attendance.AttendanceStatus
+import com.mashup.moit.domain.user.User
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -76,12 +78,12 @@ data class StudyUserAttendanceStatusResponse(
     val attendanceAt: LocalDateTime?
 ) {
     companion object {
-        fun sample() = StudyUserAttendanceStatusResponse(
-            1L,
-            "나는 부자가 될테야",
-            2,
-            AttendanceStatus.ATTENDANCE,
-            LocalDateTime.now()
+        fun of(attendance: Attendance, user: User) = StudyUserAttendanceStatusResponse(
+            userId = user.id,
+            nickname = user.nickname,
+            profileImage = user.profileImage,
+            attendanceStatus = attendance.status,
+            attendanceAt = attendance.attendanceAt,
         )
     }
 }
