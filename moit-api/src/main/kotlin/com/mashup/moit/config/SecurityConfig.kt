@@ -18,7 +18,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 @EnableWebSecurity
 class SecurityConfig(
     private val logoutHandler: LogoutHandler,
-    private val jwtTokenSupporter: JwtTokenSupporter
+    private val jwtTokenSupporter: JwtTokenSupporter,
+    private val objectMapper: ObjectMapper
 ) {
 
     @Bean
@@ -31,7 +32,7 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it.anyRequest().authenticated() // TODO: 추후 인가 추가
             }
-            .addFilterBefore(JwtTokenFilter(jwtTokenSupporter), UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(JwtTokenFilter(jwtTokenSupporter, objectMapper), UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling {
                 it.authenticationEntryPoint(HttpStatusAuthenticationEntryPoint())
                 it.accessDeniedHandler(HttpStatusAccessDeniedHandler())
