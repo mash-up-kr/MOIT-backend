@@ -4,4 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface UserMoitRepository : JpaRepository<UserMoitEntity, Long> {
     fun existsByUserIdAndMoitId(userId: Long, moitId: Long): Boolean
+    fun findMasterByMoitIdAndRole(moitId: Long, role: UserMoitRole): UserMoitEntity?
 }

@@ -6,6 +6,7 @@ import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.usermoit.UserMoitRole
 import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.moit.controller.dto.MoitCreateRequest
+import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -39,6 +40,13 @@ class MoitFacade(
         }
 
         return moit.id
+    }
+
+    fun getMoitDetails(moitId: Long): MoitDetailsResponse {
+        val moit = moitService.getMoitById(moitId)
+        val masterId = userMoitService.findMasterUserByMoitId(moit.id).userId
+
+        return MoitDetailsResponse.of(moit, masterId)
     }
 
     fun joinAsMember(userId: Long, invitationCode: String): MoitJoinResponse {

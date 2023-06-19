@@ -39,7 +39,7 @@ class MoitController(
     @Operation(summary = "Moit Details API", description = "moit 상세 조회")
     @GetMapping("/{moitId}")
     fun getDetails(@PathVariable moitId: Long): MoitApiResponse<MoitDetailsResponse> {
-        return MoitApiResponse.success(MoitDetailsResponse.sample())
+        return MoitApiResponse.success(moitFacade.getMoitDetails(moitId))
     }
 
     @Operation(summary = "My Moit List API", description = "내 Moit List 조회")
