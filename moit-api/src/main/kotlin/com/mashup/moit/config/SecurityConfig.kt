@@ -4,10 +4,12 @@ import com.mashup.moit.security.JwtTokenFilter
 import com.mashup.moit.security.JwtTokenSupporter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.authentication.logout.LogoutHandler
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
@@ -27,7 +29,7 @@ class SecurityConfig(
             .oauth2Login { it.defaultSuccessUrl("/api/v1/auth/login/success") }
             .logout { it.logoutRequestMatcher(AntPathRequestMatcher("/logout")).addLogoutHandler(logoutHandler) }
             .authorizeHttpRequests {
-                it.anyRequest().authenticated()
+                it.anyRequest().authenticated() // TODO: 추후 인가 추가
             }
             .addFilterBefore(JwtTokenFilter(jwtTokenSupporter), UsernamePasswordAuthenticationFilter::class.java)
             .build()
