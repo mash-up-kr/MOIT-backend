@@ -1,9 +1,11 @@
 package com.mashup.moit.config
 
-import com.mashup.moit.security.HttpStatusAccessDeniedHandler
-import com.mashup.moit.security.HttpStatusAuthenticationEntryPoint
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.security.JwtTokenFilter
 import com.mashup.moit.security.JwtTokenSupporter
+import com.mashup.moit.security.handler.AuthFailureHandler
+import com.mashup.moit.security.handler.HttpStatusAccessDeniedHandler
+import com.mashup.moit.security.handler.HttpStatusAuthenticationEntryPoint
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -48,7 +50,10 @@ class SecurityConfig(
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer {
             it.ignoring().requestMatchers(
+                "/**", // TODO: 개발 중이므로 다 제외
+                "/error/**",
                 "/am-i-alive/**",
+                "/api/v1/auth/register"
             )
         }
     }
