@@ -27,7 +27,11 @@ class SecurityConfig(
         return http
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
-            .oauth2Login { it.defaultSuccessUrl("/api/v1/auth/login/success") }
+            .oauth2Login {
+                it.loginPage("/api/v1/auth/login")
+                    .defaultSuccessUrl("/api/v1/auth/login/success") // TODO: Use successHandler 
+                    .failureHandler(AuthFailureHandler())
+            }
             .logout { it.logoutRequestMatcher(AntPathRequestMatcher("/logout")).addLogoutHandler(logoutHandler) }
             .authorizeHttpRequests {
                 it.anyRequest().authenticated() // TODO: 추후 인가 추가
