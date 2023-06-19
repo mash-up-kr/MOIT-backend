@@ -58,6 +58,7 @@ class StudyController(
     @Operation(summary = "Verify Study Keyword API", description = "Study 키워드 검증")
     @PostMapping("/{studyId}/attendance/code/verify")
     fun verifyAttendanceKeyword(@PathVariable studyId: Long, @RequestBody @Valid request: StudyAttendanceKeywordRequest): MoitApiResponse<Unit> {
+        studyFacade.verifyAttendanceKeyword(studyId, request)
         return MoitApiResponse.success()
     }
 }
