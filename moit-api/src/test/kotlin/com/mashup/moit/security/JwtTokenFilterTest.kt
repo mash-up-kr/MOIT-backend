@@ -1,6 +1,6 @@
 package com.mashup.moit.security
 
-import com.mashup.moit.config.SecurityConfig
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.domain.sample.SampleUser
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -20,10 +20,11 @@ class JwtTokenFilterTest : DescribeSpec() {
 
     private val jwtTokenFilter: JwtTokenFilter
     private val jwtTokenSupporter = mockk<JwtTokenSupporter>()
+    private val objectMapper = mockk<ObjectMapper>()
     private val filterChain = mockk<FilterChain>()
 
     init {
-        this.jwtTokenFilter = JwtTokenFilter(jwtTokenSupporter)
+        this.jwtTokenFilter = JwtTokenFilter(jwtTokenSupporter, objectMapper)
 
         beforeContainer {
             every { filterChain.doFilter(any(), any()) } just Runs
@@ -35,7 +36,7 @@ class JwtTokenFilterTest : DescribeSpec() {
 
         describe("JwtTokenFilter로") {
             context("token 검사가 필요없는 엔드포인트에서 요청이 온 경우") {
-                val request = MockHttpServletRequest("GET", SecurityConfig.LOGIN_ENDPOINT)
+                val request = MockHttpServletRequest("GET", "/error")
                 val response = MockHttpServletResponse()
                 jwtTokenFilter.doFilter(request, response, filterChain)
 
