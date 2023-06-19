@@ -45,4 +45,10 @@ class StudyService(
             null
         }
     }
+    
+    fun getAttendanceKeyword(studyId: Long): String? {
+        return studyRepository.findById(studyId)
+            .orElseThrow{ MoitException.of(MoitExceptionType.NOT_EXIST)}
+            .attendanceCode
+    }
 }

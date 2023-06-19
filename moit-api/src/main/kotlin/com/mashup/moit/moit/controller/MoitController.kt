@@ -6,6 +6,7 @@ import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinRequest
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
 import com.mashup.moit.moit.controller.dto.MoitListResponse
+import com.mashup.moit.moit.controller.dto.MoitStudyListResponse
 import com.mashup.moit.moit.facade.MoitFacade
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -38,7 +39,7 @@ class MoitController(
     @Operation(summary = "Moit Details API", description = "moit 상세 조회")
     @GetMapping("/{moitId}")
     fun getDetails(@PathVariable moitId: Long): MoitApiResponse<MoitDetailsResponse> {
-        return MoitApiResponse.success(MoitDetailsResponse.sample())
+        return MoitApiResponse.success(moitFacade.getMoitDetails(moitId))
     }
 
     @Operation(summary = "My Moit List API", description = "내 Moit List 조회")
@@ -47,4 +48,9 @@ class MoitController(
         return MoitApiResponse.success(MoitListResponse.sample())
     }
 
+    @Operation(summary = "All attendances of all studies in Moit API", description = "Moit의 모든 스터디 출결 조회")
+    @GetMapping("/{moitId}/attendance")
+    fun getAllAttendances(@PathVariable moitId: Long): MoitApiResponse<MoitStudyListResponse> {
+        return MoitApiResponse.success(MoitStudyListResponse.sample())
+    }
 }

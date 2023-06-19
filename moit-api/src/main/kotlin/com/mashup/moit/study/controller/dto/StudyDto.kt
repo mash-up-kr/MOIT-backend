@@ -51,11 +51,11 @@ data class StudyAttendanceCodeRequest(
 
 @Schema(description = "Study 출석 키워드 조회 응답")
 data class StudyAttendanceKeywordResponse(
-    @Schema(description = "Study 출석 키워드")
-    val attendanceKeyword: String,
+    @Schema(description = "Study 출석 키워드 (null일 경우 미등록 상태)")
+    val attendanceKeyword: String?,
 ) {
     companion object {
-        fun sample() = StudyAttendanceKeywordResponse("벌금환영")
+        fun of(keyword: String?) = StudyAttendanceKeywordResponse(attendanceKeyword = keyword)
     }
 }
 
