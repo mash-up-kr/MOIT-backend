@@ -33,7 +33,7 @@ class StudyController(
     @Operation(summary = "Study Keyword API", description = "study 키워드 조회")
     @GetMapping("/{studyId}/attendance/keyword")
     fun getAttendanceKeyword(@PathVariable studyId: Long): MoitApiResponse<StudyAttendanceKeywordResponse> {
-        return MoitApiResponse.success(StudyAttendanceKeywordResponse.sample())
+        return MoitApiResponse.success(studyFacade.getAttendanceKeyword(studyId))
     }
 
     @Operation(summary = "Study 첫 출석자 존재 유무 확인 API", description = "Study에 출석한 사람이 있는지 유무 조회")
