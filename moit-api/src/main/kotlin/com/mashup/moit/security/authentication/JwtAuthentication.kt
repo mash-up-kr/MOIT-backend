@@ -23,7 +23,7 @@ class JwtAuthentication(private val moitUser: MoitUser) : Authentication {
     }
 
     override fun getPrincipal(): Any {
-        return moitUser
+        return moitUser.userInfo
     }
 
     override fun isAuthenticated(): Boolean {
