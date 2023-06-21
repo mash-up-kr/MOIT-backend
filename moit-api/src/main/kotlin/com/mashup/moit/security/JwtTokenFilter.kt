@@ -42,8 +42,9 @@ class JwtTokenFilter(
             val authorization = request.getAuthorization()
             log.debug("Parsing token in header: $authorization - Request path: ${request.requestURI}")
             getToken(authorization)?.run {
-                val user = jwtTokenSupporter.extractUserFromToken(this)
-                SecurityContextHolder.getContext().authentication = JwtAuthentication(user)
+                jwtTokenSupporter.extractUserFromToken(this).apply {
+                    SecurityContextHolder.getContext().authentication = JwtAuthentication(MoitUser(this))
+                }
             } ?: throw BadCredentialsException(MoitExceptionType.INVALID_USER_AUTH_TOKEN.message)
         }
     }
