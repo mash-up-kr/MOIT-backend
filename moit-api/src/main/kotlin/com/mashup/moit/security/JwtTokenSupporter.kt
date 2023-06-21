@@ -3,7 +3,6 @@ package com.mashup.moit.security
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
-import com.mashup.moit.domain.sample.SampleUser
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
@@ -54,9 +53,9 @@ class JwtTokenSupporter(
      * @param token Moit Jwt Token
      * @return MoitUser
      */
-    fun extractUserFromToken(token: String): SampleUser {
+    fun extractUserFromToken(token: String): UserInfo {
         return jwtParser.parseClaimsJws(token).body?.let {
-            mapper.convertValue(it[CLAIM_INFO_KEY], SampleUser::class.java)
+            mapper.convertValue(it[CLAIM_INFO_KEY], UserInfo::class.java)
         } ?: throw MoitException.of(MoitExceptionType.INVALID_USER_AUTH_TOKEN)
     }
 
