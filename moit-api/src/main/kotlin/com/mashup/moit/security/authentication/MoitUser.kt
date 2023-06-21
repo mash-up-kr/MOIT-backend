@@ -22,8 +22,6 @@ data class MoitUser(val userInfo: UserInfo) : OAuth2User {
             .map { SimpleGrantedAuthority(it.toString()) }
             .toList()
         attributes = mapOf(
-            "id" to userInfo.id,
-            "providerUniqueKey" to userInfo.providerUniqueKey,
             "nickname" to userInfo.nickname,
             "profileImage" to userInfo.profileImage,
             "email" to userInfo.email,
