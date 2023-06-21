@@ -13,7 +13,7 @@ class UserService(
 
     @Transactional
     fun createUser(providerUniqueKey: String, nickname: String, profileImage: Int, email: String): User {
-        return userRepository.save(UserEntity(providerUniqueKey, nickname, profileImage, email)).toDomain()
+        return userRepository.save(UserEntity(providerUniqueKey, nickname, profileImage, email, UserRole.USER.toString())).toDomain()
     }
 
     fun findByProviderUniqueKey(providerUniqueKey: String): User? {

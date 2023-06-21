@@ -18,7 +18,10 @@ class UserEntity(
     val profileImage: Int,
 
     @Column(name = "email", nullable = false)
-    val email: String
+    val email: String,
+
+    @Column(name = "roles")
+    val roles: String,
 ) : BaseEntity() {
     fun toDomain(): User {
         return User(
@@ -30,7 +33,12 @@ class UserEntity(
             nickname = nickname,
             profileImage = profileImage,
             email = email,
+            roles = roles.split(USER_ROLE_DELIMITER).map { UserRole.valueOf(it) },
         )
+    }
+
+    companion object {
+        const val USER_ROLE_DELIMITER = "|"
     }
 
 }

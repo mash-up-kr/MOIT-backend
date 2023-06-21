@@ -1,7 +1,6 @@
 package com.mashup.moit.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mashup.moit.domain.sample.SampleUser
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -54,11 +53,13 @@ class JwtTokenFilterTest : DescribeSpec() {
                 val testToken = "test-jwt-token"
                 val testEmail = "testEmail"
                 val testNickName = "testNickname"
-                val testUser = SampleUser(
+                val testUser = UserInfo(
+                    id = 1L,
                     providerUniqueKey = "",
                     email = testEmail,
-                    profileImage = "",
-                    nickname = testNickName
+                    profileImage = 1,
+                    nickname = testNickName,
+                    roles = emptyList()
                 )
                 every { jwtTokenSupporter.extractUserFromToken(testToken) } returns testUser
 
