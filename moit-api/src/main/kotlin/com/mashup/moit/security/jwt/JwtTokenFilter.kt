@@ -1,8 +1,10 @@
-package com.mashup.moit.security
+package com.mashup.moit.security.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.common.exception.MoitExceptionType
+import com.mashup.moit.security.authentication.JwtAuthentication
+import com.mashup.moit.security.authentication.MoitUser
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

@@ -1,7 +1,7 @@
 package com.mashup.moit.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mashup.moit.security.JwtTokenSupporter
+import com.mashup.moit.security.jwt.JwtTokenSupporter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

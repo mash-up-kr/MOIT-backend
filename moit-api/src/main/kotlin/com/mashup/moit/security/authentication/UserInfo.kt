@@ -1,4 +1,4 @@
-package com.mashup.moit.security
+package com.mashup.moit.security.authentication
 
 import com.mashup.moit.domain.user.User
 import com.mashup.moit.domain.user.UserRole

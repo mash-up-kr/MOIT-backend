@@ -1,11 +1,11 @@
 package com.mashup.moit.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mashup.moit.security.JwtTokenFilter
-import com.mashup.moit.security.JwtTokenSupporter
 import com.mashup.moit.security.handler.AuthFailureHandler
 import com.mashup.moit.security.handler.HttpStatusAccessDeniedHandler
 import com.mashup.moit.security.handler.HttpStatusAuthenticationEntryPoint
+import com.mashup.moit.security.jwt.JwtTokenFilter
+import com.mashup.moit.security.jwt.JwtTokenSupporter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity

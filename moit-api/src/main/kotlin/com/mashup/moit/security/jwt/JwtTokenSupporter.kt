@@ -1,8 +1,9 @@
-package com.mashup.moit.security
+package com.mashup.moit.security.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
+import com.mashup.moit.security.authentication.UserInfo
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys

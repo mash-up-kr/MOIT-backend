@@ -2,9 +2,9 @@ package com.mashup.moit.controller
 
 import com.mashup.moit.controller.dto.UserRegisterRequest
 import com.mashup.moit.facade.UserFacade
-import com.mashup.moit.security.JwtTokenSupporter
-import com.mashup.moit.security.UserInfo
-import com.mashup.moit.security.toBeforeSignUpInfo
+import com.mashup.moit.security.authentication.UserInfo
+import com.mashup.moit.security.authentication.toBeforeSignUpInfo
+import com.mashup.moit.security.jwt.JwtTokenSupporter
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpHeaders

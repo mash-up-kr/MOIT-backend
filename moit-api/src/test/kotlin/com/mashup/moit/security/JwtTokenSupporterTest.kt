@@ -2,6 +2,8 @@ package com.mashup.moit.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.domain.user.User
+import com.mashup.moit.security.authentication.UserInfo
+import com.mashup.moit.security.jwt.JwtTokenSupporter
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys

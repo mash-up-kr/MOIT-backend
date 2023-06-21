@@ -1,4 +1,4 @@
-package com.mashup.moit.security
+package com.mashup.moit.security.authentication
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
