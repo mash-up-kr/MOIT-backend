@@ -13,7 +13,7 @@ private const val CLAIM_SUB_KEY = "sub"
 private const val CLAIM_EMAIL_KEY = "email"
 private const val CLAIM_NICKNAME_KEY = "nickname"
 
-class MoitUser(val userInfo: UserInfo) : OAuth2User {
+data class MoitUser(val userInfo: UserInfo) : OAuth2User {
     private val authorities: Collection<GrantedAuthority>
     private val attributes: Map<String, Any>
 
