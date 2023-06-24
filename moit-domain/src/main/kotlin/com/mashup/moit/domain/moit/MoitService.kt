@@ -68,13 +68,7 @@ class MoitService(
             }
         }
     }
-
-    fun getMoitById(moitId: Long): Moit {
-        return moitRepository.findById(moitId)
-            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
-            .toDomain()
-    }
-
+    
     fun getMoitByInvitationCode(invitationCode: String): Moit {
         return moitRepository.findByInvitationCode(invitationCode.uppercase(Locale.getDefault()))
             ?.also { it.validateDateForJoin() }?.toDomain()
