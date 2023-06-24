@@ -19,21 +19,27 @@ class UserEntity(
 
     @Column(name = "kakao_id")
     val kakaoId: Long? = null,
+
+    @Column(name = "nickname")
+    val nickname: String,
 ) : BaseEntity() {
     fun toDomain() = User(
         id = id,
         socialType = socialType,
+        nickname = nickname
     )
 
     companion object {
-        fun createAppleUser(appleId: Long): UserEntity = UserEntity(
+        fun createAppleUser(appleId: Long, nickname: String): UserEntity = UserEntity(
             appleId = appleId,
-            socialType = SocialType.APPLE
+            socialType = SocialType.APPLE,
+            nickname = nickname
         )
 
-        fun createKakaoUser(kakaoId: Long): UserEntity = UserEntity(
+        fun createKakaoUser(kakaoId: Long, nickname: String): UserEntity = UserEntity(
             kakaoId = kakaoId,
-            socialType = SocialType.KAKAO
+            socialType = SocialType.KAKAO,
+            nickname = nickname
         )
     }
 }

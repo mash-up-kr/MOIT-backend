@@ -68,7 +68,7 @@ class MoitService(
             }
         }
     }
-
+    
     fun getMoitByInvitationCode(invitationCode: String): Moit {
         return moitRepository.findByInvitationCode(invitationCode.uppercase(Locale.getDefault()))
             ?.also { it.validateDateForJoin() }?.toDomain()
