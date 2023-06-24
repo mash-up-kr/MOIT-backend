@@ -7,6 +7,7 @@ import com.mashup.moit.domain.user.User
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotNull
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 @Schema(description = "벌금 송금 평가 RequestBody")
@@ -46,10 +47,8 @@ data class FineResponseForListView(
     val studyOrder: Int,
     @Schema(description = "Fine 납부 인증 유무")
     val isApproved: Boolean,
-    @Schema(description = "Fine 등록 일자 YYYY-mm-dd")
-    val registerAt: LocalDate,
     @Schema(description = "Fine 납부 일자 YYYY-mm-dd")
-    val approveAt: LocalDate?,
+    val approveAt: LocalDateTime?,
 ) {
     companion object {
         fun of(fine: Fine, user: User, study: Study) =
@@ -60,9 +59,8 @@ data class FineResponseForListView(
                 userNickname = user.nickname,
                 attendanceStatus = fine.attendanceStatus,
                 studyOrder = study.order,
-                isApproved = fine.isApproved,
-                registerAt = fine.registerAt.toLocalDate(),
-                approveAt = fine.approvedAt?.toLocalDate()
+                isApproved = fine.isApproved, 
+                approveAt = fine.approvedAt
             )
     }
 }

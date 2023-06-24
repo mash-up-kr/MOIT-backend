@@ -7,6 +7,8 @@ class FineService(
     private val fineRepository: FineRepository
 ) {
     fun getFineListByMoitId(moitId: Long): List<Fine> {
-        return fineRepository.findByMoitId(moitId).map { it.toDomain() }
+        return fineRepository.findByMoitId(moitId)
+            .sortedByDescending { it.createdAt }
+            .map { it.toDomain() }
     }
 }

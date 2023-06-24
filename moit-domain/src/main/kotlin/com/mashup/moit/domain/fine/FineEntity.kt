@@ -55,8 +55,7 @@ class FineEntity(
             isApproved = isApproved,
             approveStatus = approveStatus,
             approvedAt = approvedAt,
-            approveImageUrl = approveImageUrl,
-            registerAt = createdAt
+            approveImageUrl = approveImageUrl
         )
     }
 }

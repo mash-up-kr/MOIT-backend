@@ -15,7 +15,7 @@ class StudyService(
     private val moitRepository: MoitRepository,
 ) {
     fun findByStudyIds(ids: List<Long>): List<Study> {
-        return studyRepository.findByIdIn(ids).map { it.toDomain() }
+        return studyRepository.findAllById(ids).map { it.toDomain() }
     }
 
     @Transactional

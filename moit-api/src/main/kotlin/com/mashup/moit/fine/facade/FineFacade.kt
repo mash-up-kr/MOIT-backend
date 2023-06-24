@@ -20,7 +20,7 @@ class FineFacade(
         }
 
         val fineUserIds = fineList.map { it.userId }.distinct()
-        val fineUsersMap = userService.findUsersByIds(fineUserIds).associateBy { it.id }
+        val fineUsersMap = userService.findUsersById(fineUserIds).associateBy { it.id }
 
         val fineStudyIds = fineList.map { it.studyId }.distinct()
         val fineStudyMap = studyService.findByStudyIds(fineStudyIds).associateBy { it.id }
@@ -29,9 +29,9 @@ class FineFacade(
         val (fineComplete, fineNotYet) = fineList.partition { it.isApproved }
             .let { (approvedFineList, isNotApprovedFineList) ->
                 approvedFineList.map {
-                    FineResponseForListView.of(it, fineUsersMap[it.userId]!!, fineStudyMap[it.studyId]!!)
+                    FineResponseForListView.of(it, fineUsersMap.getValue(it.userId), fineStudyMap.getValue(it.studyId))
                 } to isNotApprovedFineList.map {
-                    FineResponseForListView.of(it, fineUsersMap[it.userId]!!, fineStudyMap[it.studyId]!!)
+                    FineResponseForListView.of(it, fineUsersMap.getValue(it.userId), fineStudyMap.getValue(it.studyId))
                 }
             }
 

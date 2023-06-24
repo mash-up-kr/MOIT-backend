@@ -18,5 +18,4 @@ data class Fine(
     val approveStatus: FineApproveStatus,
     val approvedAt: LocalDateTime?,
     val approveImageUrl: String?,
-    val registerAt: LocalDateTime,
 )
