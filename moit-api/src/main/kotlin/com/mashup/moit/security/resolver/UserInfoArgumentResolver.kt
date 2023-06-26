@@ -9,8 +9,7 @@ import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 
-// TODO: WebMvcConfigurer 등록 필요
-class UserInfoArugmentResolver : HandlerMethodArgumentResolver {
+class UserInfoArgumentResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.hasParameterAnnotation(MoitUser::class.java)
