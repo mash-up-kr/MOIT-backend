@@ -49,10 +49,14 @@ management:
       enabled: true
     health:
       enabled: true
-      show-details : always
+      show-details: always
     metrics:
       enabled: true
     prometheus:
       enabled: true
   server:
     port: 8077
+
+moit:
+  auth:
+    jwt-secret-key: RzeI0dzLc2Z6Sby4PaJqY7rhJjK62g8646PqdRNLYSkTv25ol9r47vT8Nm4hpHzVlwOUf/XWb1zqWPnOWVD0jg==  
