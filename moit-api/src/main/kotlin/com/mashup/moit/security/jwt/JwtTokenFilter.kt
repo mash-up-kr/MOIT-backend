@@ -12,6 +12,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
@@ -25,15 +26,17 @@ class JwtTokenFilter(
     private val log: Logger = LoggerFactory.getLogger(JwtTokenFilter::class.java)
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        log.info("JWT Token Filter")
+        log.debug("JWT Token Filter")
         try {
             setAuthenticationFromToken(request)
             filterChain.doFilter(request, response)
         } catch (authException: AuthenticationException) {
+            log.debug("Authentication Failed: Authorization value=${request.getAuthorization()}, Message=${authException.message}")
             SecurityContextHolder.clearContext()
             response.run {
-                val failResponse = MoitApiResponse.fail(MoitExceptionType.AUTH_ERROR, authException.message)
                 status = HttpStatus.UNAUTHORIZED.value()
+                addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                val failResponse = MoitApiResponse.fail(MoitExceptionType.AUTH_ERROR, authException.message)
                 writer.write(objectMapper.writeValueAsString(failResponse))
             }
         }
