@@ -1,26 +1,23 @@
 package com.mashup.moit.domain.user
 
-import com.mashup.moit.domain.attendance.AttendanceEntity
 import com.mashup.moit.domain.common.BaseEntity
-import com.mashup.moit.domain.usermoit.UserMoitEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Table(name = "users")
 @Entity
 class UserEntity(
-    @Column(name = "provider_unique_key")
+    @Column(name = "provider_unique_key", nullable = false)
     val providerUniqueKey: String,
 
-    @Column(name = "nickname")
+    @Column(name = "nickname", nullable = false)
     val nickname: String,
 
-    @Column(name = "profile_image")
+    @Column(name = "profile_image", nullable = false)
     val profileImage: Int,
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     val email: String
 ) : BaseEntity() {
     fun toDomain(): User {
