@@ -18,9 +18,11 @@ class UserInfoArgumentResolver : HandlerMethodArgumentResolver {
     }
 
     override fun resolveArgument(parameter: MethodParameter, mavContainer: ModelAndViewContainer?, webRequest: NativeWebRequest, binderFactory: WebDataBinderFactory?): Any {
-        val jwtAuthentication = SecurityContextHolder.getContext().authentication as JwtAuthentication
-        // TODO: Cast 오류 잡기
-        return jwtAuthentication.principal
+        val authentication = SecurityContextHolder.getContext().authentication
+        return when(authentication) {
+            is JwtAuthentication -> authentication.principal
+            else -> throw ValidationException("The argument of GetAuth annotation is not of type UserInfo class.")
+        }
     }
 
 }
