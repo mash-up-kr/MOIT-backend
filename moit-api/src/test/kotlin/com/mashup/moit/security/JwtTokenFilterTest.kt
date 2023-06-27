@@ -1,7 +1,6 @@
 package com.mashup.moit.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mashup.moit.security.authentication.MoitUser
 import com.mashup.moit.security.authentication.UserInfo
 import com.mashup.moit.security.jwt.JwtTokenFilter
 import com.mashup.moit.security.jwt.JwtTokenSupporter
@@ -65,7 +64,6 @@ class JwtTokenFilterTest : DescribeSpec() {
                     nickname = testNickName,
                     roles = emptyList()
                 )
-                val moitUser = MoitUser(userInfo)
                 
                 every { jwtTokenSupporter.extractUserFromToken(testToken) } returns userInfo
 
@@ -78,7 +76,7 @@ class JwtTokenFilterTest : DescribeSpec() {
                 it("Authorization header로 부터 token을 추출해 SecurityContextHolder에 저장한다") {
                     val authentication = SecurityContextHolder.getContext().authentication
                     authentication.name shouldBe testNickName
-                    authentication.principal shouldBe moitUser
+                    authentication.principal shouldBe userInfo
                 }
             }
         }
