@@ -24,7 +24,7 @@ class AuthController(
 ) {
 
     @Operation(summary = "로그인 시도", description = "로그인 시도 API - 웹 뷰로 지원 (Auth0 이용)")
-    @GetMapping("/login")
+    @GetMapping("/sign-in")
     fun signIn(): ResponseEntity<Unit> {
         val headers = HttpHeaders()
         headers.location = URI.create("/oauth2/authorization/auth0")
@@ -32,7 +32,7 @@ class AuthController(
     }
 
     @Operation(summary = "로그인 성공 (리다이렉트용)", description = "로그인 성공 API - 서버 단 Redirect 용")
-    @GetMapping("/login/success")
+    @GetMapping("/sign-in/success")
     fun signInSuccess(@AuthenticationPrincipal oidcUser: OidcUser): ResponseEntity<Any> {
         val user = userFacade.findByProviderUniqueKey(oidcUser)
             ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(oidcUser.toBeforeSignUpInfo())
@@ -44,7 +44,7 @@ class AuthController(
     }
 
     @Operation(summary = "회원가입", description = "회원가입 API")
-    @PostMapping("/register")
+    @PostMapping("/sign-up")
     fun signUp(@RequestBody request: UserRegisterRequest): ResponseEntity<Any> {
         val jwtToken = userFacade.createUser(request).let { jwtTokenSupporter.createToken(UserInfo.from(it)) }
         return ResponseEntity.noContent()
