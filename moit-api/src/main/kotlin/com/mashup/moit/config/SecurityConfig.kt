@@ -50,7 +50,6 @@ class SecurityConfig(
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer {
             it.ignoring().requestMatchers(
-                "/**", // TODO: 개발 중이므로 다 제외
                 "/error/**",
                 "/am-i-alive/**",
                 "/api/v1/auth/register"
