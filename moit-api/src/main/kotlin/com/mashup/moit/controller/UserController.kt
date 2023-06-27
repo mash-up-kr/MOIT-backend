@@ -2,7 +2,7 @@ package com.mashup.moit.controller
 
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.security.authentication.UserInfo
-import com.mashup.moit.security.resolver.MoitUser
+import com.mashup.moit.security.resolver.GetAuth
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,7 +16,7 @@ class UserController {
 
     @Operation(summary = "유저 정보 조회", description = "유저 정보를 조회하는 API")
     @GetMapping
-    fun getUserInformation(@MoitUser userInfo: UserInfo): MoitApiResponse<UserInfo> {
+    fun getUserInformation(@GetAuth userInfo: UserInfo): MoitApiResponse<UserInfo> {
         return MoitApiResponse.success(userInfo)
     }
 
