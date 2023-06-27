@@ -38,7 +38,7 @@ class AuthController(
             ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(oidcUser.toBeforeSignUpInfo())
 
         val jwtToken = jwtTokenSupporter.createToken(UserInfo.from(user))
-        return ResponseEntity.noContent()
+        return ResponseEntity.ok()
             .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken")
             .build()
     }
