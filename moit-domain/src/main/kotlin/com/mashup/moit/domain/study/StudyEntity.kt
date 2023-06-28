@@ -40,5 +40,6 @@ class StudyEntity(
         id = id,
         moitId = moitId,
         order = order,
+        startAt = startAt,
     )
 }

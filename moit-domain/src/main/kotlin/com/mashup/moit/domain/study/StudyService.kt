@@ -42,6 +42,13 @@ class StudyService(
         }.let { studyRepository.saveAll(it) }
     }
 
+    fun findUpcomingStudy(moitId: Long): Study? {
+        return studyRepository.findFirstByMoitIdAndEndAtAfterOrderByStartAtAsc(
+            moitId = moitId,
+            endAt = LocalDateTime.now(),
+        )?.toDomain()
+    }
+
     private fun NotificationPolicyColumns.remindAt(startAt: LocalDateTime): LocalDateTime? {
         return if (isRemindActive) {
             StudyRemindAtCalculator.calculate(startAt, remindOption!!)
@@ -49,10 +56,10 @@ class StudyService(
             null
         }
     }
-    
+
     fun getAttendanceKeyword(studyId: Long): String? {
         return studyRepository.findById(studyId)
-            .orElseThrow{ MoitException.of(MoitExceptionType.NOT_EXIST)}
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
             .attendanceCode
     }
 }

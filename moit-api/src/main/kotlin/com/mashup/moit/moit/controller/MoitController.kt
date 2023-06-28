@@ -5,7 +5,7 @@ import com.mashup.moit.moit.controller.dto.MoitCreateRequest
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinRequest
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
-import com.mashup.moit.moit.controller.dto.MoitListResponse
+import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.controller.dto.MoitStudyListResponse
 import com.mashup.moit.moit.facade.MoitFacade
 import io.swagger.v3.oas.annotations.Operation
@@ -27,6 +27,7 @@ class MoitController(
     @Operation(summary = "Moit create API", description = "moit 생성")
     @PostMapping
     fun createMoit(@Valid @RequestBody request: MoitCreateRequest): MoitApiResponse<Long> {
+        // TODO 인증 개발 완료 후 userId mock 제거
         return MoitApiResponse.success(moitFacade.create(7, request))
     }
 
@@ -44,8 +45,9 @@ class MoitController(
 
     @Operation(summary = "My Moit List API", description = "내 Moit List 조회")
     @GetMapping
-    fun moitList(): MoitApiResponse<MoitListResponse> {
-        return MoitApiResponse.success(MoitListResponse.sample())
+    fun getMyMoits(): MoitApiResponse<MyMoitListResponse> {
+        // TODO 인증 개발 완료 후 userId mock 제거
+        return MoitApiResponse.success(moitFacade.getMyMoits(7))
     }
 
     @Operation(summary = "All attendances of all studies in Moit API", description = "Moit의 모든 스터디 출결 조회")
