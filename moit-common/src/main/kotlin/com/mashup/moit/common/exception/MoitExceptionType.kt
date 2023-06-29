@@ -10,11 +10,14 @@ enum class MoitExceptionType(
     EMPTY_AUTHORIZATION_HEADER("Not Exist Authorization Header", "U001_EMPTY_AUTHORIZATION_HEADER", 400),
     INVALID_USER_AUTH_TOKEN("Invalid JWT Token", "U002_INVALID_TOKEN", 400),
     INVALID_AUTH_PROVIDER("Invalid provider by auth0. Check social section of auth0", "U003_INVALID_AUTH_PROVIDER", 500),
-    
+
     // COMMON
     NOT_EXIST("존재하지 않습니다.", "C001_NOT_EXIST", 404),
     SYSTEM_FAIL("Internal Server Error.", "C002_SYSTEM_FAIL", 500),
     INVALID_ACCESS("Invalid Access", "C003_INVALID_ACCESS", 403),
     ALREADY_EXIST("Already Exist", "C004_ALREADY_EXIST", 409),
+
+    // ATTENDANCE
+    ATTENDANCE_NOT_STARTED("스터디 출석이 아직 시작되지 않았습니다.", "A001_NOT_STARTED", 400)
     ;
 }

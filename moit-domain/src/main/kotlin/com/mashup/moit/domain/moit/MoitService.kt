@@ -68,14 +68,11 @@ class MoitService(
             }
         }
     }
-
+    
     fun getMoitByInvitationCode(invitationCode: String): Moit {
-        val moit = moitRepository.findByInvitationCode(invitationCode.uppercase(Locale.getDefault()))
+        return moitRepository.findByInvitationCode(invitationCode.uppercase(Locale.getDefault()))
+            ?.also { it.validateDateForJoin() }?.toDomain()
             ?: throw MoitException.of(MoitExceptionType.NOT_EXIST)
-
-        if (moit.isEnd) throw MoitException.of(MoitExceptionType.INVALID_ACCESS, "종료된 Moit 입니다")
-
-        return moit.toDomain()
     }
 
     fun getMoitById(moitId: Long): Moit {

@@ -23,4 +23,11 @@ class AttendanceEntity(
 
     @Column(name = "attendance_at")
     val attendanceAt: LocalDateTime?,
-) : BaseEntity()
+) : BaseEntity() {
+    fun toDomain() = Attendance(
+        studyId = studyId,
+        userId = userId,
+        status = status,
+        attendanceAt = attendanceAt,
+    )
+}
