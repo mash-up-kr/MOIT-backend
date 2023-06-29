@@ -55,7 +55,7 @@ class StudyController(
     }
 
     @Operation(summary = "Register Study Keyword API", description = "Study 키워드 등록")
-    @PostMapping("/{studyId}/attendance/code/register")
+    @PostMapping("/{studyId}/attendance/keyword/register")
     fun registerAttendanceKeyword(@PathVariable studyId: Long, @RequestBody @Valid request: StudyAttendanceKeywordRequest): MoitApiResponse<Unit> {
         studyFacade.registerAttendanceKeyword(studyId, request)
         return MoitApiResponse.success()
