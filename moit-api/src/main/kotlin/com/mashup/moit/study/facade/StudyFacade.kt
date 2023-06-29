@@ -30,4 +30,8 @@ class StudyFacade(
     fun registerAttendanceKeyword(studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.registerAttendanceKeyword(studyId, request.attendanceKeyword)
     }
+
+    fun verifyAttendanceKeyword(studyId: Long, request: StudyAttendanceKeywordRequest) {
+        studyService.verifyAttendanceKeyword(studyId, request.attendanceKeyword)
+    }
 }
