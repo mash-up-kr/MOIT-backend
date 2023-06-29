@@ -13,6 +13,7 @@ class FineFacade(
     private val studyService: StudyService,
     private val userService: UserService
 ) {
+    
     fun getFineList(moitId: Long): FineListResponse {
         val fineList = fineService.getFineListByMoitId(moitId)
         if (fineList.isEmpty()) {
@@ -37,4 +38,9 @@ class FineFacade(
 
         return FineListResponse(totalFineAmount, fineNotYet, fineComplete)
     }
+    
+    fun evaluateFine(findId: Long, confirmFine: Boolean) {
+        fineService.updateFineApproveStatus(findId, confirmFine)
+    }
+    
 }
