@@ -1,7 +1,7 @@
 package com.mashup.moit.study.controller
 
 import com.mashup.moit.common.MoitApiResponse
-import com.mashup.moit.study.controller.dto.StudyAttendanceCodeRequest
+import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordRequest
 import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.study.controller.dto.StudyDetailsResponse
 import com.mashup.moit.study.controller.dto.StudyFirstAttendanceResponse
@@ -49,14 +49,15 @@ class StudyController(
     }
 
     @Operation(summary = "Register Study Keyword API", description = "Study 키워드 등록")
-    @PostMapping("/{studyId}/attendance/code/register")
-    fun registerAttendanceKeyword(@PathVariable studyId: Long, @RequestBody @Valid request: StudyAttendanceCodeRequest): MoitApiResponse<Unit> {
+    @PostMapping("/{studyId}/attendance/keyword/register")
+    fun registerAttendanceKeyword(@PathVariable studyId: Long, @RequestBody @Valid request: StudyAttendanceKeywordRequest): MoitApiResponse<Unit> {
+        studyFacade.registerAttendanceKeyword(studyId, request)
         return MoitApiResponse.success()
     }
 
     @Operation(summary = "Verify Study Keyword API", description = "Study 키워드 검증")
     @PostMapping("/{studyId}/attendance/code/verify")
-    fun verifyAttendanceKeyword(@PathVariable studyId: Long, @RequestBody @Valid request: StudyAttendanceCodeRequest): MoitApiResponse<Unit> {
+    fun verifyAttendanceKeyword(@PathVariable studyId: Long, @RequestBody @Valid request: StudyAttendanceKeywordRequest): MoitApiResponse<Unit> {
         return MoitApiResponse.success()
     }
 }

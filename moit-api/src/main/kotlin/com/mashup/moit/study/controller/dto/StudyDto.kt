@@ -42,7 +42,7 @@ data class StudyDetailsResponse(
 }
 
 @Schema(description = "Study 참석 코드 요청")
-data class StudyAttendanceCodeRequest(
+data class StudyAttendanceKeywordRequest(
     @Schema(description = "Study 참석 코드")
     @field:NotBlank
     @Size(min = 4, max = 4)
