@@ -7,6 +7,7 @@ import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordRequest
 import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.study.controller.dto.StudyDetailsResponse
+import com.mashup.moit.study.controller.dto.StudyFirstAttendanceResponse
 import com.mashup.moit.study.controller.dto.StudyUserAttendanceStatusResponse
 import org.springframework.stereotype.Component
 
@@ -17,6 +18,13 @@ class StudyFacade(
     private val attendanceService: AttendanceService,
     private val userService: UserService,
 ) {
+    fun getDetails(studyId: Long): StudyDetailsResponse {
+        val study = studyService.findById(studyId)
+        val moit = moitService.getMoitById(study.moitId)
+        val firstAttendanceUser = study.firstAttendanceUserId?.let(userService::findByIdOrNull)
+        return StudyDetailsResponse.of(moit, study, firstAttendanceUser)
+    }
+
     fun getUserAttendanceStatus(studyId: Long): List<StudyUserAttendanceStatusResponse> {
         val attendances = attendanceService.findAttendancesByStudyId(studyId)
         val usersById = userService.findUsersById(attendances.map { it.userId })
@@ -30,18 +38,15 @@ class StudyFacade(
             .let { StudyAttendanceKeywordResponse.of(it) }
     }
 
-    fun getDetails(studyId: Long): StudyDetailsResponse {
-        val study = studyService.findById(studyId)
-        val moit = moitService.getMoitById(study.moitId)
-        val firstAttendanceUser = study.firstAttendanceUserId?.let(userService::findByIdOrNull)
-        return StudyDetailsResponse.of(moit, study, firstAttendanceUser)
-    }
-
     fun registerAttendanceKeyword(studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.registerAttendanceKeyword(studyId, request.attendanceKeyword)
     }
 
     fun verifyAttendanceKeyword(studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.verifyAttendanceKeyword(studyId, request.attendanceKeyword)
+    }
+
+    fun checkFirstAttendance(studyId: Long): StudyFirstAttendanceResponse {
+        return StudyFirstAttendanceResponse.of(attendanceService.existFirstAttendanceByStudyId(studyId))
     }
 }
