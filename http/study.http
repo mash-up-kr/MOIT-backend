@@ -3,3 +3,22 @@ GET {{moit-api}}/api/v1/study/{{studyId}}/attendance/keyword
 
 ### 스터디 출석 상태 조회
 GET {{moit-api}}/api/v1/study/{{studyId}}/attendance/status
+
+### 스터디 출석 키워드 등록
+POST {{moit-api}}/api/v1/study/{{studyId}}/attendance/keyword/register
+Content-Type: application/json
+
+{
+    "attendanceKeyword": "아자홧팅"
+}
+
+### 스터디 출석 키워드 인증
+POST {{moit-api}}/api/v1/study/{{studyId}}/attendance/keyword/verify
+Content-Type: application/json
+
+{
+    "attendanceKeyword": "아자홧팅"
+}
+
+### 스터디 출석 초기화
+POST {{moit-api}}/api/v1/study/{{studyId}}/attendance/initialize
