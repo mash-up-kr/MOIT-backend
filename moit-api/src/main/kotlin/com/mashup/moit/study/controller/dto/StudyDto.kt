@@ -2,6 +2,8 @@ package com.mashup.moit.study.controller.dto
 
 import com.mashup.moit.domain.attendance.Attendance
 import com.mashup.moit.domain.attendance.AttendanceStatus
+import com.mashup.moit.domain.moit.Moit
+import com.mashup.moit.domain.study.Study
 import com.mashup.moit.domain.user.User
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
@@ -19,7 +21,7 @@ data class StudyDetailsResponse(
     @Schema(description = "Study 끝나는 날짜 및 시간")
     val endAt: LocalDateTime,
     @Schema(description = "Study 리마인드 날짜 및 시간")
-    val remindAt: LocalDateTime,
+    val remindAt: LocalDateTime? = null,
     @Schema(description = "Study 지각 날짜 및 시간")
     val lateAt: LocalDateTime,
     @Schema(description = "Study 결석 날짜 및 시간")
@@ -28,15 +30,19 @@ data class StudyDetailsResponse(
     val firstAttendanceUserNickname: String? = null
 ) {
     companion object {
-        fun sample(): StudyDetailsResponse = StudyDetailsResponse(
-            moitName = "전자군단",
-            order = 1,
-            startAt = LocalDateTime.of(2023, 6, 15, 16, 0),
-            endAt = LocalDateTime.of(2023, 6, 15, 19, 0),
-            remindAt = LocalDateTime.of(2023, 6, 15, 15, 30),
-            lateAt = LocalDateTime.of(2023, 6, 15, 16, 30),
-            absenceAt = LocalDateTime.of(2023, 6, 15, 17, 0),
-            firstAttendanceUserNickname = null
+        fun of(
+            moit: Moit,
+            study: Study,
+            firstAttendanceUser: User?
+        ): StudyDetailsResponse = StudyDetailsResponse(
+            moitName = moit.name,
+            order = study.order,
+            startAt = study.startAt,
+            endAt = study.endAt,
+            remindAt = study.remindAt,
+            lateAt = study.lateAt,
+            absenceAt = study.absenceAt,
+            firstAttendanceUserNickname = firstAttendanceUser?.nickname
         )
     }
 }

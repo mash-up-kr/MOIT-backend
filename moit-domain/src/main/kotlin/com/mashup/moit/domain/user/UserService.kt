@@ -2,6 +2,7 @@ package com.mashup.moit.domain.user
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -23,6 +24,10 @@ class UserService(
     fun findUserById(userId: Long): User {
         return findUsersById(listOf(userId)).firstOrNull()
             ?: throw MoitException.of(MoitExceptionType.NOT_EXIST)
+    }
+
+    fun findByIdOrNull(userId: Long): User? {
+        return userRepository.findByIdOrNull(userId)?.toDomain()
     }
 
     fun findUsersById(userIds: List<Long>): List<User> {

@@ -27,7 +27,7 @@ class StudyController(
     @Operation(summary = "Study Detail API", description = "Study 상세 조회")
     @GetMapping("/{studyId}")
     fun getDetail(@PathVariable studyId: Long): MoitApiResponse<StudyDetailsResponse> {
-        return MoitApiResponse.success(StudyDetailsResponse.sample())
+        return MoitApiResponse.success(studyFacade.getDetails(studyId))
     }
 
     @Operation(summary = "Study Keyword API", description = "study 키워드 조회")
