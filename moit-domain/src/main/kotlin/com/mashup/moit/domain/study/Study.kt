@@ -7,4 +7,9 @@ data class Study(
     val moitId: Long,
     val order: Int,
     val startAt: LocalDateTime,
+    val endAt: LocalDateTime,
+    val remindAt: LocalDateTime?,
+    val lateAt: LocalDateTime,
+    val absenceAt: LocalDateTime,
+    val firstAttendanceUserId: Long? = null
 )

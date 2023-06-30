@@ -3,43 +3,34 @@ package com.mashup.moit.domain.user
 import com.mashup.moit.domain.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 
 @Table(name = "users")
 @Entity
 class UserEntity(
-    @Enumerated(EnumType.STRING)
-    @Column(name = "social_type", nullable = false)
-    val socialType: SocialType,
+    @Column(name = "provider_unique_key", nullable = false)
+    val providerUniqueKey: String,
 
-    @Column(name = "apple_id")
-    val appleId: Long? = null,
-
-    @Column(name = "kakao_id")
-    val kakaoId: Long? = null,
-
-    @Column(name = "nickname")
+    @Column(name = "nickname", nullable = false)
     val nickname: String,
+
+    @Column(name = "profile_image", nullable = false)
+    val profileImage: Int,
+
+    @Column(name = "email", nullable = false)
+    val email: String
 ) : BaseEntity() {
-    fun toDomain() = User(
-        id = id,
-        socialType = socialType,
-        nickname = nickname
-    )
-
-    companion object {
-        fun createAppleUser(appleId: Long, nickname: String): UserEntity = UserEntity(
-            appleId = appleId,
-            socialType = SocialType.APPLE,
-            nickname = nickname
-        )
-
-        fun createKakaoUser(kakaoId: Long, nickname: String): UserEntity = UserEntity(
-            kakaoId = kakaoId,
-            socialType = SocialType.KAKAO,
-            nickname = nickname
+    fun toDomain(): User {
+        return User(
+            id = id,
+            createdAt = createdAt,
+            updatedAt = updatedAt,
+            isDeleted = isDeleted,
+            providerUniqueKey = providerUniqueKey,
+            nickname = nickname,
+            profileImage = profileImage,
+            email = email,
         )
     }
+
 }

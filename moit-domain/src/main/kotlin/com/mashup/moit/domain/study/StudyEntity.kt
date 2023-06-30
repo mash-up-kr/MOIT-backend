@@ -41,5 +41,10 @@ class StudyEntity(
         moitId = moitId,
         order = order,
         startAt = startAt,
+        endAt = endAt,
+        remindAt = remindAt,
+        lateAt = lateAt,
+        absenceAt = absenceAt,
+        firstAttendanceUserId = firstAttendanceUserId,
     )
 }

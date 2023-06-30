@@ -1,5 +1,7 @@
 package com.mashup.moit.common
 
+import com.mashup.moit.common.exception.MoitExceptionType
+
 data class MoitApiResponse<T>(
     val success: Boolean = true,
     val data: T? = null,
@@ -19,6 +21,18 @@ data class MoitApiResponse<T>(
                 data = data
             )
         }
+
+        fun fail(moitExceptionType: MoitExceptionType, message: String?): MoitApiResponse<Unit> {
+            return MoitApiResponse(
+                success = true,
+                data = null,
+                error = MoitApiErrorResponse(
+                    code = moitExceptionType.errorCode,
+                    message = message ?: moitExceptionType.message,
+                )
+            )
+        }
+
     }
 }
 

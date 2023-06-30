@@ -1,15 +1,12 @@
 package com.mashup.moit.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.mashup.moit.domain.user.User
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import org.springframework.security.oauth2.core.oidc.OidcIdToken
-import org.springframework.security.oauth2.core.oidc.OidcUserInfo
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser
-import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
@@ -34,25 +31,14 @@ class JwtTokenSupporterTest : BehaviorSpec() {
         this.objectMapper = objectMapper
 
         Given("User 정보가 주어진 상황에서") {
-            // define user properties
-            val providerInfo = "auth|provider-info"
-            val tokenSubject = "$providerInfo|unique-key"
-            val tokenAudience = "audience-value"
-            val claims = mapOf(
-                "sub" to tokenSubject,
-                "aud" to listOf(tokenAudience),
-                "email" to "abc@moit.com",
-                "picture" to "profile-image",
-                "nickname" to "user-nickname"
-            )
-
             // define test user
-            val userInfo = OidcUserInfo(claims)
-            val idToken = OidcIdToken("token-value-auth", NOW.toInstant(), NOW.plusDays(1L).toInstant(), claims)
-            val user: OidcUser = DefaultOidcUser(null, idToken, userInfo)
+            val user = User(1L, LocalDateTime.now(), LocalDateTime.now(), false, "key", "nickname", 1, "email", null, null)
+            val userInfo = UserInfo.from(user)
+            val tokenSubject = "jwt-user-${userInfo.nickname}"
+            val tokenAudience = "${userInfo.providerUniqueKey}|${userInfo.id}|${userInfo.nickname}"
 
             When("JWT 토큰 생성했을 때") {
-                val jwtToken = jwtTokenSupporter.createToken(user)
+                val jwtToken = jwtTokenSupporter.createToken(userInfo)
                 val jwt = jwtParser.parseClaimsJws(jwtToken)
 
                 Then("토큰의 type이 JWT여야 한다") {
@@ -98,5 +84,5 @@ class JwtTokenSupporterTest : BehaviorSpec() {
     companion object {
         private val NOW = LocalDateTime.now()
     }
-    
+
 }
