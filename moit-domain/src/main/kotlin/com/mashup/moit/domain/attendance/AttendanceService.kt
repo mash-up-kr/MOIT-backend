@@ -36,6 +36,12 @@ class AttendanceService(
         val study = studyRepository.findById(studyId).orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
         val attendance = attendanceRepository.findByUserIdAndStudyId(userId, studyId)
             ?: throw MoitException.of(MoitExceptionType.ATTENDANCE_NOT_STARTED)
+        if (attendance.status !== AttendanceStatus.UNDECIDED) {
+            throw MoitException.of(
+                MoitExceptionType.ALREADY_EXIST,
+                "이미 출석하였습니다."
+            )
+        }
 
         val now = LocalDateTime.now()
         attendance.apply {
