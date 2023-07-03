@@ -1,8 +1,11 @@
 package com.mashup.moit.fine.facade
 
+import com.mashup.moit.common.exception.MoitException
+import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.user.UserService
+import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.fine.controller.dto.FineListResponse
 import com.mashup.moit.fine.controller.dto.FineResponseForListView
 import org.springframework.stereotype.Component
@@ -11,7 +14,8 @@ import org.springframework.stereotype.Component
 class FineFacade(
     private val fineService: FineService,
     private val studyService: StudyService,
-    private val userService: UserService
+    private val userService: UserService,
+    private val userMoitService: UserMoitService,
 ) {
     
     fun getFineList(moitId: Long): FineListResponse {
@@ -39,7 +43,12 @@ class FineFacade(
         return FineListResponse(totalFineAmount, fineNotYet, fineComplete)
     }
     
-    fun evaluateFine(findId: Long, confirmFine: Boolean) {
+    fun evaluateFine(userId: Long, moitId: Long, findId: Long, confirmFine: Boolean) {
+        val masterId = userMoitService.findMasterUserByMoitId(moitId).userId
+        if (userId != masterId) {
+            throw MoitException.of(MoitExceptionType.ONLY_MOIT_MASTER)
+        }
+        
         fineService.updateFineApproveStatus(findId, confirmFine)
     }
     
