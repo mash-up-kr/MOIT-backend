@@ -35,7 +35,7 @@ class FineController(
         @GetAuth userInfo: UserInfo,
         @PathVariable("moitId") moitId: Long,
         @PathVariable("fineId") fineId: Long,
-        @RequestParam("fineRemittanceImage") fineRemittanceImage: MultipartFile
+        @RequestParam("finePaymentImage") finePaymentImage: MultipartFile
     ): MoitApiResponse<Unit> {
         return MoitApiResponse.success()
     }
