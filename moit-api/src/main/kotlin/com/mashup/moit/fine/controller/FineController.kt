@@ -32,6 +32,7 @@ class FineController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun certificationFine(
+        @GetAuth userInfo: UserInfo,
         @PathVariable("moitId") moitId: Long,
         @PathVariable("fineId") fineId: Long,
         @RequestParam("fineRemittanceImage") fineRemittanceImage: MultipartFile
