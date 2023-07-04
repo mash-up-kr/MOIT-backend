@@ -30,8 +30,8 @@ class SecurityConfig(
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
             .oauth2Login {
-                it.loginPage("/api/v1/auth/login")
-                    .defaultSuccessUrl("/api/v1/auth/login/success") // TODO: Use successHandler 
+                it.loginPage("/api/v1/auth/sign-in")
+                    .defaultSuccessUrl("/api/v1/auth/sign-in/success") // TODO: Use successHandler 
                     .failureHandler(AuthFailureHandler())
             }
             .logout { it.logoutRequestMatcher(AntPathRequestMatcher("/logout")).addLogoutHandler(logoutHandler) }
@@ -53,7 +53,8 @@ class SecurityConfig(
                 "/**", // TODO: remove this
                 "/error/**",
                 "/am-i-alive/**",
-                "/api/v1/auth/register"
+                "/api/v1/auth/sign-up",
+                "/api/v1/auth/sign-in"
             )
         }
     }
