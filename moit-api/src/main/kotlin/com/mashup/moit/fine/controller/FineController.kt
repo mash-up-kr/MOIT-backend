@@ -3,6 +3,7 @@ package com.mashup.moit.fine.controller
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.fine.controller.dto.FineEvaluateRequest
 import com.mashup.moit.fine.controller.dto.FineListResponse
+import com.mashup.moit.fine.controller.dto.FineResponse
 import com.mashup.moit.fine.facade.FineFacade
 import com.mashup.moit.security.authentication.UserInfo
 import com.mashup.moit.security.resolver.GetAuth
@@ -36,8 +37,10 @@ class FineController(
         @PathVariable("moitId") moitId: Long,
         @PathVariable("fineId") fineId: Long,
         @RequestParam("finePaymentImage") finePaymentImage: MultipartFile
-    ): MoitApiResponse<Unit> {
-        return MoitApiResponse.success()
+    ): MoitApiResponse<FineResponse> {
+        return MoitApiResponse.success(
+            fineFacade.addFineCertification(userInfo.id, userInfo.nickname, fineId, finePaymentImage)
+        )
     }
 
     @Operation(summary = "벌금 인증 평가 API", description = "벌금 송금 인증을 평가하는 API - 스터디장만 가능")
