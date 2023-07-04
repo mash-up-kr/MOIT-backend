@@ -2,9 +2,6 @@ package com.mashup.moit.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.domain.user.User
-import com.mashup.moit.domain.user.UserRole
-import com.mashup.moit.security.authentication.UserInfo
-import com.mashup.moit.security.jwt.JwtTokenSupporter
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
@@ -35,7 +32,7 @@ class JwtTokenSupporterTest : BehaviorSpec() {
 
         Given("User 정보가 주어진 상황에서") {
             // define test user
-            val user = User(1L, LocalDateTime.now(), LocalDateTime.now(), false, "key", "nickname", 1, "email", setOf(UserRole.USER))
+            val user = User(1L, LocalDateTime.now(), LocalDateTime.now(), false, "key", "nickname", 1, "email", null, null)
             val userInfo = UserInfo.from(user)
             val tokenSubject = "jwt-user-${userInfo.nickname}"
             val tokenAudience = "${userInfo.providerUniqueKey}|${userInfo.id}|${userInfo.nickname}"

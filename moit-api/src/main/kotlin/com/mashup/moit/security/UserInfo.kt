@@ -1,7 +1,6 @@
-package com.mashup.moit.security.authentication
+package com.mashup.moit.security
 
 import com.mashup.moit.domain.user.User
-import com.mashup.moit.domain.user.UserRole
 
 data class UserInfo(
     val id: Long,
@@ -9,7 +8,6 @@ data class UserInfo(
     val nickname: String,
     val profileImage: Int,
     val email: String,
-    val roles: Set<UserRole>,
 ) {
     companion object {
         fun from(user: User): UserInfo {
@@ -18,8 +16,7 @@ data class UserInfo(
                 user.providerUniqueKey,
                 user.nickname,
                 user.profileImage,
-                user.email,
-                user.roles
+                user.email
             )
         }
     }
