@@ -1,7 +1,5 @@
 package com.mashup.moit.domain.user
 
-import com.mashup.moit.domain.attendance.AttendanceEntity
-import com.mashup.moit.domain.usermoit.UserMoitEntity
 import java.time.LocalDateTime
 
 data class User(
@@ -13,6 +11,5 @@ data class User(
     val nickname: String,
     val profileImage: Int,
     val email: String,
-    val attendances: List<AttendanceEntity>? = null,
-    val userMoits: List<UserMoitEntity>? = null
+    val roles: Set<UserRole>,
 )

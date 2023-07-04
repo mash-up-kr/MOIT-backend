@@ -1,7 +1,9 @@
 package com.mashup.moit.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mashup.moit.domain.sample.SampleUser
+import com.mashup.moit.security.authentication.UserInfo
+import com.mashup.moit.security.jwt.JwtTokenFilter
+import com.mashup.moit.security.jwt.JwtTokenSupporter
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -54,13 +56,16 @@ class JwtTokenFilterTest : DescribeSpec() {
                 val testToken = "test-jwt-token"
                 val testEmail = "testEmail"
                 val testNickName = "testNickname"
-                val testUser = SampleUser(
+                val userInfo = UserInfo(
+                    id = 1L,
                     providerUniqueKey = "",
                     email = testEmail,
-                    profileImage = "",
-                    nickname = testNickName
+                    profileImage = 1,
+                    nickname = testNickName,
+                    roles = emptySet()
                 )
-                every { jwtTokenSupporter.extractUserFromToken(testToken) } returns testUser
+                
+                every { jwtTokenSupporter.extractUserFromToken(testToken) } returns userInfo
 
                 val request = MockHttpServletRequest("GET", "/must/login-user/test").apply {
                     addHeader(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $testToken")
@@ -71,7 +76,7 @@ class JwtTokenFilterTest : DescribeSpec() {
                 it("Authorization header로 부터 token을 추출해 SecurityContextHolder에 저장한다") {
                     val authentication = SecurityContextHolder.getContext().authentication
                     authentication.name shouldBe testNickName
-                    authentication.details shouldBe testEmail
+                    authentication.principal shouldBe userInfo
                 }
             }
         }
