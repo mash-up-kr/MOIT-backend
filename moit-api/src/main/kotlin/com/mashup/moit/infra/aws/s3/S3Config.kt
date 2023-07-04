@@ -26,5 +26,5 @@ class S3Config {
     }
 
     @ConfigurationProperties(prefix = "cloud.aws.s3")
-    data class S3Properties(val bucketName: String)
+    data class S3Properties(val domain: String, val bucketName: String)
 }
