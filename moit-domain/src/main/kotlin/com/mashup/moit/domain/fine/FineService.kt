@@ -24,4 +24,17 @@ class FineService(
             .apply { this.approveStatus = approveStatus }
     }
 
+    @Transactional
+    fun addedFinePaymentImage(userId: Long, findId: Long, finePaymentImageUrl: String): Fine {
+        return fineRepository.findById(findId)
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+            .takeIf { it.userId == userId }
+            ?.apply { 
+                this.paymentImageUrl = finePaymentImageUrl
+                this.approveStatus = FineApproveStatus.IN_PROGRESS 
+            }
+            ?.toDomain()
+            ?: throw MoitException.of(MoitExceptionType.NOT_HAVE_PERMISSION_RESOURCE)
+    }
+
 }
