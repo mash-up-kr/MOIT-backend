@@ -29,7 +29,7 @@ class FineEntity(
     val approvedAt: LocalDateTime?,
 
     @Column(name = "payment_image_url")
-    val paymentImageUrl: String?,
+    var paymentImageUrl: String?,
 
     @Column(name = "user_id", nullable = false)
     val userId: Long,
