@@ -53,6 +53,11 @@ class MoitFacade(
         val moit = getMoitByInvitationCode(invitationCode)
         return userMoitService.join(userId, moit.id, UserMoitRole.MEMBER).let { MoitJoinResponse.of(it.moitId) }
     }
+    
+    fun isMasterOfMoit(moitId: Long, userId: Long): Boolean {
+        val masterId = userMoitService.findMasterUserByMoitId(moitId).userId
+        return userId == masterId
+    }
 
     private fun getMoitByInvitationCode(invitationCode: String): Moit {
         return moitService.getMoitByInvitationCode(invitationCode)
