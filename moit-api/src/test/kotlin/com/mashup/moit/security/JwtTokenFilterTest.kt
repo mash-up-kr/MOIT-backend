@@ -62,7 +62,7 @@ class JwtTokenFilterTest : DescribeSpec() {
                     email = testEmail,
                     profileImage = 1,
                     nickname = testNickName,
-                    roles = emptyList()
+                    roles = emptySet()
                 )
                 
                 every { jwtTokenSupporter.extractUserFromToken(testToken) } returns userInfo

@@ -11,5 +11,5 @@ data class User(
     val nickname: String,
     val profileImage: Int,
     val email: String,
-    val roles: List<UserRole>,
+    val roles: Set<UserRole>,
 )

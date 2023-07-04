@@ -9,7 +9,7 @@ data class UserInfo(
     val nickname: String,
     val profileImage: Int,
     val email: String,
-    val roles: List<UserRole>,
+    val roles: Set<UserRole>,
 ) {
     companion object {
         fun from(user: User): UserInfo {

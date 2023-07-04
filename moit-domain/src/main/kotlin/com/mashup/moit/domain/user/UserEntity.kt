@@ -1,7 +1,9 @@
 package com.mashup.moit.domain.user
 
 import com.mashup.moit.domain.common.BaseEntity
+import com.mashup.moit.domain.moit.converter.UserRoleConverter
 import jakarta.persistence.Column
+import jakarta.persistence.Convert
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
 
@@ -20,8 +22,9 @@ class UserEntity(
     @Column(name = "email", nullable = false)
     val email: String,
 
+    @Convert(converter = UserRoleConverter::class)
     @Column(name = "roles")
-    val roles: String,
+    val roles: Set<UserRole>,
 ) : BaseEntity() {
     fun toDomain(): User {
         return User(
@@ -33,7 +36,7 @@ class UserEntity(
             nickname = nickname,
             profileImage = profileImage,
             email = email,
-            roles = roles.split(USER_ROLE_DELIMITER).map { UserRole.valueOf(it) },
+            roles = roles,
         )
     }
 
