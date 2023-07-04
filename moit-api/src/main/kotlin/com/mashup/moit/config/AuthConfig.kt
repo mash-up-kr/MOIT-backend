@@ -18,7 +18,7 @@ class AuthConfig {
     }
 
     @ConfigurationProperties(prefix = "moit.auth")
-    data class AuthProperty(var jwtSecretKey: String)
+    data class AuthProperty(val jwtSecretKey: String)
 
 }
 
