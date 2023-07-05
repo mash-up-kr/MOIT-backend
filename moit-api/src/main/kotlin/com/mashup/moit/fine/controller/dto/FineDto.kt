@@ -6,7 +6,6 @@ import com.mashup.moit.domain.study.Study
 import com.mashup.moit.domain.user.User
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotNull
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 
@@ -59,8 +58,43 @@ data class FineResponseForListView(
                 userNickname = user.nickname,
                 attendanceStatus = fine.attendanceStatus,
                 studyOrder = study.order,
-                isApproved = fine.isApproved, 
+                isApproved = fine.isApproved,
                 approveAt = fine.approvedAt
+            )
+    }
+}
+
+
+@Schema(description = "Fine 정보 - Fine payment 추가 시 정보 조회로 반환")
+data class FineResponse(
+    @Schema(description = "Fine id")
+    val id: Long,
+    @Schema(description = "Fine 금액")
+    val fineAmount: Long,
+    @Schema(description = "Fine 대상 User id")
+    val userId: Long,
+    @Schema(description = "Fine 대상 User nickname")
+    val userNickname: String,
+    @Schema(description = "Fine 대상 출석 상태 (LATE, ABSENCE)")
+    val attendanceStatus: AttendanceStatus,
+    @Schema(description = "Fine 납부 인증 유무")
+    val isApproved: Boolean,
+    @Schema(description = "Fine 납부 일자 YYYY-mm-dd")
+    val approveAt: LocalDateTime?,
+    @Schema(description = "Fine 인증 이미지")
+    val paymentImageUrl: String?,
+) {
+    companion object {
+        fun of(fine: Fine, userNickname: String) =
+            FineResponse(
+                id = fine.id,
+                fineAmount = fine.amount,
+                userId = fine.userId,
+                userNickname = userNickname,
+                attendanceStatus = fine.attendanceStatus,
+                isApproved = fine.isApproved,
+                approveAt = fine.approvedAt,
+                paymentImageUrl = fine.paymentImageUrl
             )
     }
 }

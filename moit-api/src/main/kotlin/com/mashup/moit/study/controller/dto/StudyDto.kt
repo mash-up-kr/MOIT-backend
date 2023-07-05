@@ -71,7 +71,7 @@ data class StudyFirstAttendanceResponse(
     val isFirstAttendance: Boolean,
 ) {
     companion object {
-        fun sample() = StudyFirstAttendanceResponse(true)
+        fun of(isFirstAttendance: Boolean) = StudyFirstAttendanceResponse(isFirstAttendance)
     }
 }
 

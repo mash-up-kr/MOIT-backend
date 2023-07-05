@@ -16,4 +16,8 @@ class AttendanceService(
             ?.map { it.toDomain() }
             ?: throw MoitException.of(MoitExceptionType.ATTENDANCE_NOT_STARTED)
     }
+
+    fun existFirstAttendanceByStudyId(studyId: Long): Boolean {
+        return attendanceRepository.existsByStudyIdAndStatus(studyId, AttendanceStatus.ATTENDANCE)
+    }
 }

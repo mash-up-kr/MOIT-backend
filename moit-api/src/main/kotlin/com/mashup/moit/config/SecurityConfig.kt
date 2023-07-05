@@ -1,11 +1,11 @@
 package com.mashup.moit.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mashup.moit.security.JwtTokenFilter
-import com.mashup.moit.security.JwtTokenSupporter
 import com.mashup.moit.security.handler.AuthFailureHandler
 import com.mashup.moit.security.handler.HttpStatusAccessDeniedHandler
 import com.mashup.moit.security.handler.HttpStatusAuthenticationEntryPoint
+import com.mashup.moit.security.jwt.JwtTokenFilter
+import com.mashup.moit.security.jwt.JwtTokenSupporter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -27,11 +27,12 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
+            .csrf { it.disable() }
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
             .oauth2Login {
-                it.loginPage("/api/v1/auth/login")
-                    .defaultSuccessUrl("/api/v1/auth/login/success") // TODO: Use successHandler 
+                it.loginPage("/api/v1/auth/sign-in")
+                    .defaultSuccessUrl("/api/v1/auth/sign-in/success") // TODO: Use successHandler 
                     .failureHandler(AuthFailureHandler())
             }
             .logout { it.logoutRequestMatcher(AntPathRequestMatcher("/logout")).addLogoutHandler(logoutHandler) }
@@ -50,10 +51,11 @@ class SecurityConfig(
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer {
             it.ignoring().requestMatchers(
-                "/**", // TODO: 개발 중이므로 다 제외
+                "/**", // TODO: remove this
                 "/error/**",
                 "/am-i-alive/**",
-                "/api/v1/auth/register"
+                "/api/v1/auth/sign-up",
+                "/api/v1/auth/sign-in"
             )
         }
     }

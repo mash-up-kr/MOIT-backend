@@ -31,8 +31,11 @@ Content-Type: application/json
     "invitationCode": "SP2231RI"
 }
 
+### My Moits
+GET {{moit-api}}/api/v1/moit
+
 ### Moit Details 
 GET {{moit-api}}/api/v1/moit/{{moitId}}
 
-### My Moits
-GET {{moit-api}}/api/v1/moit
+### Moit Attendance 
+GET {{moit-api}}/api/v1/moit/{{moitId}}/attendance

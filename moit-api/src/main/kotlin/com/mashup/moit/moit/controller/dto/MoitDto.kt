@@ -193,12 +193,18 @@ data class MoitStudyListResponse(
 data class MoitStudyResponse(
     @Schema(description = "출결 정보를 담은 스터디 id")
     val studyId: Long,
+    @Schema(description = "스터디 순서")
+    val order: Int,
+    @Schema(description = "스터디 날짜")
+    val date: LocalDate,
     @Schema(description = "스터디에 포함된 출결 리스트")
     val attendances: List<MoitStudyAttendanceResponse>
 ) {
     companion object {
         fun sample(): MoitStudyResponse = MoitStudyResponse(
             studyId = 1L,
+            order = 0,
+            date = LocalDate.of(2023, 6, 15),
             attendances = listOf(
                 MoitStudyAttendanceResponse.sample().copy(status = AttendanceStatus.ABSENCE),
                 MoitStudyAttendanceResponse.sample(),
