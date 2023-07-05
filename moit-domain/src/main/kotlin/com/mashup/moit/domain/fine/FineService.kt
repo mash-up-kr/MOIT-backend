@@ -34,7 +34,7 @@ class FineService(
                 this.approveStatus = FineApproveStatus.IN_PROGRESS 
             }
             ?.toDomain()
-            ?: throw MoitException.of(MoitExceptionType.NOT_HAVE_PERMISSION_RESOURCE)
+            ?: throw MoitException.of(MoitExceptionType.INVALID_ACCESS)
     }
 
 }

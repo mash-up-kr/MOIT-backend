@@ -16,7 +16,6 @@ enum class MoitExceptionType(
     SYSTEM_FAIL("Internal Server Error.", "C002_SYSTEM_FAIL", 500),
     INVALID_ACCESS("Invalid Access", "C003_INVALID_ACCESS", 403),
     ALREADY_EXIST("Already Exist", "C004_ALREADY_EXIST", 409),
-    NOT_HAVE_PERMISSION_RESOURCE("유저는 해당 리소스에 대한 권한이 없습니다", "C005_NOT_HAVE_PERMISSION_RESOURCE", 403),
 
     // ATTENDANCE
     ATTENDANCE_NOT_STARTED("스터디 출석이 아직 시작되지 않았습니다.", "A001_NOT_STARTED", 400),
