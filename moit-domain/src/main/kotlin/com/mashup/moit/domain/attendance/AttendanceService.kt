@@ -32,7 +32,7 @@ class AttendanceService(
     }
 
     @Transactional
-    fun requestAttendance(userId: Long, studyId: Long) {
+    fun requestAttendance(userId: Long, studyId: Long): Attendance {
         val study = studyRepository.findById(studyId).orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
         val attendance = attendanceRepository.findByUserIdAndStudyId(userId, studyId)
             ?: throw MoitException.of(MoitExceptionType.ATTENDANCE_NOT_STARTED)
@@ -44,10 +44,10 @@ class AttendanceService(
         }
 
         val now = LocalDateTime.now()
-        attendance.apply {
+        return attendance.apply {
             this.status = study.attendanceStatus(now)
             this.attendanceAt = now
-        }
+        }.toDomain()
     }
 
     fun findAttendancesByStudyId(studyId: Long): List<Attendance> {
