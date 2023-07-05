@@ -48,6 +48,13 @@ class StudyService(
         }.let { studyRepository.saveAll(it) }
     }
 
+    fun findUpcomingStudy(moitId: Long): Study? {
+        return studyRepository.findFirstByMoitIdAndEndAtAfterOrderByStartAtAsc(
+            moitId = moitId,
+            endAt = LocalDateTime.now(),
+        )?.toDomain()
+    }
+
     private fun NotificationPolicyColumns.remindAt(startAt: LocalDateTime): LocalDateTime? {
         return if (isRemindActive) {
             StudyRemindAtCalculator.calculate(startAt, remindOption!!)

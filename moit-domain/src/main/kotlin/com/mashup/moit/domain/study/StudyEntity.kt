@@ -45,6 +45,6 @@ class StudyEntity(
         remindAt = remindAt,
         lateAt = lateAt,
         absenceAt = absenceAt,
-        firstAttendanceUserId = firstAttendanceUserId
+        firstAttendanceUserId = firstAttendanceUserId,
     )
 }

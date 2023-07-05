@@ -6,4 +6,5 @@ interface UserMoitRepository : JpaRepository<UserMoitEntity, Long> {
     fun existsByUserIdAndMoitId(userId: Long, moitId: Long): Boolean
     fun findByMoitIdAndRole(moitId: Long, role: UserMoitRole): UserMoitEntity?
     fun findAllByMoitId(moitId: Long): List<UserMoitEntity>
+    fun findAllByUserId(userId: Long): List<UserMoitEntity>
 }
