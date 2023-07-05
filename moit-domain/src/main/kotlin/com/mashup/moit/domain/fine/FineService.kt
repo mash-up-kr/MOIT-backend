@@ -17,16 +17,16 @@ class FineService(
     }
 
     @Transactional
-    fun updateFineApproveStatus(findId: Long, confirmFine: Boolean) {
+    fun updateFineApproveStatus(fineId: Long, confirmFine: Boolean) {
         val approveStatus = if (confirmFine) FineApproveStatus.APPROVED else FineApproveStatus.REJECTED
-        fineRepository.findById(findId)
+        fineRepository.findById(fineId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
             .apply { this.approveStatus = approveStatus }
     }
 
     @Transactional
-    fun addedFinePaymentImage(userId: Long, findId: Long, finePaymentImageUrl: String): Fine {
-        return fineRepository.findById(findId)
+    fun addedFinePaymentImage(userId: Long, fineId: Long, finePaymentImageUrl: String): Fine {
+        return fineRepository.findById(fineId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
             .takeIf { it.userId == userId }
             ?.apply { 

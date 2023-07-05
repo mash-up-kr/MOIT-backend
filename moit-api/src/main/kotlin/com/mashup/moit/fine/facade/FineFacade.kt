@@ -47,13 +47,13 @@ class FineFacade(
         return FineListResponse(totalFineAmount, fineNotYet, fineComplete)
     }
 
-    fun evaluateFine(userId: Long, moitId: Long, findId: Long, confirmFine: Boolean) {
+    fun evaluateFine(userId: Long, moitId: Long, fineId: Long, confirmFine: Boolean) {
         val masterId = userMoitService.findMasterUserByMoitId(moitId).userId
         if (userId != masterId) {
             throw MoitException.of(MoitExceptionType.ONLY_MOIT_MASTER)
         }
 
-        fineService.updateFineApproveStatus(findId, confirmFine)
+        fineService.updateFineApproveStatus(fineId, confirmFine)
     }
 
     fun addFineCertification(userId: Long, userNickname: String, fineId: Long, finePaymentImage: MultipartFile): FineResponse {
