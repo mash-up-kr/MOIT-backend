@@ -1,9 +1,9 @@
-package com.mashup.moit.security
+package com.mashup.moit.security.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
-import com.mashup.moit.domain.sample.SampleUser
+import com.mashup.moit.security.authentication.UserInfo
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
@@ -54,9 +54,9 @@ class JwtTokenSupporter(
      * @param token Moit Jwt Token
      * @return MoitUser
      */
-    fun extractUserFromToken(token: String): SampleUser {
+    fun extractUserFromToken(token: String): UserInfo {
         return jwtParser.parseClaimsJws(token).body?.let {
-            mapper.convertValue(it[CLAIM_INFO_KEY], SampleUser::class.java)
+            mapper.convertValue(it[CLAIM_INFO_KEY], UserInfo::class.java)
         } ?: throw MoitException.of(MoitExceptionType.INVALID_USER_AUTH_TOKEN)
     }
 
@@ -68,7 +68,7 @@ class JwtTokenSupporter(
     private fun LocalDateTime.convertToDate(): Date = Date.from(this.toInstant(ASIA_SEOUL_OFFSET))
 
     companion object {
-        const val BEARER_TOKEN_PREFIX = "BEARER"
+        const val BEARER_TOKEN_PREFIX = "Bearer"
         const val CLAIM_INFO_KEY = "info"
         private const val DAY_30 = 30L
         private val ASIA_SEOUL_ZONE = ZoneId.of("Asia/Seoul")

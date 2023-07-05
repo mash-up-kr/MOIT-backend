@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 interface AttendanceRepository : JpaRepository<AttendanceEntity, Long> {
     fun findByUserIdAndStudyId(userId: Long, studyId: Long): AttendanceEntity?
     fun findAllByStudyIdOrderByAttendanceAtAsc(studyId: Long): List<AttendanceEntity>
+    fun existsByStudyIdAndStatus(studyId: Long, status: AttendanceStatus): Boolean
 }

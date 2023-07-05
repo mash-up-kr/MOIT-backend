@@ -10,6 +10,7 @@ tasks.getByName("jar") {
 
 val swaggerVersion: String by project.extra
 val jjwtVersion: String by project.extra
+val awsVersion: String by project.extra
 
 apply(plugin = "com.google.cloud.tools.jib")
 
@@ -24,6 +25,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     testImplementation("org.springframework.security:spring-security-test")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-aws:$awsVersion")
 
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")

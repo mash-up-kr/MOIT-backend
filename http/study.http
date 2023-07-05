@@ -22,3 +22,6 @@ Content-Type: application/json
 
 ### 스터디 출석 초기화
 POST {{moit-api}}/api/v1/study/{{studyId}}/attendance/initialize
+
+### 스터디 첫 출석자 존재 여부 조회 
+GET {{moit-api}}/api/v1/study/{{studyId}}/attendance/is-first

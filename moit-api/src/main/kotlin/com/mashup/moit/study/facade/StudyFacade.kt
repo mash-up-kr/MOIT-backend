@@ -7,6 +7,7 @@ import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordRequest
 import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.study.controller.dto.StudyDetailsResponse
+import com.mashup.moit.study.controller.dto.StudyFirstAttendanceResponse
 import com.mashup.moit.study.controller.dto.StudyUserAttendanceStatusResponse
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -45,6 +46,10 @@ class StudyFacade(
         }
     }
 
+    fun registerAttendanceKeyword(studyId: Long, request: StudyAttendanceKeywordRequest) {
+        studyService.registerAttendanceKeyword(studyId, request.attendanceKeyword)
+    }
+
     @Transactional
     fun verifyAttendanceKeyword(userId: Long, studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.verifyAttendanceKeyword(studyId, request.attendanceKeyword).also {
@@ -54,5 +59,9 @@ class StudyFacade(
 
     fun initializeAttendance(studyId: Long) {
         attendanceService.initializeAttendance(studyId)
+    }
+
+    fun checkFirstAttendance(studyId: Long): StudyFirstAttendanceResponse {
+        return StudyFirstAttendanceResponse.of(attendanceService.existFirstAttendanceByStudyId(studyId))
     }
 }

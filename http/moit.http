@@ -33,3 +33,6 @@ Content-Type: application/json
 
 ### Moit Details 
 GET {{moit-api}}/api/v1/moit/{{moitId}}
+
+### Moit Attendance 
+GET {{moit-api}}/api/v1/moit/{{moitId}}/attendance

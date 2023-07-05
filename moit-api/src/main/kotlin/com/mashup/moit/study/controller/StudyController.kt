@@ -39,7 +39,7 @@ class StudyController(
     @Operation(summary = "Study 첫 출석자 존재 유무 확인 API", description = "Study에 출석한 사람이 있는지 유무 조회")
     @GetMapping("/{studyId}/attendance/is-first")
     fun isFirstAttendance(@PathVariable studyId: Long): MoitApiResponse<StudyFirstAttendanceResponse> {
-        return MoitApiResponse.success(StudyFirstAttendanceResponse.sample())
+        return MoitApiResponse.success(studyFacade.checkFirstAttendance(studyId))
     }
 
     @Operation(summary = "Study 유저 출석상태 조회 API", description = "Study 참석자 출석 상태 조회. 출석/지각 완료(결과) 페이지에서 사용됨.")

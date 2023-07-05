@@ -1,31 +1,29 @@
-package com.mashup.moit.security
+package com.mashup.moit.security.authentication
 
-import com.mashup.moit.domain.sample.SampleUser
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 
-class JwtAuthentication(private val user: SampleUser): Authentication {
-    
+class JwtAuthentication(private val moitUser: MoitUser) : Authentication {
     private var authenticated: Boolean = true
-    
+
     override fun getName(): String {
-        return user.nickname
+        return moitUser.name
     }
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        TODO("User role 추가") 
+    override fun getAuthorities(): Collection<GrantedAuthority> {
+        return moitUser.authorities
     }
 
     override fun getCredentials(): Any {
-        TODO("Not yet implemented")
+        return moitUser.userInfo.id
     }
 
     override fun getDetails(): Any {
-        return user.email
+        return moitUser.attributes
     }
 
     override fun getPrincipal(): Any {
-        return user
+        return moitUser.userInfo
     }
 
     override fun isAuthenticated(): Boolean {
@@ -35,5 +33,5 @@ class JwtAuthentication(private val user: SampleUser): Authentication {
     override fun setAuthenticated(authenticated: Boolean) {
         this.authenticated = authenticated
     }
-    
+
 }

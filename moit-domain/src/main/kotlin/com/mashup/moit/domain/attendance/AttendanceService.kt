@@ -57,6 +57,10 @@ class AttendanceService(
             ?: throw MoitException.of(MoitExceptionType.ATTENDANCE_NOT_STARTED)
     }
 
+    fun existFirstAttendanceByStudyId(studyId: Long): Boolean {
+        return attendanceRepository.existsByStudyIdAndStatus(studyId, AttendanceStatus.ATTENDANCE)
+    }
+
     private fun StudyEntity.attendanceStatus(dateTime: LocalDateTime): AttendanceStatus {
         return when {
             dateTime.isBefore(lateAt) -> AttendanceStatus.ATTENDANCE
