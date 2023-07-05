@@ -30,7 +30,7 @@ class UserMoitService(
     }
 
     fun findMasterUserByMoitId(moitId: Long): UserMoit {
-        return userMoitRepository.findMasterByMoitIdAndRole(moitId, UserMoitRole.MASTER)?.toDomain()
+        return userMoitRepository.findByMoitIdAndRole(moitId, UserMoitRole.MASTER)?.toDomain()
             ?: throw MoitException.of(MoitExceptionType.NOT_EXIST)
     }
 }
