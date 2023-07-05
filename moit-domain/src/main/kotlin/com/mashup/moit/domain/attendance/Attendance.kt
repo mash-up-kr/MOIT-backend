@@ -3,6 +3,7 @@ package com.mashup.moit.domain.attendance
 import java.time.LocalDateTime
 
 data class Attendance(
+    val id: Long,
     val studyId: Long,
     val userId: Long,
     val status: AttendanceStatus,

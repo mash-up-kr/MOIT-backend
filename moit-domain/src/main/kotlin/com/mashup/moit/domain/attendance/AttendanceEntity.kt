@@ -25,6 +25,7 @@ class AttendanceEntity(
     var attendanceAt: LocalDateTime?,
 ) : BaseEntity() {
     fun toDomain() = Attendance(
+        id = id,
         studyId = studyId,
         userId = userId,
         status = status,
