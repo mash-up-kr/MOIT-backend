@@ -60,3 +60,15 @@ management:
 moit:
   auth:
     jwt-secret-key: ENC(RzeI0dzLc2Z6Sby4PaJqY7rhJjK62g8646PqdRNLYSkTv25ol9r47vT8Nm4hpHzVlwOUf/XWb1zqWPnOWVD0jg==)  
+
+cloud:
+  aws:
+    credentials:
+      access-key: ENC(59QcBpydXsm/54kH3O8aPU6bPuTIdxpCTet6FuU5XC5z5Zwi52AfYlTjyjxZwPWyBM1AaI8lW+FZYQnwzP6hBw==)
+      secret-key: ENC(V1ZQWaHkDE5DgMCB+9zKg7zGG6L9fZGXMCI0+iwPrX2/7cu79E60tVxQQ1MWh4taVLMwjaE3nptBBuRIIeIfguvilK91bO+lBU/9Ue//g0Y=)
+    s3:
+      domain: ENC(7F1WPrRa7fvFEYOfGsTFYIhe7R5bQmmCJMwgghCEvPOB7/4SipK+Nnr5EEED0JUICQUtoRUzPmPBNhQ5QXS+2KD4vhmEYkkh3jOT8Lqr1KDITPcs41c7J7m1/6lf74DO)
+      bucket-name: ENC(/sQSONSoi0685DnJHPl4WSRI8E5ARagYcbvkA15RUWTcH5s6wAgMut0+A7EqDQeXQT8FR97Kbpt2FacUNQrg3Q==)
+    region:
+      static: "ap-northeast-2"
+      auto: false

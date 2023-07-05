@@ -19,7 +19,7 @@ data class MoitUser(val userInfo: UserInfo) : OAuth2User {
 
     init {
         authorities = userInfo.roles
-            .map { SimpleGrantedAuthority(it.toString()) }
+            .map { SimpleGrantedAuthority(it.role) }
             .toList()
         attributes = mapOf(
             "nickname" to userInfo.nickname,
