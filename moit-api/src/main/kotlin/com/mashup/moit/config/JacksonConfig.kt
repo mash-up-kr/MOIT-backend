@@ -1,5 +1,6 @@
 package com.mashup.moit.config
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
@@ -18,6 +19,7 @@ class JacksonConfig {
     fun jackson2ObjectMapperBuilder(): Jackson2ObjectMapperBuilder {
         return Jackson2ObjectMapperBuilder()
             .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .serializerByType(LocalDateTime::class.java, LocalDateTimeSerializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
             .serializerByType(LocalDate::class.java, LocalDateSerializer(DateTimeFormatter.ISO_LOCAL_DATE))
             .serializerByType(LocalTime::class.java, LocalTimeSerializer(DateTimeFormatter.ISO_LOCAL_TIME))
