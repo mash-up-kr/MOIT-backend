@@ -19,6 +19,13 @@ class StudyFacade(
     private val attendanceService: AttendanceService,
     private val userService: UserService,
 ) {
+    fun getDetails(studyId: Long): StudyDetailsResponse {
+        val study = studyService.findById(studyId)
+        val moit = moitService.getMoitById(study.moitId)
+        val firstAttendanceUser = study.firstAttendanceUserId?.let(userService::findByIdOrNull)
+        return StudyDetailsResponse.of(moit, study, firstAttendanceUser)
+    }
+
     fun getUserAttendanceStatus(studyId: Long): List<StudyUserAttendanceStatusResponse> {
         val attendances = attendanceService.findAttendancesByStudyId(studyId)
         val usersById = userService.findUsersById(attendances.map { it.userId })
@@ -32,22 +39,11 @@ class StudyFacade(
             .let { StudyAttendanceKeywordResponse.of(it) }
     }
 
-    fun getDetails(studyId: Long): StudyDetailsResponse {
-        val study = studyService.findById(studyId)
-        val moit = moitService.getMoitById(study.moitId)
-        val firstAttendanceUser = study.firstAttendanceUserId?.let(userService::findByIdOrNull)
-        return StudyDetailsResponse.of(moit, study, firstAttendanceUser)
-    }
-
     @Transactional
     fun registerAttendanceKeyword(userId: Long, studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.registerAttendanceKeyword(studyId, request.attendanceKeyword).also {
             attendanceService.requestAttendance(userId, studyId)
         }
-    }
-
-    fun registerAttendanceKeyword(studyId: Long, request: StudyAttendanceKeywordRequest) {
-        studyService.registerAttendanceKeyword(studyId, request.attendanceKeyword)
     }
 
     @Transactional
