@@ -1,6 +1,5 @@
 package com.mashup.moit.moit.controller.dto
 
-import com.mashup.moit.common.util.DateTimeUtils.responseFormatTime
 import com.mashup.moit.domain.attendance.AttendanceStatus
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.NotificationRemindOption
@@ -88,9 +87,9 @@ data class MoitDetailsResponse(
     @Schema(description = "moit 반복 주기")
     val scheduleRepeatCycle: ScheduleRepeatCycle,
     @Schema(description = "moit 시작 시간", example = "HH:mm")
-    val scheduleStartTime: String,
+    val scheduleStartTime: LocalTime,
     @Schema(description = "moit 종료 시간", example = "HH:mm")
-    val scheduleEndTime: String,
+    val scheduleEndTime: LocalTime,
     @Schema(description = "moit 지각 시간")
     val fineLateTime: Int,
     @Schema(description = "moit 지각 벌금")
@@ -118,8 +117,8 @@ data class MoitDetailsResponse(
             imageUrl = moit.imageUrl,
             scheduleDayOfWeeks = moit.scheduleDayOfWeeks,
             scheduleRepeatCycle = moit.scheduleRepeatCycle,
-            scheduleStartTime = moit.scheduleStartTime.responseFormatTime(),
-            scheduleEndTime = moit.scheduleEndTime.responseFormatTime(),
+            scheduleStartTime = moit.scheduleStartTime,
+            scheduleEndTime = moit.scheduleEndTime,
             fineLateTime = moit.fineLateTime,
             fineLateAmount = moit.fineLateAmount,
             fineAbsenceAmount = moit.fineAbsenceAmount,
@@ -153,9 +152,9 @@ class MyMoitResponseForListView(
     @Schema(description = "Moit Study 요일")
     val dayOfWeeks: Set<DayOfWeek>,
     @Schema(description = "Moit Study 시작시간")
-    val startTime: String,
+    val startTime: LocalTime,
     @Schema(description = "Moit Study 종료시간")
-    val endTime: String,
+    val endTime: LocalTime,
     @Schema(description = "제일 가까운 Moit Study D-day, 모든 Study 가 종료됐다면 null")
     val dday: Int?,
 ) {
@@ -167,8 +166,8 @@ class MyMoitResponseForListView(
             isEnd = moit.isEnd,
             repeatCycle = moit.scheduleRepeatCycle,
             dayOfWeeks = moit.scheduleDayOfWeeks,
-            startTime = moit.scheduleStartTime.responseFormatTime(),
-            endTime = moit.scheduleEndTime.responseFormatTime(),
+            startTime = moit.scheduleStartTime,
+            endTime = moit.scheduleEndTime,
             dday = dday,
         )
     }
