@@ -5,4 +5,5 @@ import java.time.LocalDateTime
 
 interface StudyRepository : JpaRepository<StudyEntity, Long> {
     fun findFirstByMoitIdAndEndAtAfterOrderByStartAtAsc(moitId: Long, endAt: LocalDateTime): StudyEntity?
+    fun findAllByMoitId(moitId: Long): List<StudyEntity>
 }

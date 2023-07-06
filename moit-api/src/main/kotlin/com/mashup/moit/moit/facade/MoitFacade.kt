@@ -1,25 +1,34 @@
 package com.mashup.moit.moit.facade
 
+import com.mashup.moit.domain.attendance.AttendanceService
+import com.mashup.moit.domain.attendance.AttendanceStatus
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
+import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.domain.usermoit.UserMoitRole
 import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.moit.controller.dto.MoitCreateRequest
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
+import com.mashup.moit.moit.controller.dto.MoitStudyAttendanceResponse
+import com.mashup.moit.moit.controller.dto.MoitStudyListResponse
+import com.mashup.moit.moit.controller.dto.MoitStudyResponse
 import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.controller.dto.MyMoitResponseForListView
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.Period
 
 @Component
 class MoitFacade(
     private val moitService: MoitService,
     private val studyService: StudyService,
-    private val userMoitService: UserMoitService
+    private val userMoitService: UserMoitService,
+    private val userService: UserService,
+    private val attendanceService: AttendanceService
 ) {
     @Transactional
     fun create(userId: Long, request: MoitCreateRequest): Long {
@@ -68,6 +77,31 @@ class MoitFacade(
         return moits.sortedWith(compareBy(nullsLast()) { ddayByMoitId[it.id] })
             .map { MyMoitResponseForListView.of(it, ddayByMoitId[it.id]) }
             .let { MyMoitListResponse(it) }
+    }
+
+    fun getAllAttendances(moitId: Long): MoitStudyListResponse {
+        val moit = moitService.getMoitById(moitId)
+        val studies = studyService.findAllByMoitId(moit.id)
+            .sortedBy { study -> study.order }
+            .takeWhile { study -> study.startAt < LocalDateTime.now() }
+            .sortedByDescending { study -> study.order }
+            .mapNotNull { study ->
+                val attendances = attendanceService.findAllByStudyId(study.id)
+                if (attendances.all { attendance -> attendance.status == AttendanceStatus.UNDECIDED }) {
+                    return@mapNotNull null
+                }
+                val attendanceResponses = attendances
+                    .filterNot { attendance ->
+                        attendance.status == AttendanceStatus.UNDECIDED
+                    }.map { attendance ->
+                        MoitStudyAttendanceResponse.of(
+                            attendance = attendance,
+                            attendanceUser = userService.findUserById(attendance.userId)
+                        )
+                    }
+                MoitStudyResponse.of(study, attendanceResponses)
+            }
+        return MoitStudyListResponse(studies)
     }
 
     private fun getMoitByInvitationCode(invitationCode: String): Moit {

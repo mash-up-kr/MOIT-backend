@@ -24,6 +24,11 @@ class StudyService(
         return studyRepository.findAllById(ids).map { it.toDomain() }
     }
 
+    fun findAllByMoitId(moitId: Long): List<Study> {
+        return studyRepository.findAllByMoitId(moitId)
+            .map { it.toDomain() }
+    }
+
     @Transactional
     fun createStudies(moitId: Long) {
         val moit = moitRepository.findById(moitId).orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }

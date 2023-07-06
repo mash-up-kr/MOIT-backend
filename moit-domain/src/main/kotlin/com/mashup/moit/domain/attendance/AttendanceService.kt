@@ -17,6 +17,13 @@ class AttendanceService(
             ?: throw MoitException.of(MoitExceptionType.ATTENDANCE_NOT_STARTED)
     }
 
+    fun findAllByStudyId(studyId: Long): List<Attendance> {
+        return attendanceRepository.findAllByStudyIdOrderByAttendanceAtAsc(studyId)
+            .takeIf { it.isNotEmpty() }
+            ?.map { it.toDomain() }
+            ?: emptyList()
+    }
+
     fun existFirstAttendanceByStudyId(studyId: Long): Boolean {
         return attendanceRepository.existsByStudyIdAndStatus(studyId, AttendanceStatus.ATTENDANCE)
     }
