@@ -8,8 +8,12 @@ import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.moit.controller.dto.MoitCreateRequest
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
+import com.mashup.moit.moit.controller.dto.MyMoitListResponse
+import com.mashup.moit.moit.controller.dto.MyMoitResponseForListView
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
+import java.time.Period
 
 @Component
 class MoitFacade(
@@ -53,10 +57,17 @@ class MoitFacade(
         val moit = getMoitByInvitationCode(invitationCode)
         return userMoitService.join(userId, moit.id, UserMoitRole.MEMBER).let { MoitJoinResponse.of(it.moitId) }
     }
-    
-    fun isMasterOfMoit(moitId: Long, userId: Long): Boolean {
-        val masterId = userMoitService.findMasterUserByMoitId(moitId).userId
-        return userId == masterId
+
+    fun getMyMoits(userId: Long): MyMoitListResponse {
+        val moits = moitService.getMoitsByUserId(userId)
+        val ddayByMoitId = moits.associate { moit ->
+            moit.id to studyService.findUpcomingStudy(moit.id)
+                ?.let { Period.between(LocalDate.now(), it.startAt.toLocalDate()) }?.days
+        }
+
+        return moits.sortedWith(compareBy(nullsLast()) { ddayByMoitId[it.id] })
+            .map { MyMoitResponseForListView.of(it, ddayByMoitId[it.id]) }
+            .let { MyMoitListResponse(it) }
     }
 
     private fun getMoitByInvitationCode(invitationCode: String): Moit {

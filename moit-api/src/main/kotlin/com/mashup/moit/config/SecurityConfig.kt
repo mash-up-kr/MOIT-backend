@@ -27,6 +27,7 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
+            .csrf { it.disable() }
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
             .oauth2Login {

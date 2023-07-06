@@ -28,8 +28,8 @@ class FineEntity(
     @Column(name = "approved_at")
     val approvedAt: LocalDateTime?,
 
-    @Column(name = "approve_image_url")
-    val approveImageUrl: String?,
+    @Column(name = "payment_image_url")
+    var paymentImageUrl: String?,
 
     @Column(name = "user_id", nullable = false)
     val userId: Long,
@@ -55,7 +55,7 @@ class FineEntity(
             isApproved = isApproved,
             approveStatus = approveStatus,
             approvedAt = approvedAt,
-            approveImageUrl = approveImageUrl
+            paymentImageUrl = paymentImageUrl
         )
     }
 }

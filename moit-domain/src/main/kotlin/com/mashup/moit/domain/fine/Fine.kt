@@ -17,5 +17,5 @@ data class Fine(
     val isApproved: Boolean,
     val approveStatus: FineApproveStatus,
     val approvedAt: LocalDateTime?,
-    val approveImageUrl: String?,
+    val paymentImageUrl: String?,
 )

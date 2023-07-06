@@ -33,6 +33,7 @@ enum class ScheduleRepeatCycle(
     NONE(null),
     ONE_WEEK(Period.ofDays(7)),
     TWO_WEEK(Period.ofDays(14)),
+    THREE_WEEK(Period.ofDays(21)),
     FOUR_WEEK(Period.ofDays(28)),
     ;
 }

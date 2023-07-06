@@ -2,6 +2,7 @@ package com.mashup.moit.domain.moit
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
+import com.mashup.moit.domain.usermoit.UserMoitRepository
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,7 +14,8 @@ import java.util.*
 @Service
 @Transactional(readOnly = true)
 class MoitService(
-    private val moitRepository: MoitRepository
+    private val moitRepository: MoitRepository,
+    private val userMoitRepository: UserMoitRepository,
 ) {
     @Transactional
     fun createMoit(
@@ -79,5 +81,10 @@ class MoitService(
         return moitRepository.findById(moitId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
             .toDomain()
+    }
+
+    fun getMoitsByUserId(userId: Long): List<Moit> {
+        val moitIds = userMoitRepository.findAllByUserId(userId).map { it.moitId }
+        return moitRepository.findAllById(moitIds).map { it.toDomain() }
     }
 }
