@@ -15,14 +15,14 @@ class AttendanceEntity(
     val studyId: Long,
 
     @Column(name = "user_id", nullable = false)
-    var userId: Long,
+    val userId: Long,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    val status: AttendanceStatus,
+    var status: AttendanceStatus,
 
     @Column(name = "attendance_at")
-    val attendanceAt: LocalDateTime?,
+    var attendanceAt: LocalDateTime?,
 ) : BaseEntity() {
     fun toDomain() = Attendance(
         studyId = studyId,

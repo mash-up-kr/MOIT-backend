@@ -1,5 +1,6 @@
 package com.mashup.moit.domain.study
 
+import com.mashup.moit.domain.attendance.AttendanceStatus
 import com.mashup.moit.domain.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -47,4 +48,12 @@ class StudyEntity(
         absenceAt = absenceAt,
         firstAttendanceUserId = firstAttendanceUserId,
     )
+
+    fun attendanceStatus(dateTime: LocalDateTime): AttendanceStatus {
+        return when {
+            dateTime.isBefore(lateAt) -> AttendanceStatus.ATTENDANCE
+            dateTime.isBefore(absenceAt) -> AttendanceStatus.LATE
+            else -> AttendanceStatus.ABSENCE
+        }
+    }
 }
