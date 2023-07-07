@@ -2,7 +2,6 @@ package com.mashup.moit.domain.attendance
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
-import com.mashup.moit.domain.study.StudyEntity
 import com.mashup.moit.domain.study.StudyRepository
 import com.mashup.moit.domain.usermoit.UserMoitRepository
 import org.springframework.stereotype.Service
@@ -59,13 +58,5 @@ class AttendanceService(
 
     fun existFirstAttendanceByStudyId(studyId: Long): Boolean {
         return attendanceRepository.existsByStudyIdAndStatus(studyId, AttendanceStatus.ATTENDANCE)
-    }
-
-    private fun StudyEntity.attendanceStatus(dateTime: LocalDateTime): AttendanceStatus {
-        return when {
-            dateTime.isBefore(lateAt) -> AttendanceStatus.ATTENDANCE
-            dateTime.isBefore(absenceAt) -> AttendanceStatus.LATE
-            else -> AttendanceStatus.ABSENCE
-        }
     }
 }
