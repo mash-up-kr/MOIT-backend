@@ -17,7 +17,7 @@ class AttendanceInitializeScheduler(
     @Async("asyncSchedulerExecutor")
     @Transactional
     fun initializeAttendance() {
-        studyService.findUnInitializedStudyStartAtBefore(LocalDateTime.now().plusMinutes(20)).forEach {
+        studyService.findUninitializedStudyStartAtBefore(LocalDateTime.now().plusMinutes(20)).forEach {
             attendanceService.initializeAttendance(it.id)
             studyService.markAsInitialized(it.id)
         }

@@ -24,7 +24,7 @@ class StudyService(
         return studyRepository.findAllById(ids).map { it.toDomain() }
     }
 
-    fun findUnInitializedStudyStartAtBefore(startAt: LocalDateTime): List<Study> {
+    fun findUninitializedStudyStartAtBefore(startAt: LocalDateTime): List<Study> {
         return studyRepository.findAllByStartAtBeforeAndIsInitializedFalse(startAt)
             .map { it.toDomain() }
     }
