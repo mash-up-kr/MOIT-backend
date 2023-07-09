@@ -13,7 +13,7 @@ class AsyncConfig {
     fun asyncSchedulerExecutor(): Executor {
         return ThreadPoolTaskExecutor().apply {
             corePoolSize = 5
-            maxPoolSize = 5
+            maxPoolSize = 10
             queueCapacity = 20
             setThreadNamePrefix("AsyncSchedulerThread-")
             setWaitForTasksToCompleteOnShutdown(true)
