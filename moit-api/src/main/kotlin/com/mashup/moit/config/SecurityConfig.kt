@@ -51,10 +51,14 @@ class SecurityConfig(
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer {
             it.ignoring().requestMatchers(
+                // swagger
+                "/api-docs/**", "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**",
+                // error page
                 "/error/**",
+                // actuator
                 "/am-i-alive/**",
-                "/api/v1/auth/sign-up",
-                "/api/v1/auth/sign-in"
+                // Auth endpoints
+                "/api/v1/auth/sign-up", "/api/v1/auth/sign-in"
             )
         }
     }
