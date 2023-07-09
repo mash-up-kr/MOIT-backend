@@ -37,13 +37,13 @@ data class MoitCreateRequest(
     val lateTime: Int,
     @field:NotNull
     @field:PositiveOrZero
-    val lateAmount: Int,
+    val lateAmount: Long,
     @field:NotNull
     @field:PositiveOrZero
     val absenceTime: Int,
     @field:NotNull
     @field:PositiveOrZero
-    val absenceAmount: Int,
+    val absenceAmount: Long,
     @field:NotNull
     val isRemindActive: Boolean,
     val remindOption: NotificationRemindOption?,
@@ -93,11 +93,11 @@ data class MoitDetailsResponse(
     @Schema(description = "moit 지각 시간")
     val fineLateTime: Int,
     @Schema(description = "moit 지각 벌금")
-    val fineLateAmount: Int,
+    val fineLateAmount: Long,
     @Schema(description = "moit 결석 시간")
     val fineAbsenceTime: Int,
     @Schema(description = "moit 결석 벌금")
-    val fineAbsenceAmount: Int,
+    val fineAbsenceAmount: Long,
     @Schema(description = "moit 알람 리마인드 on/off")
     val notificationIsRemindActive: Boolean,
     @Schema(description = "moit 알람 리마인드 시간")

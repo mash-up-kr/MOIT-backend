@@ -28,9 +28,9 @@ class MoitService(
         startTime: LocalTime,
         endTime: LocalTime,
         lateTime: Int,
-        lateAmount: Int,
+        lateAmount: Long,
         absenceTime: Int,
-        absenceAmount: Int,
+        absenceAmount: Long,
         isRemindActive: Boolean,
         remindOption: NotificationRemindOption?,
     ): Moit {

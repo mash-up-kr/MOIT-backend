@@ -9,11 +9,11 @@ data class FinePolicyColumns(
     val lateTime: Int,
 
     @Column(name = "late_amount", nullable = false)
-    val lateAmount: Int,
+    val lateAmount: Long,
 
     @Column(name = "absence_time", nullable = false)
     val absenceTime: Int,
 
     @Column(name = "absence_amount", nullable = false)
-    val absenceAmount: Int,
+    val absenceAmount: Long,
 )

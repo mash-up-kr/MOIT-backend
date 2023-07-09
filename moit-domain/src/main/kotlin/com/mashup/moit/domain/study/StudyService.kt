@@ -70,20 +70,23 @@ class StudyService(
     }
 
     @Transactional
-    fun registerAttendanceKeyword(studyId: Long, attendanceCode: String) {
-        studyRepository.findById(studyId)
+    fun registerAttendanceKeyword(studyId: Long, attendanceCode: String): Study {
+        return studyRepository.findById(studyId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST, "해당 스터디가 존재하지 않습니다") }
             .takeIf { study -> study.attendanceCode == null }
             ?.apply { this.attendanceCode = attendanceCode }
+            ?.toDomain()
             ?: throw MoitException.of(MoitExceptionType.ALREADY_EXIST, "출석 키워드가 이미 존재합니다")
     }
 
-    fun verifyAttendanceKeyword(studyId: Long, attendanceCode: String) {
-        val studyAttendanceCode = studyRepository.findById(studyId)
+    fun verifyAttendanceKeyword(studyId: Long, attendanceCode: String): Study {
+        val study = studyRepository.findById(studyId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST, "해당 스터디가 존재하지 않습니다") }
-            .attendanceCode ?: throw MoitException.of(MoitExceptionType.NOT_EXIST, "출석 키워드가 등록되지 않았습니다")
-        if (studyAttendanceCode != attendanceCode) {
-            throw MoitException.of(MoitExceptionType.INVALID_ATTENDANCE_KEYWORD)
+        when (study.attendanceCode) {
+            attendanceCode -> Unit
+            null -> throw MoitException.of(MoitExceptionType.NOT_EXIST, "출석 키워드가 등록되지 않았습니다")
+            else -> throw MoitException.of(MoitExceptionType.INVALID_ATTENDANCE_KEYWORD)
         }
+        return study.toDomain()
     }
 }
