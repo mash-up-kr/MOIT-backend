@@ -59,7 +59,7 @@ management:
 
 moit:
   auth:
-    jwt-secret-key: ENC(RzeI0dzLc2Z6Sby4PaJqY7rhJjK62g8646PqdRNLYSkTv25ol9r47vT8Nm4hpHzVlwOUf/XWb1zqWPnOWVD0jg==)  
+    jwt-secret-key: ENC(011c274SIytPrr5ozweLG7iWoGQVAMo1uA8xRAFyBASndo9yGYtfmDtBO7TchnzRJWVJiauSVzX5LX/XD/3NieuTBKcETvYEjgvo9znrniw=)
 
 cloud:
   aws:
