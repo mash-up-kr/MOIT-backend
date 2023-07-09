@@ -1,6 +1,8 @@
 package com.mashup.moit.study.controller
 
 import com.mashup.moit.common.MoitApiResponse
+import com.mashup.moit.security.authentication.UserInfo
+import com.mashup.moit.security.resolver.GetAuth
 import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordRequest
 import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.study.controller.dto.StudyDetailsResponse
@@ -50,24 +52,29 @@ class StudyController(
 
     @Operation(summary = "Register Study Keyword API", description = "Study 키워드 등록")
     @PostMapping("/{studyId}/attendance/keyword/register")
-    fun registerAttendanceKeyword(@PathVariable studyId: Long, @RequestBody @Valid request: StudyAttendanceKeywordRequest): MoitApiResponse<Unit> {
-        // TODO 인증 개발 완료 후 userId mock 제거
-        studyFacade.registerAttendanceKeyword(7, studyId, request)
+    fun registerAttendanceKeyword(
+        @GetAuth userInfo: UserInfo,
+        @PathVariable studyId: Long,
+        @RequestBody @Valid request: StudyAttendanceKeywordRequest,
+    ): MoitApiResponse<Unit> {
+        studyFacade.registerAttendanceKeyword(userInfo.id, studyId, request)
         return MoitApiResponse.success()
     }
 
     @Operation(summary = "Verify Study Keyword API", description = "Study 키워드 검증")
     @PostMapping("/{studyId}/attendance/keyword/verify")
-    fun verifyAttendanceKeyword(@PathVariable studyId: Long, @RequestBody @Valid request: StudyAttendanceKeywordRequest): MoitApiResponse<Unit> {
-        // TODO 인증 개발 완료 후 userId mock 제거
-        studyFacade.verifyAttendanceKeyword(7, studyId, request)
+    fun verifyAttendanceKeyword(
+        @GetAuth userInfo: UserInfo,
+        @PathVariable studyId: Long,
+        @RequestBody @Valid request: StudyAttendanceKeywordRequest,
+    ): MoitApiResponse<Unit> {
+        studyFacade.verifyAttendanceKeyword(userInfo.id, studyId, request)
         return MoitApiResponse.success()
     }
 
     @Operation(summary = "Initialize Attendance", description = "Study 출석 초기화")
     @PostMapping("/{studyId}/attendance/initialize")
     fun initializeAttendance(@PathVariable studyId: Long): MoitApiResponse<Unit> {
-        // TODO 인증 개발 완료 후 userId mock 제거
         studyFacade.initializeAttendance(studyId)
         return MoitApiResponse.success()
     }
