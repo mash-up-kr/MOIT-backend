@@ -1,6 +1,8 @@
 package com.mashup.moit.sample.controller.sample.dto
 
+import com.mashup.moit.domain.moit.NotificationRemindOption
 import com.mashup.moit.domain.sample.Sample
+import java.time.LocalDateTime
 
 data class SampleCreateRequest(
     val name: String,
@@ -17,3 +19,9 @@ data class SampleResponse(
         )
     }
 }
+
+data class SampleNotificationRequest(
+    val targetId: Long,
+    val targetName: String,
+    val remainMinutes: NotificationRemindOption,
+)
