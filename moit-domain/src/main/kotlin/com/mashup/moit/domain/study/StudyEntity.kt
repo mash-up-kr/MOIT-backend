@@ -37,6 +37,9 @@ class StudyEntity(
     @Column(name = "attendance_code")
     var attendanceCode: String? = null
 
+    @Column(name = "is_initialized", nullable = false)
+    var isInitialized: Boolean = false
+
     fun toDomain() = Study(
         id = id,
         moitId = moitId,

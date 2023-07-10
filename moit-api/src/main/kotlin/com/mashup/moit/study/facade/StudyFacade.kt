@@ -59,8 +59,10 @@ class StudyFacade(
         }
     }
 
+    @Transactional
     fun initializeAttendance(studyId: Long) {
         attendanceService.initializeAttendance(studyId)
+        studyService.markAsInitialized(studyId)
     }
 
     fun checkFirstAttendance(studyId: Long): StudyFirstAttendanceResponse {

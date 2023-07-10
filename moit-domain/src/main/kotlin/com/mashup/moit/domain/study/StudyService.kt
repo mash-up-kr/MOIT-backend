@@ -24,6 +24,19 @@ class StudyService(
         return studyRepository.findAllById(ids).map { it.toDomain() }
     }
 
+    fun findUninitializedStudyStartAtBefore(startAt: LocalDateTime): List<Study> {
+        return studyRepository.findAllByStartAtBeforeAndIsInitializedFalse(startAt)
+            .map { it.toDomain() }
+    }
+
+    @Transactional
+    fun markAsInitialized(studyId: Long): Study {
+        return studyRepository.findById(studyId)
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+            .apply { this.isInitialized = true }
+            .toDomain()
+    }
+
     @Transactional
     fun createStudies(moitId: Long) {
         val moit = moitRepository.findById(moitId).orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
