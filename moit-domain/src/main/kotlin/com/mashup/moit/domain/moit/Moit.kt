@@ -39,8 +39,12 @@ enum class ScheduleRepeatCycle(
 }
 
 enum class NotificationRemindOption(
+    val mean: String
 ) {
-    STUDY_DAY_10_AM, BEFORE_1_HOUR, BEFORE_30_MINUTE, BEFORE_10_MINUTE;
+    STUDY_DAY_10_AM("당일 아침"),
+    BEFORE_1_HOUR("1시간 전"),
+    BEFORE_30_MINUTE("30분 전"),
+    BEFORE_10_MINUTE("10분 전");
 }
 
 enum class NotificationRemindLevel {

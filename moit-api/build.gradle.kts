@@ -21,17 +21,23 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-
+    
+    // security 
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     testImplementation("org.springframework.security:spring-security-test")
-
+    
+    // aws
     implementation("org.springframework.cloud:spring-cloud-starter-aws:$awsVersion")
-
+    
+    // jwt 
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
-
+    
+    // fcm 
+    implementation ("com.google.firebase:firebase-admin:9.2.0")
+    
     // swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$swaggerVersion")
 }
