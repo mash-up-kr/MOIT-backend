@@ -3,7 +3,7 @@ package com.mashup.moit.controller
 import com.mashup.moit.controller.dto.UserRegisterRequest
 import com.mashup.moit.facade.UserFacade
 import com.mashup.moit.security.authentication.UserInfo
-import com.mashup.moit.security.authentication.toBeforeSignUpInfo
+import com.mashup.moit.security.authentication.toHttpHeader
 import com.mashup.moit.security.jwt.JwtTokenSupporter
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -35,7 +35,9 @@ class AuthController(
     @GetMapping("/sign-in/success")
     fun signInSuccess(@AuthenticationPrincipal oidcUser: OidcUser): ResponseEntity<Any> {
         val user = userFacade.findByProviderUniqueKey(oidcUser)
-            ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(oidcUser.toBeforeSignUpInfo())
+            ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .headers(oidcUser.toHttpHeader())
+                .build()
 
         val jwtToken = jwtTokenSupporter.createToken(UserInfo.from(user))
         return ResponseEntity.ok()

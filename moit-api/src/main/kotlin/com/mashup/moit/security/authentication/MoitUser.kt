@@ -2,7 +2,7 @@ package com.mashup.moit.security.authentication
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
-import com.mashup.moit.controller.dto.UserBeforeSignUpInfoResponse
+import org.springframework.http.HttpHeaders
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
@@ -12,6 +12,10 @@ private const val PROVIDER_SPLIT_DELIMITER = "|"
 private const val CLAIM_SUB_KEY = "sub"
 private const val CLAIM_EMAIL_KEY = "email"
 private const val CLAIM_NICKNAME_KEY = "nickname"
+
+private const val EMAIL_HEADER_KEY = "X-MOIT-USER-EMAIL"
+private const val NICKNAME_HEADER_KEY = "X-MOIT-USER-NICKNAME"
+private const val PROVIDER_HEADER_KEY = "X-MOIT-USER-PROVIDER"
 
 data class MoitUser(val userInfo: UserInfo) : OAuth2User {
     private val authorities: Collection<GrantedAuthority>
@@ -55,9 +59,14 @@ fun OidcUser.getProviderUniqueKey(): String {
     return "$authProvider${PROVIDER_SPLIT_DELIMITER}$email"
 }
 
-fun OidcUser.toBeforeSignUpInfo(): UserBeforeSignUpInfoResponse {
+fun OidcUser.toHttpHeader(): HttpHeaders {
     val email = this.getClaimAsString(CLAIM_EMAIL_KEY)
     val nickname = this.getClaimAsString(CLAIM_NICKNAME_KEY)
     val authProviderUniqueKey = this.getProviderUniqueKey()
-    return UserBeforeSignUpInfoResponse(authProviderUniqueKey, nickname, email)
+    return HttpHeaders().apply {
+        set(EMAIL_HEADER_KEY, email)
+        set(NICKNAME_HEADER_KEY, nickname)
+        set(PROVIDER_HEADER_KEY, authProviderUniqueKey)
+    }
+
 }
