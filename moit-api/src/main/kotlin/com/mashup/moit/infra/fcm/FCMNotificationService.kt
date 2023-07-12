@@ -16,13 +16,12 @@ class FCMNotificationService(
 
     fun sendTopicSampleNotification(request: SampleNotificationRequest) {
         val title = STUDY_REMINDER_NOTIFICATION
-
         val body = when (request.remainMinutes) {
-            NotificationRemindOption.STUDY_DAY_10_AM -> "오늘은 ${request.targetName} 스터디가 있는 날이에요"
-            else -> "${request.targetName} 시작, ${request.remainMinutes.mean} 전입니다"
+            NotificationRemindOption.STUDY_DAY_10_AM -> "오늘은 ${request.studyName} 스터디가 있는 날이에요"
+            else -> "${request.studyName} 시작, ${request.remainMinutes.mean} 전입니다"
         }
 
-        val topic = getStudyTopic(request.targetId)
+        val topic = getStudyTopic(request.studyId)
 
         try {
             val notification = Notification.builder()
@@ -37,11 +36,9 @@ class FCMNotificationService(
                 .build();
 
             firebaseMessaging.send(msg)
+            logger.info("success to send notification : {}", msg.toString())
         } catch (e: Exception) {
-            logger.error(
-                "Fail to send Message. topic-id : {}, title: {}, : [{}]",
-                topic, title, e.toString()
-            )
+            logger.error("Fail to send Message. topic-id : {}, title: {}, : [{}]", topic, title, e.toString())
         }
     }
 
