@@ -33,4 +33,8 @@ class UserMoitService(
         return userMoitRepository.findByMoitIdAndRole(moitId, UserMoitRole.MASTER)?.toDomain()
             ?: throw MoitException.of(MoitExceptionType.NOT_EXIST)
     }
+
+    fun findUsersByMoitId(moitId: Long): List<UserMoit> {
+        return userMoitRepository.findAllByMoitId(moitId).map { it.toDomain() }
+    }
 }

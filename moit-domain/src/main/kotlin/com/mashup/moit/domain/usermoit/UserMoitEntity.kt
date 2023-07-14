@@ -25,6 +25,6 @@ class UserMoitEntity(
             id = id,
             moitId = moitId,
             userId = userId,
-            role = role.name
+            role = role,
         )
 }
