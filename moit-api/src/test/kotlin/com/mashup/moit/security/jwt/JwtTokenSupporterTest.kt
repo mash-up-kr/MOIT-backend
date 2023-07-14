@@ -11,7 +11,7 @@ class JwtTokenSupporterTest {
     @Test
     fun createTokenTest() {
         // given
-        val testKey = "abcd1234!@#\$-=-=최고"
+        val testKey = "abcd1234!@#$-=-=최고"
         val objectMapper = ObjectMapper()
         val jwtTokenSupporter = JwtTokenSupporter(testKey, objectMapper)
         val userInfo = UserInfo(
