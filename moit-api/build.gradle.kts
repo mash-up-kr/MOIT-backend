@@ -11,6 +11,7 @@ tasks.getByName("jar") {
 val swaggerVersion: String by project.extra
 val jjwtVersion: String by project.extra
 val awsVersion: String by project.extra
+val firebaseVersion: String by project.extra
 
 apply(plugin = "com.google.cloud.tools.jib")
 
@@ -36,7 +37,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
     
     // fcm 
-    implementation ("com.google.firebase:firebase-admin:9.2.0")
+    implementation ("com.google.firebase:firebase-admin:$firebaseVersion")
     
     // swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$swaggerVersion")
