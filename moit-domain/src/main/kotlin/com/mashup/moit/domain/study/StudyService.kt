@@ -37,6 +37,11 @@ class StudyService(
             .toDomain()
     }
 
+    fun findAllByMoitIdStartAtBefore(moitId: Long, startAt: LocalDateTime): List<Study> {
+        return studyRepository.findAllByMoitIdAndStartAtBeforeOrderByOrderDesc(moitId, startAt)
+            .map { it.toDomain() }
+    }
+
     @Transactional
     fun createStudies(moitId: Long) {
         val moit = moitRepository.findById(moitId).orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
