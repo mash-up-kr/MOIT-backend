@@ -7,6 +7,7 @@ import com.mashup.moit.domain.usermoit.UserMoitRole
 import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.moit.controller.dto.MoitCreateRequest
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
+import com.mashup.moit.moit.controller.dto.MoitJoinCodeResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
 import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.controller.dto.MyMoitResponseForListView
@@ -68,6 +69,11 @@ class MoitFacade(
         return moits.sortedWith(compareBy(nullsLast()) { ddayByMoitId[it.id] })
             .map { MyMoitResponseForListView.of(it, ddayByMoitId[it.id]) }
             .let { MyMoitListResponse(it) }
+    }
+
+    fun getJoinCode(moitId: Long): MoitJoinCodeResponse {
+        return moitService.getMoitById(moitId)
+            .let { MoitJoinCodeResponse.of(it.invitationCode) }
     }
 
     private fun getMoitByInvitationCode(invitationCode: String): Moit {

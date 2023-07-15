@@ -3,10 +3,11 @@ package com.mashup.moit.moit.controller
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.moit.controller.dto.MoitCreateRequest
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
+import com.mashup.moit.moit.controller.dto.MoitJoinCodeResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinRequest
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
-import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.controller.dto.MoitStudyListResponse
+import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.facade.MoitFacade
 import com.mashup.moit.security.authentication.UserInfo
 import com.mashup.moit.security.resolver.GetAuth
@@ -63,5 +64,10 @@ class MoitController(
     @GetMapping("/{moitId}/attendance")
     fun getAllAttendances(@PathVariable moitId: Long): MoitApiResponse<MoitStudyListResponse> {
         return MoitApiResponse.success(MoitStudyListResponse.sample())
+    }
+
+    @GetMapping("/{moitId}/join-code")
+    fun getMoitJoinCode(@PathVariable moitId: Long): MoitApiResponse<MoitJoinCodeResponse> {
+        return MoitApiResponse.success(moitFacade.getJoinCode(moitId))
     }
 }
