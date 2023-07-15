@@ -250,13 +250,13 @@ data class MoitStudyAttendanceResponse(
 }
 
 @Schema(description = "Moit 가입 코드 조회 응답")
-data class MoitJoinCodeResponse(
+data class MoitInvitationCodeResponse(
     @Schema(description = "moit 초대 코드")
     @field:NotBlank
     @Size(min = 6, max = 6)
     val invitationCode: String,
 ) {
     companion object {
-        fun of(invitationCode: String) = MoitJoinCodeResponse(invitationCode)
+        fun of(invitationCode: String) = MoitInvitationCodeResponse(invitationCode)
     }
 }

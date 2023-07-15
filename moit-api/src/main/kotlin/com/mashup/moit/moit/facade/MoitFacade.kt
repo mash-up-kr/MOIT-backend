@@ -8,7 +8,7 @@ import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.moit.controller.dto.MoitCreateRequest
 import com.mashup.moit.moit.controller.dto.MoitCreateResponse
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
-import com.mashup.moit.moit.controller.dto.MoitJoinCodeResponse
+import com.mashup.moit.moit.controller.dto.MoitInvitationCodeResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
 import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.controller.dto.MyMoitResponseForListView
@@ -72,9 +72,9 @@ class MoitFacade(
             .let { MyMoitListResponse(it) }
     }
 
-    fun getJoinCode(moitId: Long): MoitJoinCodeResponse {
+    fun getInvitationCode(moitId: Long): MoitInvitationCodeResponse {
         return moitService.getMoitById(moitId)
-            .let { MoitJoinCodeResponse.of(it.invitationCode) }
+            .let { MoitInvitationCodeResponse.of(it.invitationCode) }
     }
 
     private fun getMoitByInvitationCode(invitationCode: String): Moit {

@@ -2,8 +2,9 @@ package com.mashup.moit.moit.controller
 
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.moit.controller.dto.MoitCreateRequest
+import com.mashup.moit.moit.controller.dto.MoitCreateResponse
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
-import com.mashup.moit.moit.controller.dto.MoitJoinCodeResponse
+import com.mashup.moit.moit.controller.dto.MoitInvitationCodeResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinRequest
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
 import com.mashup.moit.moit.controller.dto.MoitStudyListResponse
@@ -32,7 +33,7 @@ class MoitController(
     fun createMoit(
         @GetAuth userInfo: UserInfo,
         @Valid @RequestBody request: MoitCreateRequest,
-    ): MoitApiResponse<Long> {
+    ): MoitApiResponse<MoitCreateResponse> {
         return MoitApiResponse.success(moitFacade.create(userInfo.id, request))
     }
 
@@ -65,8 +66,9 @@ class MoitController(
         return MoitApiResponse.success(MoitStudyListResponse.sample())
     }
 
-    @GetMapping("/{moitId}/join-code")
-    fun getMoitJoinCode(@PathVariable moitId: Long): MoitApiResponse<MoitJoinCodeResponse> {
-        return MoitApiResponse.success(moitFacade.getJoinCode(moitId))
+    @Operation(summary = "Moit Invitation Code", description = "Moit의 가입 코드 조회")
+    @GetMapping("/{moitId}/invitation-code")
+    fun getMoitInvitationCode(@PathVariable moitId: Long): MoitApiResponse<MoitInvitationCodeResponse> {
+        return MoitApiResponse.success(moitFacade.getInvitationCode(moitId))
     }
 }
