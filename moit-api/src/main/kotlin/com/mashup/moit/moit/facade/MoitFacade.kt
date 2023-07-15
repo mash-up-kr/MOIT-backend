@@ -6,6 +6,7 @@ import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.usermoit.UserMoitRole
 import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.moit.controller.dto.MoitCreateRequest
+import com.mashup.moit.moit.controller.dto.MoitCreateResponse
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinCodeResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
@@ -23,7 +24,7 @@ class MoitFacade(
     private val userMoitService: UserMoitService
 ) {
     @Transactional
-    fun create(userId: Long, request: MoitCreateRequest): Long {
+    fun create(userId: Long, request: MoitCreateRequest): MoitCreateResponse {
         val moit = moitService.createMoit(
             name = request.name,
             description = request.description,
@@ -44,7 +45,7 @@ class MoitFacade(
             userMoitService.join(userId, it.id, UserMoitRole.MASTER)
         }
 
-        return moit.id
+        return MoitCreateResponse(moit.id, moit.invitationCode)
     }
 
     fun getMoitDetails(moitId: Long): MoitDetailsResponse {

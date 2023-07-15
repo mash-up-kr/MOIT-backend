@@ -49,7 +49,14 @@ data class MoitCreateRequest(
     val remindOption: NotificationRemindOption?,
 )
 
-//@TODO moit create response 
+data class MoitCreateResponse(
+    @Schema(description = "생성된 moitId")
+    val moitId: Long,
+    @Schema(description = "moit 초대 코드")
+    @field:NotBlank
+    @Size(min = 6, max = 6)
+    val invitationCode: String,
+)
 
 @Schema(description = "moit 가입 RequestBody")
 data class MoitJoinRequest(
