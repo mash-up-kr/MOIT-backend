@@ -6,8 +6,8 @@ import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinRequest
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinUserListResponse
-import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.controller.dto.MoitStudyListResponse
+import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.facade.MoitFacade
 import com.mashup.moit.security.authentication.UserInfo
 import com.mashup.moit.security.resolver.GetAuth
@@ -71,6 +71,6 @@ class MoitController(
     @Operation(summary = "All attendances of all studies in Moit API", description = "Moit의 모든 스터디 출결 조회")
     @GetMapping("/{moitId}/attendance")
     fun getAllAttendances(@PathVariable moitId: Long): MoitApiResponse<MoitStudyListResponse> {
-        return MoitApiResponse.success(MoitStudyListResponse.sample())
+        return MoitApiResponse.success(moitFacade.getAllAttendances(moitId))
     }
 }

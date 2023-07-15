@@ -1,5 +1,9 @@
 package com.mashup.moit.moit.facade
 
+import com.mashup.moit.common.exception.MoitException
+import com.mashup.moit.common.exception.MoitExceptionType
+import com.mashup.moit.domain.attendance.AttendanceService
+import com.mashup.moit.domain.attendance.AttendanceStatus
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
@@ -10,11 +14,15 @@ import com.mashup.moit.moit.controller.dto.MoitCreateRequest
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinUserListResponse
+import com.mashup.moit.moit.controller.dto.MoitStudyAttendanceResponse
+import com.mashup.moit.moit.controller.dto.MoitStudyListResponse
+import com.mashup.moit.moit.controller.dto.MoitStudyResponse
 import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.controller.dto.MyMoitResponseForListView
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.Period
 
 @Component
@@ -23,6 +31,7 @@ class MoitFacade(
     private val studyService: StudyService,
     private val userMoitService: UserMoitService,
     private val userService: UserService,
+    private val attendanceService: AttendanceService
 ) {
     @Transactional
     fun create(userId: Long, request: MoitCreateRequest): Long {
@@ -81,6 +90,34 @@ class MoitFacade(
             users = userMoits.map { usersByUserId.getValue(it.userId) },
             masterUserId = userMoits.first { it.role === UserMoitRole.MASTER }.userId,
         )
+    }
+
+    fun getAllAttendances(moitId: Long): MoitStudyListResponse {
+        val moit = moitService.getMoitById(moitId)
+        val studyWithAttendances = studyService.findAllByMoitIdStartAtBefore(moit.id, LocalDateTime.now())
+            .mapNotNull { study ->
+                val attendances = attendanceService.findAttendancesByStudyId(study.id)
+                if (attendances.all { attendance -> attendance.status == AttendanceStatus.UNDECIDED }) {
+                    return@mapNotNull null
+                }
+                study to attendances
+            }
+        val attendanceUserIds = studyWithAttendances.map { it.second }
+            .flatMap { attendances -> attendances.map { attendance -> attendance.userId } }
+        val firstAttendanceUsers = userService.findUsersById(attendanceUserIds).toSet()
+        return studyWithAttendances.map { (study, attendances) ->
+            attendances
+                .filterNot { attendance -> attendance.status == AttendanceStatus.UNDECIDED }
+                .map { attendance ->
+                    MoitStudyAttendanceResponse.of(
+                        attendance = attendance,
+                        attendanceUser = firstAttendanceUsers.find { user ->
+                            user.id == attendance.userId
+                        } ?: throw MoitException.of(MoitExceptionType.NOT_EXIST)
+                    )
+                }
+                .let { attendanceResponses -> MoitStudyResponse.of(study, attendanceResponses) }
+        }.let(::MoitStudyListResponse)
     }
 
     private fun getMoitByInvitationCode(invitationCode: String): Moit {

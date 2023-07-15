@@ -1,9 +1,12 @@
 package com.mashup.moit.moit.controller.dto
 
+import com.mashup.moit.domain.attendance.Attendance
 import com.mashup.moit.domain.attendance.AttendanceStatus
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.NotificationRemindOption
 import com.mashup.moit.domain.moit.ScheduleRepeatCycle
+import com.mashup.moit.domain.study.Study
+import com.mashup.moit.domain.user.User
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
@@ -180,16 +183,7 @@ class MyMoitResponseForListView(
 data class MoitStudyListResponse(
     @Schema(description = "Moit 내 모든 스터디 리스트")
     val studies: List<MoitStudyResponse>
-) {
-    companion object {
-        fun sample(): MoitStudyListResponse = MoitStudyListResponse(
-            studies = listOf(
-                MoitStudyResponse.sample(),
-                MoitStudyResponse.sample().copy(studyId = 2L)
-            )
-        )
-    }
-}
+)
 
 @Schema(description = "출결 정보를 담은 Moit 스터디 간단 정보")
 data class MoitStudyResponse(
@@ -203,18 +197,14 @@ data class MoitStudyResponse(
     val attendances: List<MoitStudyAttendanceResponse>
 ) {
     companion object {
-        fun sample(): MoitStudyResponse = MoitStudyResponse(
-            studyId = 1L,
-            order = 0,
-            date = LocalDate.of(2023, 6, 15),
-            attendances = listOf(
-                MoitStudyAttendanceResponse.sample().copy(status = AttendanceStatus.ABSENCE),
-                MoitStudyAttendanceResponse.sample(),
-                MoitStudyAttendanceResponse.sample().copy(
-                    status = AttendanceStatus.LATE,
-                    attendanceAt = LocalDateTime.of(2023, 6, 15, 17, 30)
-                )
-            )
+        fun of(
+            study: Study,
+            attendances: List<MoitStudyAttendanceResponse>
+        ): MoitStudyResponse = MoitStudyResponse(
+            studyId = study.id,
+            order = study.order,
+            date = study.startAt.toLocalDate(),
+            attendances = attendances
         )
     }
 }
@@ -233,12 +223,15 @@ data class MoitStudyAttendanceResponse(
     val attendanceAt: LocalDateTime? = null,
 ) {
     companion object {
-        fun sample(): MoitStudyAttendanceResponse = MoitStudyAttendanceResponse(
-            userId = 1L,
-            nickname = "전자군단",
-            profileImage = 3,
-            status = AttendanceStatus.ATTENDANCE,
-            attendanceAt = LocalDateTime.now()
+        fun of(
+            attendance: Attendance,
+            attendanceUser: User
+        ): MoitStudyAttendanceResponse = MoitStudyAttendanceResponse(
+            userId = attendanceUser.id,
+            nickname = attendanceUser.nickname,
+            profileImage = attendanceUser.profileImage,
+            status = attendance.status,
+            attendanceAt = attendance.attendanceAt
         )
     }
 }
