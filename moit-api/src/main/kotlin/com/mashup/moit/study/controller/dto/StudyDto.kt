@@ -77,10 +77,15 @@ data class StudyFirstAttendanceResponse(
 
 @Schema(description = "Study 유저 출석상태 응답")
 data class StudyUserAttendanceStatusResponse(
+    @Schema(description = "유저 id")
     val userId: Long,
+    @Schema(description = "유저 nickname")
     val nickname: String,
+    @Schema(description = "유저 프로필 이미지 idx")
     val profileImage: Int,
+    @Schema(description = "유저 출석 상태")
     val attendanceStatus: AttendanceStatus,
+    @Schema(description = "유저 출석 시각")
     val attendanceAt: LocalDateTime?
 ) {
     companion object {
