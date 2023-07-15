@@ -82,6 +82,8 @@ data class MoitDetailsResponse(
     val description: String?,
     @Schema(description = "moit image url")
     val imageUrl: String?,
+    @Schema(description = "moit 초대 코드")
+    val invitationCode: String,
     @Schema(description = "moit 반복 요일")
     val scheduleDayOfWeeks: Set<DayOfWeek>,
     @Schema(description = "moit 반복 주기")
@@ -115,6 +117,7 @@ data class MoitDetailsResponse(
             masterId = masterId,
             description = moit.description,
             imageUrl = moit.imageUrl,
+            invitationCode = moit.invitationCode,
             scheduleDayOfWeeks = moit.scheduleDayOfWeeks,
             scheduleRepeatCycle = moit.scheduleRepeatCycle,
             scheduleStartTime = moit.scheduleStartTime,

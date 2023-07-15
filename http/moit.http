@@ -34,6 +34,9 @@ Content-Type: application/json
 ### My Moits
 GET {{moit-api}}/api/v1/moit
 
+### Moit Join Users
+GET {{moit-api}}/api/v1/moit/{{moitId}}/users
+
 ### Moit Details 
 GET {{moit-api}}/api/v1/moit/{{moitId}}
 

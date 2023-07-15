@@ -27,7 +27,7 @@ class JwtTokenSupporterTest {
         val token = jwtTokenSupporter.createToken(userInfo)
 
         // then
-        println("token = ${token}")
+        println("token = Bearer $token")
         assertThat(token.length).isPositive()
     }
 

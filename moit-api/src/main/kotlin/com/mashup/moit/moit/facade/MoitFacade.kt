@@ -3,11 +3,13 @@ package com.mashup.moit.moit.facade
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
+import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.domain.usermoit.UserMoitRole
 import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.moit.controller.dto.MoitCreateRequest
 import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
 import com.mashup.moit.moit.controller.dto.MoitJoinResponse
+import com.mashup.moit.moit.controller.dto.MoitJoinUserListResponse
 import com.mashup.moit.moit.controller.dto.MyMoitListResponse
 import com.mashup.moit.moit.controller.dto.MyMoitResponseForListView
 import org.springframework.stereotype.Component
@@ -19,7 +21,8 @@ import java.time.Period
 class MoitFacade(
     private val moitService: MoitService,
     private val studyService: StudyService,
-    private val userMoitService: UserMoitService
+    private val userMoitService: UserMoitService,
+    private val userService: UserService,
 ) {
     @Transactional
     fun create(userId: Long, request: MoitCreateRequest): Long {
@@ -58,7 +61,7 @@ class MoitFacade(
         return userMoitService.join(userId, moit.id, UserMoitRole.MEMBER).let { MoitJoinResponse.of(it.moitId) }
     }
 
-    fun getMyMoits(userId: Long): MyMoitListResponse {
+    fun getMoitsByUserId(userId: Long): MyMoitListResponse {
         val moits = moitService.getMoitsByUserId(userId)
         val ddayByMoitId = moits.associate { moit ->
             moit.id to studyService.findUpcomingStudy(moit.id)
@@ -68,6 +71,16 @@ class MoitFacade(
         return moits.sortedWith(compareBy(nullsLast()) { ddayByMoitId[it.id] })
             .map { MyMoitResponseForListView.of(it, ddayByMoitId[it.id]) }
             .let { MyMoitListResponse(it) }
+    }
+
+    fun getUsersByMoitId(moitId: Long): MoitJoinUserListResponse {
+        val userMoits = userMoitService.findUsersByMoitId(moitId)
+        val usersByUserId = userService.findUsersById(userMoits.map { it.userId }).associateBy { it.id }
+
+        return MoitJoinUserListResponse.of(
+            users = userMoits.map { usersByUserId.getValue(it.userId) },
+            masterUserId = userMoits.first { it.role === UserMoitRole.MASTER }.userId,
+        )
     }
 
     private fun getMoitByInvitationCode(invitationCode: String): Moit {
