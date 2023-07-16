@@ -4,7 +4,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
 import com.mashup.moit.domain.moit.NotificationRemindOption
-import com.mashup.moit.sample.controller.sample.dto.SampleNotificationRequest
+import com.mashup.moit.controller.sample.dto.SampleNotificationRequest
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 

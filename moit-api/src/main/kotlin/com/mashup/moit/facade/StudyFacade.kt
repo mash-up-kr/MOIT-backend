@@ -1,15 +1,15 @@
-package com.mashup.moit.study.facade
+package com.mashup.moit.facade
 
 import com.mashup.moit.domain.attendance.AttendanceService
 import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.user.UserService
-import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordRequest
-import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordResponse
-import com.mashup.moit.study.controller.dto.StudyDetailsResponse
-import com.mashup.moit.study.controller.dto.StudyFirstAttendanceResponse
-import com.mashup.moit.study.controller.dto.StudyUserAttendanceStatusResponse
+import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordRequest
+import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordResponse
+import com.mashup.moit.controller.study.dto.StudyDetailsResponse
+import com.mashup.moit.controller.study.dto.StudyFirstAttendanceResponse
+import com.mashup.moit.controller.study.dto.StudyUserAttendanceStatusResponse
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 

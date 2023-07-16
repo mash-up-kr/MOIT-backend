@@ -1,4 +1,4 @@
-package com.mashup.moit.fine.facade
+package com.mashup.moit.facade
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
@@ -6,9 +6,9 @@ import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.domain.usermoit.UserMoitService
-import com.mashup.moit.fine.controller.dto.FineListResponse
-import com.mashup.moit.fine.controller.dto.FineResponse
-import com.mashup.moit.fine.controller.dto.FineResponseForListView
+import com.mashup.moit.controller.fine.dto.FineListResponse
+import com.mashup.moit.controller.fine.dto.FineResponse
+import com.mashup.moit.controller.fine.dto.FineResponseForListView
 import com.mashup.moit.infra.aws.s3.S3Service
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile

@@ -1,10 +1,10 @@
-package com.mashup.moit.fine.controller
+package com.mashup.moit.controller.fine
 
 import com.mashup.moit.common.MoitApiResponse
-import com.mashup.moit.fine.controller.dto.FineEvaluateRequest
-import com.mashup.moit.fine.controller.dto.FineListResponse
-import com.mashup.moit.fine.controller.dto.FineResponse
-import com.mashup.moit.fine.facade.FineFacade
+import com.mashup.moit.controller.fine.dto.FineEvaluateRequest
+import com.mashup.moit.controller.fine.dto.FineListResponse
+import com.mashup.moit.controller.fine.dto.FineResponse
+import com.mashup.moit.facade.FineFacade
 import com.mashup.moit.security.authentication.UserInfo
 import com.mashup.moit.security.resolver.GetAuth
 import io.swagger.v3.oas.annotations.Operation
