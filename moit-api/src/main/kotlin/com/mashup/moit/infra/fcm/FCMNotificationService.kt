@@ -3,8 +3,8 @@ package com.mashup.moit.infra.fcm
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
-import com.mashup.moit.domain.moit.NotificationRemindOption
 import com.mashup.moit.controller.sample.dto.SampleNotificationRequest
+import com.mashup.moit.domain.moit.NotificationRemindOption
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -35,8 +35,8 @@ class FCMNotificationService(
                 .setNotification(notification)
                 .build();
 
-            firebaseMessaging.send(msg)
-            logger.info("success to send notification : {}", msg.toString())
+            val response = firebaseMessaging.send(msg)
+            logger.info("success to send notification : {}", response)
         } catch (e: Exception) {
             logger.error("Fail to send Message. topic-id : {}, title: {}, : [{}]", topic, title, e.toString())
         }

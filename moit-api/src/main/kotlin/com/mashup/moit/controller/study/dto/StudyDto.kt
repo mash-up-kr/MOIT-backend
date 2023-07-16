@@ -93,3 +93,29 @@ data class StudyUserAttendanceStatusResponse(
         )
     }
 }
+
+@Schema(description = "Study 출석 시작 notification")
+data class StudyAttendanceStartNotification(
+    @Schema(hidden = true)
+    val topic: String,
+    @Schema(description = "notification title")
+    val title: String,
+    @Schema(description = "notification body")
+    val body: String,
+) {
+    companion object {
+        private const val TOPIC_MOIT_PREFIX = "MOIT-"
+        private const val TITLE_TEMPLATE = "출석 체크가 시작되었어요!"
+
+        // todo edit push message depends on notification level 
+        fun of(moit: Moit, study: Study) = StudyAttendanceStartNotification(
+            topic = TOPIC_MOIT_PREFIX + moit.id,
+            title = TITLE_TEMPLATE,
+            body = bodyTemplate(moit, study)
+        )
+
+        private fun bodyTemplate(moit: Moit, study: Study): String {
+            return "${moit.name} ${study.order}회차 스터디가 시작되었어요"
+        }
+    }
+}

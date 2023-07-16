@@ -107,4 +107,10 @@ class StudyService(
         }
         return study.toDomain()
     }
+
+    fun findStudiesByStartTime(min: LocalDateTime, max: LocalDateTime): List<Study> {
+        return studyRepository.findAllByStartAtGreaterThanEqualAndStartAtLessThanEqual(min, max)
+            .filter { !it.isInitialized } // 모종의 initialize 실패 인입 방지 
+            .map { it.toDomain() }
+    }
 }
