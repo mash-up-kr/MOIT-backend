@@ -1,4 +1,4 @@
-package com.mashup.moit.controller
+package com.mashup.moit.controller.user
 
 import com.mashup.moit.controller.dto.UserRegisterRequest
 import com.mashup.moit.facade.UserFacade
