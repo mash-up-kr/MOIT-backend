@@ -21,13 +21,13 @@ class KafkaConsumer(
     @KafkaListener(topics = [STUDY_CREATE_TOPIC])
     fun consumeStudyCreateEvent(event: StudyCreateEvent) {
         log.debug("consumeStudyCreateEvent called: {}", event)
-        studyService.createStudies(event.moitId!!)
+        studyService.createStudies(event.moitId)
     }
 
     @KafkaListener(topics = [FINE_CREATE_TOPIC])
     fun consumeFineCreateEvent(event: FineCreateEvent) {
         log.debug("consumeFineCreateEvent called: {}", event)
-        fineService.create(event.attendanceId!!, event.moitId!!)
+        fineService.create(event.attendanceId, event.moitId)
     }
 
 }
