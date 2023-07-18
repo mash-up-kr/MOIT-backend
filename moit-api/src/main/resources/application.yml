@@ -25,14 +25,18 @@ spring:
   kafka:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       group-id: ENC(D4Y7cXR3eszRDBMXMgQzP71FSFdHuCBxg9c8Krbb5JCEsGcQRtuRU/s6dFxr7hPR)
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     bootstrap-servers: ENC(UUoAbkwFVTtdbHDG5VO6mjQtHIkt6C72SXZGMls+Wz/Ygg5ICtbX7OEV47/AddxgHvrdGwbFQhUfdQNaND4rlK2675cA9ZWdjDryXgcqPDI=)
     properties:
+      spring:
+        json:
+          trusted:
+            packages: "*"
       security:
         protocol: SASL_SSL
       sasl:
