@@ -1,15 +1,16 @@
 package com.mashup.moit.facade
 
-import com.mashup.moit.domain.attendance.AttendanceService
-import com.mashup.moit.domain.fine.FineService
-import com.mashup.moit.domain.moit.MoitService
-import com.mashup.moit.domain.study.StudyService
-import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordRequest
 import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.controller.study.dto.StudyDetailsResponse
 import com.mashup.moit.controller.study.dto.StudyFirstAttendanceResponse
 import com.mashup.moit.controller.study.dto.StudyUserAttendanceStatusResponse
+import com.mashup.moit.domain.attendance.AttendanceService
+import com.mashup.moit.domain.moit.MoitService
+import com.mashup.moit.domain.study.StudyService
+import com.mashup.moit.domain.user.UserService
+import com.mashup.moit.infra.event.EventProducer
+import com.mashup.moit.infra.event.FineCreateEvent
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,7 +20,7 @@ class StudyFacade(
     private val studyService: StudyService,
     private val attendanceService: AttendanceService,
     private val userService: UserService,
-    private val fineService: FineService,
+    private val eventProducer: EventProducer
 ) {
     fun getDetails(studyId: Long): StudyDetailsResponse {
         val study = studyService.findById(studyId)
@@ -45,8 +46,7 @@ class StudyFacade(
     fun registerAttendanceKeyword(userId: Long, studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.registerAttendanceKeyword(studyId, request.attendanceKeyword).also {
             val attendance = attendanceService.requestAttendance(userId, studyId)
-            // TODO 비동기로 처리 고려
-            fineService.create(attendance.id, it.moitId)
+            eventProducer.produce(FineCreateEvent(attendanceId = attendance.id, moitId = it.moitId))
         }
     }
 
@@ -54,8 +54,7 @@ class StudyFacade(
     fun verifyAttendanceKeyword(userId: Long, studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.verifyAttendanceKeyword(studyId, request.attendanceKeyword).also {
             val attendance = attendanceService.requestAttendance(userId, studyId)
-            // TODO 비동기로 처리 고려
-            fineService.create(attendance.id, it.moitId)
+            eventProducer.produce(FineCreateEvent(attendanceId = attendance.id, moitId = it.moitId))
         }
     }
 
