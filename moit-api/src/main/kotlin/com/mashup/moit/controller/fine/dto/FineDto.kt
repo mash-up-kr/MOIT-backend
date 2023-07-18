@@ -1,4 +1,4 @@
-package com.mashup.moit.fine.controller.dto
+package com.mashup.moit.controller.fine.dto
 
 import com.mashup.moit.domain.attendance.AttendanceStatus
 import com.mashup.moit.domain.fine.Fine

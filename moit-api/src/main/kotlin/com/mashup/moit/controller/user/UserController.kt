@@ -1,4 +1,4 @@
-package com.mashup.moit.controller
+package com.mashup.moit.controller.user
 
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.security.authentication.UserInfo

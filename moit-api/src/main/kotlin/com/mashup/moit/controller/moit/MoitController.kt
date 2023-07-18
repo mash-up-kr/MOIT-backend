@@ -1,14 +1,14 @@
-package com.mashup.moit.moit.controller
+package com.mashup.moit.controller.moit
 
 import com.mashup.moit.common.MoitApiResponse
-import com.mashup.moit.moit.controller.dto.MoitCreateRequest
-import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
-import com.mashup.moit.moit.controller.dto.MoitJoinRequest
-import com.mashup.moit.moit.controller.dto.MoitJoinResponse
-import com.mashup.moit.moit.controller.dto.MoitJoinUserListResponse
-import com.mashup.moit.moit.controller.dto.MoitStudyListResponse
-import com.mashup.moit.moit.controller.dto.MyMoitListResponse
-import com.mashup.moit.moit.facade.MoitFacade
+import com.mashup.moit.controller.moit.dto.MoitCreateRequest
+import com.mashup.moit.controller.moit.dto.MoitDetailsResponse
+import com.mashup.moit.controller.moit.dto.MoitJoinRequest
+import com.mashup.moit.controller.moit.dto.MoitJoinResponse
+import com.mashup.moit.controller.moit.dto.MoitJoinUserListResponse
+import com.mashup.moit.controller.moit.dto.MoitStudyListResponse
+import com.mashup.moit.controller.moit.dto.MyMoitListResponse
+import com.mashup.moit.facade.MoitFacade
 import com.mashup.moit.security.authentication.UserInfo
 import com.mashup.moit.security.resolver.GetAuth
 import io.swagger.v3.oas.annotations.Operation

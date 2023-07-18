@@ -1,9 +1,9 @@
-package com.mashup.moit.sample.controller.sample
+package com.mashup.moit.controller.sample
 
 import com.mashup.moit.common.MoitApiResponse
-import com.mashup.moit.sample.controller.sample.dto.SampleCreateRequest
-import com.mashup.moit.sample.controller.sample.dto.SampleResponse
-import com.mashup.moit.sample.facade.SampleFacade
+import com.mashup.moit.controller.sample.dto.SampleCreateRequest
+import com.mashup.moit.controller.sample.dto.SampleResponse
+import com.mashup.moit.facade.SampleFacade
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*

@@ -1,4 +1,4 @@
-package com.mashup.moit.moit.facade
+package com.mashup.moit.facade
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
@@ -10,15 +10,15 @@ import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.domain.usermoit.UserMoitRole
 import com.mashup.moit.domain.usermoit.UserMoitService
-import com.mashup.moit.moit.controller.dto.MoitCreateRequest
-import com.mashup.moit.moit.controller.dto.MoitDetailsResponse
-import com.mashup.moit.moit.controller.dto.MoitJoinResponse
-import com.mashup.moit.moit.controller.dto.MoitJoinUserListResponse
-import com.mashup.moit.moit.controller.dto.MoitStudyAttendanceResponse
-import com.mashup.moit.moit.controller.dto.MoitStudyListResponse
-import com.mashup.moit.moit.controller.dto.MoitStudyResponse
-import com.mashup.moit.moit.controller.dto.MyMoitListResponse
-import com.mashup.moit.moit.controller.dto.MyMoitResponseForListView
+import com.mashup.moit.controller.moit.dto.MoitCreateRequest
+import com.mashup.moit.controller.moit.dto.MoitDetailsResponse
+import com.mashup.moit.controller.moit.dto.MoitJoinResponse
+import com.mashup.moit.controller.moit.dto.MoitJoinUserListResponse
+import com.mashup.moit.controller.moit.dto.MoitStudyAttendanceResponse
+import com.mashup.moit.controller.moit.dto.MoitStudyListResponse
+import com.mashup.moit.controller.moit.dto.MoitStudyResponse
+import com.mashup.moit.controller.moit.dto.MyMoitListResponse
+import com.mashup.moit.controller.moit.dto.MyMoitResponseForListView
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate

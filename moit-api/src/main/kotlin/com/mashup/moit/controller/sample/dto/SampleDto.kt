@@ -1,4 +1,4 @@
-package com.mashup.moit.sample.controller.sample.dto
+package com.mashup.moit.controller.sample.dto
 
 import com.mashup.moit.domain.moit.NotificationRemindOption
 import com.mashup.moit.domain.sample.Sample

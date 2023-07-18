@@ -1,4 +1,4 @@
-package com.mashup.moit.study.controller.dto
+package com.mashup.moit.controller.study.dto
 
 import com.mashup.moit.domain.attendance.Attendance
 import com.mashup.moit.domain.attendance.AttendanceStatus

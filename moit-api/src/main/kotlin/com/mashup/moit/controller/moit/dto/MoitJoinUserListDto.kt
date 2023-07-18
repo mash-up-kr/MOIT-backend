@@ -1,4 +1,4 @@
-package com.mashup.moit.moit.controller.dto
+package com.mashup.moit.controller.moit.dto
 
 import com.mashup.moit.domain.user.User
 import io.swagger.v3.oas.annotations.media.Schema

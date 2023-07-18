@@ -1,14 +1,14 @@
-package com.mashup.moit.study.controller
+package com.mashup.moit.controller.study
 
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.security.authentication.UserInfo
 import com.mashup.moit.security.resolver.GetAuth
-import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordRequest
-import com.mashup.moit.study.controller.dto.StudyAttendanceKeywordResponse
-import com.mashup.moit.study.controller.dto.StudyDetailsResponse
-import com.mashup.moit.study.controller.dto.StudyFirstAttendanceResponse
-import com.mashup.moit.study.controller.dto.StudyUserAttendanceStatusResponse
-import com.mashup.moit.study.facade.StudyFacade
+import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordRequest
+import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordResponse
+import com.mashup.moit.controller.study.dto.StudyDetailsResponse
+import com.mashup.moit.controller.study.dto.StudyFirstAttendanceResponse
+import com.mashup.moit.controller.study.dto.StudyUserAttendanceStatusResponse
+import com.mashup.moit.facade.StudyFacade
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid

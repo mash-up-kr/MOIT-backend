@@ -1,8 +1,8 @@
-package com.mashup.moit.sample.facade
+package com.mashup.moit.facade
 
 import com.mashup.moit.domain.sample.SampleService
-import com.mashup.moit.sample.controller.sample.dto.SampleCreateRequest
-import com.mashup.moit.sample.controller.sample.dto.SampleResponse
+import com.mashup.moit.controller.sample.dto.SampleCreateRequest
+import com.mashup.moit.controller.sample.dto.SampleResponse
 import org.springframework.stereotype.Component
 
 @Component
