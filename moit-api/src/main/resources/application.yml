@@ -13,15 +13,15 @@ spring:
       client:
         registration:
           auth0:
-            client-id: ENC(6jkKllTGxVAzzWlIpGfYWOi/8xNw1/BYMDURjaq/W5WDk9mpxQT/m1ONh5hnOUl/dQwSAA7ZzGdItniu3xH7vFdHGSmpl5lDYiV7VEfRBd0=)
-            client-secret: ENC(ut0qWQvWin/brPbolIE6FWQEOYm73alrD9QkzkGWFqwjIHzjGtABrniR8VB5n+BmTe2lJuQ9x5KsjyKZ+Qu5Vy0KUNc42LhtWO+y8y3FwK5nwri5lnPEXR1Hg0sXQItoDGLOym79bHsvGQVRTCTHvg==)
+            client-id: ENC(NNbSuxBd5Gl+LZJwCws0IYoYmA2Pe4+sX0Hm7+QToWpU1F5HFQg7jLVy6phcyTdcUc2NXUtul8jYJZCV5AGaVAxyPQX75r2KkwJQ7Zcjqkw=)
+            client-secret: ENC(sruib4iDMuuI7Z5anBNzBf89Zoi1mZ7EII1pml9sO9kAOydk1YDhpEUb6gscCvXIkkGiShNQ+Y8fMXv129DMORolgW3AF2lRyMhnpryxRABTgJ5mUTSkH/thUb/Y6ejSH9SBQUu7AJV1OtEZonJ3lg==)
             scope:
               - openid
               - profile
               - email
         provider:
           auth0:
-            issuer-uri: ENC(FjcoFhmUB80mv7Ko4HuZqEyjEJ+Nr1rEF5/Ml2oSxYDG3W1F6Lw/fM19GIt4s41d7467ujASDQjd8FZnGksdnRukTGCQLFEYOrb3iYnIX2w=)
+            issuer-uri: ENC(G0yAcdZjTXv3nDDqIA8AKZs7ec6+Trbo7Fo/CNvDMcqNlr6h+7VHIDbjtA9A5QAH7LARlMBuv7IOh+SnHXAzU4+2MzrciU3DygNAjvI5ckw=)
 
 # swagger doc 
 springdoc:

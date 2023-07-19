@@ -31,8 +31,7 @@ class SecurityConfig(
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
             .oauth2Login {
-                it.loginPage("/api/v1/auth/sign-in")
-                    .defaultSuccessUrl("/api/v1/auth/sign-in/success") // TODO: Use successHandler 
+                it.defaultSuccessUrl("/api/v1/auth/sign-in/success") // TODO: Use successHandler 
                     .failureHandler(AuthFailureHandler())
             }
             .logout { it.logoutRequestMatcher(AntPathRequestMatcher("/logout")).addLogoutHandler(logoutHandler) }
