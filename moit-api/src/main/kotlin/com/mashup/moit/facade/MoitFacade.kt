@@ -2,14 +2,6 @@ package com.mashup.moit.facade
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
-import com.mashup.moit.domain.attendance.AttendanceService
-import com.mashup.moit.domain.attendance.AttendanceStatus
-import com.mashup.moit.domain.moit.Moit
-import com.mashup.moit.domain.moit.MoitService
-import com.mashup.moit.domain.study.StudyService
-import com.mashup.moit.domain.user.UserService
-import com.mashup.moit.domain.usermoit.UserMoitRole
-import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.controller.moit.dto.MoitCreateRequest
 import com.mashup.moit.controller.moit.dto.MoitDetailsResponse
 import com.mashup.moit.controller.moit.dto.MoitJoinResponse
@@ -19,8 +11,18 @@ import com.mashup.moit.controller.moit.dto.MoitStudyListResponse
 import com.mashup.moit.controller.moit.dto.MoitStudyResponse
 import com.mashup.moit.controller.moit.dto.MyMoitListResponse
 import com.mashup.moit.controller.moit.dto.MyMoitResponseForListView
+import com.mashup.moit.domain.attendance.AttendanceService
+import com.mashup.moit.domain.attendance.AttendanceStatus
+import com.mashup.moit.domain.moit.Moit
+import com.mashup.moit.domain.moit.MoitService
+import com.mashup.moit.domain.study.StudyService
+import com.mashup.moit.domain.user.UserService
+import com.mashup.moit.domain.usermoit.UserMoitRole
+import com.mashup.moit.domain.usermoit.UserMoitService
+import com.mashup.moit.infra.aws.s3.S3Service
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
@@ -31,7 +33,8 @@ class MoitFacade(
     private val studyService: StudyService,
     private val userMoitService: UserMoitService,
     private val userService: UserService,
-    private val attendanceService: AttendanceService
+    private val attendanceService: AttendanceService,
+    private val s3Service: S3Service,
 ) {
     @Transactional
     fun create(userId: Long, request: MoitCreateRequest): Long {
@@ -121,7 +124,18 @@ class MoitFacade(
         }.let(::MoitStudyListResponse)
     }
 
+    fun addMoitImage(moitId: Long, moitImage: MultipartFile) {
+        val moit = moitService.getMoitById(moitId)
+        val moitImageUrl = s3Service.upload(MOIT_IMAGE_DIRECTORY, moitImage)
+        moitService.addMoitImage(moit.id, moitImageUrl)
+    }
+
     private fun getMoitByInvitationCode(invitationCode: String): Moit {
         return moitService.getMoitByInvitationCode(invitationCode)
     }
+
+    companion object {
+        private const val MOIT_IMAGE_DIRECTORY = "moit/"
+    }
+
 }

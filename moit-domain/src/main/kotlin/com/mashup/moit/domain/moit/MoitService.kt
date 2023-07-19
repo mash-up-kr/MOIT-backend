@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.*
+import java.util.Locale
 
 @Service
 @Transactional(readOnly = true)
@@ -70,7 +70,7 @@ class MoitService(
             }
         }
     }
-    
+
     fun getMoitByInvitationCode(invitationCode: String): Moit {
         return moitRepository.findByInvitationCode(invitationCode.uppercase(Locale.getDefault()))
             ?.also { it.validateDateForJoin() }?.toDomain()
@@ -87,4 +87,12 @@ class MoitService(
         val moitIds = userMoitRepository.findAllByUserId(userId).map { it.moitId }
         return moitRepository.findAllById(moitIds).map { it.toDomain() }
     }
+
+    @Transactional
+    fun addMoitImage(moitId: Long, moitImageUrl: String) {
+        moitRepository.findById(moitId)
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+            .apply { this.profileUrl = moitImageUrl }
+    }
+
 }
