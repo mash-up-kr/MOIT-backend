@@ -44,8 +44,4 @@ class UserEntity(
         )
     }
 
-    companion object {
-        const val USER_ROLE_DELIMITER = "|"
-    }
-
 }
