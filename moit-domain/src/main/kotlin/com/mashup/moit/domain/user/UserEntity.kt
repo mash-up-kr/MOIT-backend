@@ -6,8 +6,12 @@ import jakarta.persistence.Column
 import jakarta.persistence.Convert
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.Where
 
 @Table(name = "users")
+@Where(clause = "is_deleted = false")
+@SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id=?")
 @Entity
 class UserEntity(
     @Column(name = "provider_unique_key", nullable = false)

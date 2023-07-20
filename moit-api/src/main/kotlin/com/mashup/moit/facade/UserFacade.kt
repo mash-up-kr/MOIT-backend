@@ -14,6 +14,10 @@ class UserFacade(
     private val userService: UserService
 ) {
 
+    fun deleteById(userId: Long) {
+        return userService.deleteUser(userId)
+    }
+
     fun findByProviderUniqueKey(oidcUser: OidcUser): User? {
         return userService.findByProviderUniqueKey(oidcUser.getProviderUniqueKey())
     }

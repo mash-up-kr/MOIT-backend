@@ -17,6 +17,11 @@ class UserService(
         return userRepository.save(UserEntity(providerUniqueKey, nickname, profileImage, email, setOf(UserRole.USER))).toDomain()
     }
 
+    @Transactional
+    fun deleteUser(userId: Long) {
+        userRepository.deleteById(userId);
+    }
+
     fun findByProviderUniqueKey(providerUniqueKey: String): User? {
         return userRepository.findByProviderUniqueKey(providerUniqueKey)?.toDomain()
     }
