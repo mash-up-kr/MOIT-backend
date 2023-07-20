@@ -57,7 +57,7 @@ class FineService(
     }
 
     @Transactional
-    fun addedFinePaymentImage(userId: Long, fineId: Long, finePaymentImageUrl: String): Fine {
+    fun addFinePaymentImage(userId: Long, fineId: Long, finePaymentImageUrl: String): Fine {
         return fineRepository.findById(fineId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
             .takeIf { it.userId == userId }

@@ -19,7 +19,7 @@ class MoitEntity(
     val description: String? = null,
 
     @Column(name = "profile_url")
-    val profileUrl: String? = null,
+    var profileUrl: String? = null,
 
     @Column(name = "invitation_code", nullable = false)
     val invitationCode: String,
