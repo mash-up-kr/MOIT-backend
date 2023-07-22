@@ -15,11 +15,20 @@ class BannerService(
 ) {
     fun findOpenedBannerByUserId(userId: Long): List<Banner> {
         val now = LocalDateTime.now()
-        return bannerRepository.findByUserIdAndOpenAtAfterAndCloseAtBefore(
+        val banners = bannerRepository.findByUserIdAndOpenAtAfterAndCloseAtBefore(
             userId = userId,
             openAt = now,
             closeAt = now,
         ).map { bannerGenerator.generate(it) }
+
+        return banners.ifEmpty {
+            listOf(
+                DefaultBanner(
+                    userId = userId,
+                    moitId = null,
+                )
+            )
+        }
     }
 
     @Transactional

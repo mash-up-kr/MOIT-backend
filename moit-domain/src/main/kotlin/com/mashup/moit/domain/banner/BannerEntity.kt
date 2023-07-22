@@ -29,4 +29,13 @@ class BannerEntity(
 
     @Column(name = "study_id")
     val studyId: Long?,
-) : BaseEntity()
+) : BaseEntity() {
+    fun isOpened(): Boolean {
+        val now = LocalDateTime.now()
+        return openAt.isBefore(now) && (closeAt == null || closeAt!!.isAfter(now))
+    }
+
+    fun isClosed(): Boolean {
+        return !isOpened()
+    }
+}

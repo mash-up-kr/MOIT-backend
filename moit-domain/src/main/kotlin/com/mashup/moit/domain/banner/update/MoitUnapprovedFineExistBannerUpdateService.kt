@@ -30,14 +30,14 @@ class MoitUnapprovedFineExistBannerUpdateService(
                 bannerType = BannerType.MOIT_UNAPPROVED_FINE_EXIST,
             )
 
-            val fines = fineRepository.findAllByMoitIdAndUserIdAndApproveStatusIn(
+            val unapprovedFines = fineRepository.findAllByMoitIdAndUserIdAndApproveStatusIn(
                 userId = fine.userId,
                 moitId = fine.moitId,
                 approveStatuses = setOf(FineApproveStatus.NEW, FineApproveStatus.IN_PROGRESS, FineApproveStatus.REJECTED),
             )
 
-            if (fines.isNotEmpty()) {
-                if (banner !== null) {
+            if (unapprovedFines.isNotEmpty()) {
+                if (banner !== null && banner.isClosed()) {
                     banner.apply {
                         this.openAt = LocalDateTime.now()
                         this.closeAt = null
@@ -55,7 +55,7 @@ class MoitUnapprovedFineExistBannerUpdateService(
                     )
                 }
             } else {
-                if (banner !== null) {
+                if (banner !== null && banner.isOpened()) {
                     banner.apply {
                         this.closeAt = LocalDateTime.now()
                     }

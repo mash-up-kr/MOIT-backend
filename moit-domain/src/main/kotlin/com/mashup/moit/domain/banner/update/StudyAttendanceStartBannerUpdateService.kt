@@ -24,25 +24,25 @@ class StudyAttendanceStartBannerUpdateService(
         if (request is StudyAttendanceStartBannerUpdateRequest) {
             val study = studyRepository.findById(request.studyId)
                 .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
-            val moitUsers = userMoitRepository.findAllByMoitId(study.moitId)
+            val studyUserIds = userMoitRepository.findAllByMoitId(study.moitId).map { it.userId }
 
-            val existedBanners = bannerRepository.findByUserIdInAndStudyIdAndBannerType(
-                userIds = moitUsers.map { it.userId },
+            val existedBannerUserIds = bannerRepository.findByUserIdInAndStudyIdAndBannerType(
+                userIds = studyUserIds,
                 studyId = study.id,
                 bannerType = BannerType.MOIT_UNAPPROVED_FINE_EXIST,
-            )
+            ).map { it.userId }
 
-            moitUsers.filter { it.userId !in existedBanners.map { banner -> banner.userId } }
+            studyUserIds.filter { it !in existedBannerUserIds }
                 .map {
                     BannerEntity(
-                        userId = it.userId,
+                        userId = it,
                         openAt = study.startAt.minusMinutes(10L),
                         closeAt = study.endAt,
                         bannerType = BannerType.STUDY_ATTENDANCE_START,
                         moitId = study.moitId,
                         studyId = study.id,
                     )
-                }
+                }.let { bannerRepository.saveAll(it) }
         } else {
             throw MoitException.of(MoitExceptionType.SYSTEM_FAIL)
         }

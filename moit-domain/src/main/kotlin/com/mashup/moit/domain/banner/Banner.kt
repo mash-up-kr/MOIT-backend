@@ -4,16 +4,13 @@ import java.time.LocalDateTime
 
 sealed interface Banner {
     val userId: Long
-    val openAt: LocalDateTime
-    val closeAt: LocalDateTime?
+    val moitId: Long?
     val priority: Int
 }
 
 data class StudyAttendanceStartBanner(
     override val userId: Long,
-    override val openAt: LocalDateTime,
-    override val closeAt: LocalDateTime?,
-    val moitId: Long,
+    override val moitId: Long,
     val moitName: String,
     val studyId: Long,
     val studyStartAt: LocalDateTime,
@@ -25,9 +22,7 @@ data class StudyAttendanceStartBanner(
 
 data class MoitUnapprovedFineExistBanner(
     override val userId: Long,
-    override val openAt: LocalDateTime,
-    override val closeAt: LocalDateTime?,
-    val moitId: Long,
+    override val moitId: Long,
     val moitName: String,
     val fineAmount: Long,
 ) : Banner {
@@ -36,8 +31,7 @@ data class MoitUnapprovedFineExistBanner(
 
 data class DefaultBanner(
     override val userId: Long,
-    override val openAt: LocalDateTime,
-    override val closeAt: LocalDateTime?,
+    override val moitId: Long?,
 ) : Banner {
     override val priority = 2
 }
