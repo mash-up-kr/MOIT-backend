@@ -3,8 +3,6 @@ package com.mashup.moit.infra.fcm
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
-import com.mashup.moit.controller.sample.dto.SampleNotificationRequest
-import com.mashup.moit.controller.study.dto.StudyAttendanceStartNotification
 import com.mashup.moit.domain.moit.NotificationRemindOption
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -38,7 +36,7 @@ class FCMNotificationService(
     fun getMoitTopic(moitId: Long): String {
         return TOPIC_MOIT_PREFIX + moitId
     }
-    
+
     fun sendTopicSampleNotification(request: SampleNotificationRequest) {
         val title = STUDY_REMINDER_NOTIFICATION
         val body = when (request.remainMinutes) {

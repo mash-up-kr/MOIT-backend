@@ -1,9 +1,9 @@
 package com.mashup.moit.scheduler
 
-import com.mashup.moit.controller.study.dto.StudyAttendanceStartNotification
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.fcm.FCMNotificationService
+import com.mashup.moit.infra.fcm.StudyAttendanceStartNotification
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Async
