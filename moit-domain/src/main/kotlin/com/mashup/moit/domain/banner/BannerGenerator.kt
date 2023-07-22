@@ -24,8 +24,6 @@ class BannerGenerator(
 
                 StudyAttendanceStartBanner(
                     userId = banner.userId,
-                    openAt = banner.openAt,
-                    closeAt = banner.closeAt,
                     moitId = moit.id,
                     moitName = moit.name,
                     studyId = study.id,
@@ -46,8 +44,6 @@ class BannerGenerator(
 
                 MoitUnapprovedFineExistBanner(
                     userId = banner.userId,
-                    openAt = banner.openAt,
-                    closeAt = banner.closeAt,
                     moitId = moit.id,
                     moitName = moit.name,
                     fineAmount = fines.filter { it.approveStatus !== FineApproveStatus.APPROVED }.sumOf { it.amount },
