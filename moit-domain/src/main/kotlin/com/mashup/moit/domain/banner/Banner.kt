@@ -5,7 +5,6 @@ import java.time.LocalDateTime
 sealed interface Banner {
     val userId: Long
     val moitId: Long?
-    val priority: Int
 }
 
 data class StudyAttendanceStartBanner(
@@ -16,25 +15,19 @@ data class StudyAttendanceStartBanner(
     val studyStartAt: LocalDateTime,
     val studyLateAt: LocalDateTime,
     val studyAbsenceAt: LocalDateTime,
-) : Banner {
-    override val priority = 0
-}
+) : Banner
 
 data class MoitUnapprovedFineExistBanner(
     override val userId: Long,
     override val moitId: Long,
     val moitName: String,
     val fineAmount: Long,
-) : Banner {
-    override val priority = 1
-}
+) : Banner
 
 data class DefaultBanner(
     override val userId: Long,
     override val moitId: Long?,
-) : Banner {
-    override val priority = 2
-}
+) : Banner
 
 enum class BannerType {
     STUDY_ATTENDANCE_START,

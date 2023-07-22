@@ -17,8 +17,8 @@ class BannerEntity(
     @Column(name = "open_at", nullable = false)
     var openAt: LocalDateTime,
 
-    @Column(name = "close_at")
-    var closeAt: LocalDateTime?,
+    @Column(name = "close_at", nullable = false)
+    var closeAt: LocalDateTime,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "banner_type", nullable = false)
@@ -32,7 +32,7 @@ class BannerEntity(
 ) : BaseEntity() {
     fun isOpened(): Boolean {
         val now = LocalDateTime.now()
-        return openAt.isBefore(now) && (closeAt == null || closeAt!!.isAfter(now))
+        return openAt.let { it.isBefore(now) || it.isEqual(now) } && closeAt.isAfter(now)
     }
 
     fun isClosed(): Boolean {

@@ -40,14 +40,14 @@ class MoitUnapprovedFineExistBannerUpdateService(
                 if (banner !== null && banner.isClosed()) {
                     banner.apply {
                         this.openAt = LocalDateTime.now()
-                        this.closeAt = null
+                        this.closeAt = LocalDateTime.MAX
                     }
                 } else {
                     bannerRepository.save(
                         BannerEntity(
                             userId = fine.userId,
                             openAt = LocalDateTime.now(),
-                            closeAt = null,
+                            closeAt = LocalDateTime.MAX,
                             bannerType = BannerType.MOIT_UNAPPROVED_FINE_EXIST,
                             moitId = fine.moitId,
                             studyId = null,
