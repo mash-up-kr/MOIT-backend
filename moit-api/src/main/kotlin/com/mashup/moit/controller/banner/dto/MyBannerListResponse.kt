@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 data class BannerListResponse(
     val studyAttendanceStartBanners: List<StudyAttendanceStartBannerResponse>,
     val moitUnapprovedFineExistBanners: List<MoitUnapprovedFineExistBannerResponse>,
-    val defaultBanner: List<DefaultBannerResponse>,
+    val defaultBanners: List<DefaultBannerResponse>,
 )
 
 data class StudyAttendanceStartBannerResponse(
@@ -19,10 +19,9 @@ data class StudyAttendanceStartBannerResponse(
     val studyStartAt: LocalDateTime,
     val studyLateAt: LocalDateTime,
     val studyAbsenceAt: LocalDateTime,
-    val order: Int,
 ) {
     companion object {
-        fun of(banner: StudyAttendanceStartBanner, order: Int): StudyAttendanceStartBannerResponse {
+        fun of(banner: StudyAttendanceStartBanner): StudyAttendanceStartBannerResponse {
             return StudyAttendanceStartBannerResponse(
                 userId = banner.userId,
                 moitId = banner.moitId,
@@ -31,7 +30,6 @@ data class StudyAttendanceStartBannerResponse(
                 studyStartAt = banner.studyStartAt,
                 studyLateAt = banner.studyLateAt,
                 studyAbsenceAt = banner.studyAbsenceAt,
-                order = order,
             )
         }
     }
@@ -42,16 +40,14 @@ data class MoitUnapprovedFineExistBannerResponse(
     val moitId: Long,
     val moitName: String,
     val findAmount: Long,
-    val order: Int,
 ) {
     companion object {
-        fun of(banner: MoitUnapprovedFineExistBanner, order: Int): MoitUnapprovedFineExistBannerResponse {
+        fun of(banner: MoitUnapprovedFineExistBanner): MoitUnapprovedFineExistBannerResponse {
             return MoitUnapprovedFineExistBannerResponse(
                 userId = banner.userId,
                 moitId = banner.moitId,
                 moitName = banner.moitName,
                 findAmount = banner.fineAmount,
-                order = order,
             )
         }
     }

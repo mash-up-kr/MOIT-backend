@@ -20,10 +20,10 @@ class BannerFacade(
 
         return BannerListResponse(
             studyAttendanceStartBanners = moitFilteredBanners.filterIsInstance<StudyAttendanceStartBanner>()
-                .map { StudyAttendanceStartBannerResponse.of(it, 1) },
+                .map { StudyAttendanceStartBannerResponse.of(it) },
             moitUnapprovedFineExistBanners = moitFilteredBanners.filterIsInstance<MoitUnapprovedFineExistBanner>()
-                .map { MoitUnapprovedFineExistBannerResponse.of(it, 1) },
-            defaultBanner = moitFilteredBanners.filterIsInstance<DefaultBanner>()
+                .map { MoitUnapprovedFineExistBannerResponse.of(it) },
+            defaultBanners = moitFilteredBanners.filterIsInstance<DefaultBanner>()
                 .map { DefaultBannerResponse.of(it) },
         )
     }
