@@ -36,7 +36,7 @@ class BannerGenerator(
             BannerType.MOIT_UNAPPROVED_FINE_EXIST -> {
                 val moit = moitRepository.findById(banner.moitId!!)
                     .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
-                val fines = fineRepository.findAllByMoitIdAndUserIdAndApproveStatusIn(
+                val unapprovedFines = fineRepository.findAllByMoitIdAndUserIdAndApproveStatusIn(
                     moitId = banner.moitId,
                     userId = banner.userId,
                     approveStatuses = setOf(FineApproveStatus.NEW, FineApproveStatus.IN_PROGRESS, FineApproveStatus.REJECTED),
@@ -46,7 +46,7 @@ class BannerGenerator(
                     userId = banner.userId,
                     moitId = moit.id,
                     moitName = moit.name,
-                    fineAmount = fines.filter { it.approveStatus !== FineApproveStatus.APPROVED }.sumOf { it.amount },
+                    fineAmount = unapprovedFines.sumOf { it.amount },
                 )
             }
         }
