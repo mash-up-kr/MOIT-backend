@@ -38,10 +38,12 @@ class MoitUnapprovedFineExistBannerUpdateService(
             )
 
             if (unapprovedFines.isNotEmpty()) {
-                if (banner !== null && banner.isClosed()) {
-                    banner.apply {
-                        this.openAt = LocalDateTime.now()
-                        this.closeAt = BANNER_CLOSE_MAX_DATE
+                if (banner !== null) {
+                    if (banner.isClosed()) {
+                        banner.apply {
+                            this.openAt = LocalDateTime.now()
+                            this.closeAt = BANNER_CLOSE_MAX_DATE
+                        }
                     }
                 } else {
                     bannerRepository.save(
