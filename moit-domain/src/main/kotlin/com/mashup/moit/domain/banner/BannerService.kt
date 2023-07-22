@@ -15,7 +15,7 @@ class BannerService(
 ) {
     fun findOpenedBannerByUserId(userId: Long): List<Banner> {
         val now = LocalDateTime.now()
-        val banners = bannerRepository.findByUserIdAndOpenAtAfterAndCloseAtBefore(
+        val banners = bannerRepository.findByUserIdAndOpenAtBeforeAndCloseAtAfter(
             userId = userId,
             openAt = now,
             closeAt = now,

@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 @Repository
 interface BannerRepository : JpaRepository<BannerEntity, Long> {
     // findBy UserId And OpenAtAfter And CloseAtBefore
-    fun findByUserIdAndOpenAtAfterAndCloseAtBefore(userId: Long, openAt: LocalDateTime, closeAt: LocalDateTime): List<BannerEntity>
+    fun findByUserIdAndOpenAtBeforeAndCloseAtAfter(userId: Long, openAt: LocalDateTime, closeAt: LocalDateTime): List<BannerEntity>
 
     // findBy UserIdIn And StudyId And BannerType
     fun findByUserIdInAndStudyIdAndBannerType(userIds: Collection<Long>, studyId: Long, bannerType: BannerType): List<BannerEntity>
