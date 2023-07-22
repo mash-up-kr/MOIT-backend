@@ -10,6 +10,8 @@ import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.controller.study.dto.StudyDetailsResponse
 import com.mashup.moit.controller.study.dto.StudyFirstAttendanceResponse
 import com.mashup.moit.controller.study.dto.StudyUserAttendanceStatusResponse
+import com.mashup.moit.domain.banner.BannerService
+import com.mashup.moit.domain.banner.update.StudyAttendanceStartBannerUpdateRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -20,6 +22,7 @@ class StudyFacade(
     private val attendanceService: AttendanceService,
     private val userService: UserService,
     private val fineService: FineService,
+    private val bannerService: BannerService,
 ) {
     fun getDetails(studyId: Long): StudyDetailsResponse {
         val study = studyService.findById(studyId)
@@ -63,6 +66,8 @@ class StudyFacade(
     fun initializeAttendance(studyId: Long) {
         attendanceService.initializeAttendance(studyId)
         studyService.markAsInitialized(studyId)
+        // TODO Kafka 머지 후 비동기로 전환 (StudyInitializeEvent)
+        bannerService.update(StudyAttendanceStartBannerUpdateRequest(studyId))
     }
 
     fun checkFirstAttendance(studyId: Long): StudyFirstAttendanceResponse {
