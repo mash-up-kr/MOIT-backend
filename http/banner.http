@@ -1,0 +1,3 @@
+### My Banner
+GET {{moit-api}}/api/v1/banner?moitId=
+Authorization: {{authorizationHeader}}
