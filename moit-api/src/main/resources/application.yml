@@ -29,11 +29,18 @@ spring:
     consumer:
       group-id: ENC(D4Y7cXR3eszRDBMXMgQzP71FSFdHuCBxg9c8Krbb5JCEsGcQRtuRU/s6dFxr7hPR)
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
     bootstrap-servers: ENC(UUoAbkwFVTtdbHDG5VO6mjQtHIkt6C72SXZGMls+Wz/Ygg5ICtbX7OEV47/AddxgHvrdGwbFQhUfdQNaND4rlK2675cA9ZWdjDryXgcqPDI=)
     properties:
       spring:
+        deserializer:
+          key:
+            delegate:
+              class: org.apache.kafka.common.serialization.StringDeserializer
+          value:
+            delegate:
+              class: org.springframework.kafka.support.serializer.JsonDeserializer
         json:
           trusted:
             packages: "*"
