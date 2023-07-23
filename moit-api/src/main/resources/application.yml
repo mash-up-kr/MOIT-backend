@@ -22,6 +22,23 @@ spring:
         provider:
           auth0:
             issuer-uri: ENC(G0yAcdZjTXv3nDDqIA8AKZs7ec6+Trbo7Fo/CNvDMcqNlr6h+7VHIDbjtA9A5QAH7LARlMBuv7IOh+SnHXAzU4+2MzrciU3DygNAjvI5ckw=)
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: ENC(D4Y7cXR3eszRDBMXMgQzP71FSFdHuCBxg9c8Krbb5JCEsGcQRtuRU/s6dFxr7hPR)
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    bootstrap-servers: ENC(UUoAbkwFVTtdbHDG5VO6mjQtHIkt6C72SXZGMls+Wz/Ygg5ICtbX7OEV47/AddxgHvrdGwbFQhUfdQNaND4rlK2675cA9ZWdjDryXgcqPDI=)
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: SCRAM-SHA-256
+        jaas:
+          config: ENC(18qmH7MluXlgiDmBymlr5Ljoy/hFuIqrl/YThyZjnUPrRqUY7A/JS4kq30Cf/ASBeLX7o/QM76EjyVe6/By79fxuhCUoou6J3Dk5j589Jme/Z5J3yOGnZfGxQRn9UtPcm4P7X/Gq7U0IoNSaxd/JW0ZJ4TM5HoaHNUYhpAZnR/k58R80YadjUu/pOebMJowGapABJUoTN3kHtAnDgs7jGlOsiqhjzjj8uEhcr/0m9w1FN74J8FkSJ/E1p4OIhwVgm8SOpWtSoJTeVpjg9XApu3xtxUvITrzMMq4QOn261kw=)
 
 # swagger doc 
 springdoc:
