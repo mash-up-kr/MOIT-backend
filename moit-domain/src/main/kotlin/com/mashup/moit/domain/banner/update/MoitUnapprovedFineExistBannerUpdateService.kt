@@ -21,51 +21,49 @@ class MoitUnapprovedFineExistBannerUpdateService(
     }
 
     override fun update(request: BannerUpdateRequest) {
-        if (request is MoitUnapprovedFineExistBannerUpdateRequest) {
-            val fine = fineRepository.findById(request.fineId)
-                .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+        request as? MoitUnapprovedFineExistBannerUpdateRequest ?: throw MoitException.of(MoitExceptionType.SYSTEM_FAIL)
 
-            val banner = bannerRepository.findByUserIdAndMoitIdAndBannerType(
-                userId = fine.userId,
-                moitId = fine.moitId,
-                bannerType = BannerType.MOIT_UNAPPROVED_FINE_EXIST,
-            )
+        val fine = fineRepository.findById(request.fineId)
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
 
-            val unapprovedFines = fineRepository.findAllByMoitIdAndUserIdAndApproveStatusIn(
-                userId = fine.userId,
-                moitId = fine.moitId,
-                approveStatuses = setOf(FineApproveStatus.NEW, FineApproveStatus.IN_PROGRESS, FineApproveStatus.REJECTED),
-            )
+        val banner = bannerRepository.findByUserIdAndMoitIdAndBannerType(
+            userId = fine.userId,
+            moitId = fine.moitId,
+            bannerType = BannerType.MOIT_UNAPPROVED_FINE_EXIST,
+        )
 
-            if (unapprovedFines.isNotEmpty()) {
-                if (banner !== null) {
-                    if (banner.isClosed()) {
-                        banner.apply {
-                            this.openAt = LocalDateTime.now()
-                            this.closeAt = BANNER_CLOSE_MAX_DATE
-                        }
+        val unapprovedFines = fineRepository.findAllByMoitIdAndUserIdAndApproveStatusIn(
+            userId = fine.userId,
+            moitId = fine.moitId,
+            approveStatuses = setOf(FineApproveStatus.NEW, FineApproveStatus.IN_PROGRESS, FineApproveStatus.REJECTED),
+        )
+
+        if (unapprovedFines.isNotEmpty()) {
+            if (banner !== null) {
+                if (banner.isClosed()) {
+                    banner.apply {
+                        this.openAt = LocalDateTime.now()
+                        this.closeAt = BANNER_CLOSE_MAX_DATE
                     }
-                } else {
-                    bannerRepository.save(
-                        BannerEntity(
-                            userId = fine.userId,
-                            openAt = LocalDateTime.now(),
-                            closeAt = BANNER_CLOSE_MAX_DATE,
-                            bannerType = BannerType.MOIT_UNAPPROVED_FINE_EXIST,
-                            moitId = fine.moitId,
-                            studyId = null,
-                        )
-                    )
                 }
             } else {
-                if (banner !== null && banner.isOpened()) {
-                    banner.apply {
-                        this.closeAt = LocalDateTime.now()
-                    }
-                }
+                bannerRepository.save(
+                    BannerEntity(
+                        userId = fine.userId,
+                        openAt = LocalDateTime.now(),
+                        closeAt = BANNER_CLOSE_MAX_DATE,
+                        bannerType = BannerType.MOIT_UNAPPROVED_FINE_EXIST,
+                        moitId = fine.moitId,
+                        studyId = null,
+                    )
+                )
             }
         } else {
-            throw MoitException.of(MoitExceptionType.SYSTEM_FAIL)
+            if (banner !== null && banner.isOpened()) {
+                banner.apply {
+                    this.closeAt = LocalDateTime.now()
+                }
+            }
         }
     }
 }

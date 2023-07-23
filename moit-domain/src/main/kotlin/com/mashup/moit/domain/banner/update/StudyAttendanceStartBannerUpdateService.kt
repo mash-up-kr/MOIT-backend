@@ -20,30 +20,28 @@ class StudyAttendanceStartBannerUpdateService(
     }
 
     override fun update(request: BannerUpdateRequest) {
-        if (request is StudyAttendanceStartBannerUpdateRequest) {
-            val study = studyRepository.findById(request.studyId)
-                .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
-            val studyUserIds = userMoitRepository.findAllByMoitId(study.moitId).map { it.userId }
+        request as? StudyAttendanceStartBannerUpdateRequest ?: throw MoitException.of(MoitExceptionType.SYSTEM_FAIL)
 
-            val existedBannerUserIds = bannerRepository.findByUserIdInAndStudyIdAndBannerType(
-                userIds = studyUserIds,
-                studyId = study.id,
-                bannerType = BannerType.STUDY_ATTENDANCE_START,
-            ).map { it.userId }
+        val study = studyRepository.findById(request.studyId)
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+        val studyUserIds = userMoitRepository.findAllByMoitId(study.moitId).map { it.userId }
 
-            studyUserIds.filter { it !in existedBannerUserIds }
-                .map {
-                    BannerEntity(
-                        userId = it,
-                        openAt = study.startAt.minusMinutes(10L),
-                        closeAt = study.endAt,
-                        bannerType = BannerType.STUDY_ATTENDANCE_START,
-                        moitId = study.moitId,
-                        studyId = study.id,
-                    )
-                }.let { bannerRepository.saveAll(it) }
-        } else {
-            throw MoitException.of(MoitExceptionType.SYSTEM_FAIL)
-        }
+        val existedBannerUserIds = bannerRepository.findByUserIdInAndStudyIdAndBannerType(
+            userIds = studyUserIds,
+            studyId = study.id,
+            bannerType = BannerType.STUDY_ATTENDANCE_START,
+        ).map { it.userId }
+
+        studyUserIds.filter { it !in existedBannerUserIds }
+            .map {
+                BannerEntity(
+                    userId = it,
+                    openAt = study.startAt.minusMinutes(10L),
+                    closeAt = study.endAt,
+                    bannerType = BannerType.STUDY_ATTENDANCE_START,
+                    moitId = study.moitId,
+                    studyId = study.id,
+                )
+            }.let { bannerRepository.saveAll(it) }
     }
 }
