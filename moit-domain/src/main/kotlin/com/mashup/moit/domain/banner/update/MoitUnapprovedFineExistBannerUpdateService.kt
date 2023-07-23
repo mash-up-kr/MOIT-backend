@@ -5,11 +5,9 @@ import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.domain.banner.BannerEntity
 import com.mashup.moit.domain.banner.BannerRepository
 import com.mashup.moit.domain.banner.BannerType
-import com.mashup.moit.domain.banner.update.BannerUpdateConstant.BANNER_CLOSE_MAX_DATE
 import com.mashup.moit.domain.fine.FineApproveStatus
 import com.mashup.moit.domain.fine.FineRepository
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 
 @Service
 class MoitUnapprovedFineExistBannerUpdateService(
@@ -39,30 +37,21 @@ class MoitUnapprovedFineExistBannerUpdateService(
         )
 
         if (unapprovedFines.isNotEmpty()) {
-            if (banner !== null) {
+            if (banner != null) {
                 if (banner.isClosed()) {
-                    banner.apply {
-                        this.openAt = LocalDateTime.now()
-                        this.closeAt = BANNER_CLOSE_MAX_DATE
-                    }
+                    banner.open()
                 }
             } else {
                 bannerRepository.save(
-                    BannerEntity(
+                    BannerEntity.initializeMoitUnapprovedFineExistBanner(
                         userId = fine.userId,
-                        openAt = LocalDateTime.now(),
-                        closeAt = BANNER_CLOSE_MAX_DATE,
-                        bannerType = BannerType.MOIT_UNAPPROVED_FINE_EXIST,
                         moitId = fine.moitId,
-                        studyId = null,
                     )
                 )
             }
         } else {
-            if (banner !== null && banner.isOpened()) {
-                banner.apply {
-                    this.closeAt = LocalDateTime.now()
-                }
+            if (banner != null && banner.isOpened()) {
+                banner.close()
             }
         }
     }

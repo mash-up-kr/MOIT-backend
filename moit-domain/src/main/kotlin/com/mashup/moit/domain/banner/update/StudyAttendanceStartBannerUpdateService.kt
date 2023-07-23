@@ -34,11 +34,10 @@ class StudyAttendanceStartBannerUpdateService(
 
         studyUserIds.filter { it !in existedBannerUserIds }
             .map {
-                BannerEntity(
+                BannerEntity.initializeStudyAttendanceStartBanner(
                     userId = it,
                     openAt = study.startAt.minusMinutes(10L),
                     closeAt = study.endAt,
-                    bannerType = BannerType.STUDY_ATTENDANCE_START,
                     moitId = study.moitId,
                     studyId = study.id,
                 )
