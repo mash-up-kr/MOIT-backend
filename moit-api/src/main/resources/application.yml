@@ -43,7 +43,7 @@ spring:
               class: org.springframework.kafka.support.serializer.JsonDeserializer
         json:
           trusted:
-            packages: "*"
+            packages: com.mashup.moit.infra.event
       security:
         protocol: SASL_SSL
       sasl:
