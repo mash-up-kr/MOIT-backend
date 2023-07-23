@@ -36,7 +36,6 @@ class MoitController(
         @GetAuth userInfo: UserInfo,
         @Valid @RequestBody request: MoitCreateRequest,
     ): MoitApiResponse<Long> {
-        // TODO 인증 개발 완료 후 userId mock 제거
         return MoitApiResponse.success(moitFacade.create(userInfo.id, request))
     }
 
