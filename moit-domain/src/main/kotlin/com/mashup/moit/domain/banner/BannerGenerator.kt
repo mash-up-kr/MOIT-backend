@@ -39,7 +39,7 @@ class BannerGenerator(
                 val unapprovedFines = fineRepository.findAllByMoitIdAndUserIdAndApproveStatusIn(
                     moitId = banner.moitId,
                     userId = banner.userId,
-                    approveStatuses = setOf(FineApproveStatus.NEW, FineApproveStatus.IN_PROGRESS, FineApproveStatus.REJECTED),
+                    approveStatuses = FineApproveStatus.UNAPPROVED_STATUSES,
                 )
 
                 MoitUnapprovedFineExistBanner(

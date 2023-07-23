@@ -35,7 +35,7 @@ class MoitUnapprovedFineExistBannerUpdateService(
         val unapprovedFines = fineRepository.findAllByMoitIdAndUserIdAndApproveStatusIn(
             userId = fine.userId,
             moitId = fine.moitId,
-            approveStatuses = setOf(FineApproveStatus.NEW, FineApproveStatus.IN_PROGRESS, FineApproveStatus.REJECTED),
+            approveStatuses = FineApproveStatus.UNAPPROVED_STATUSES,
         )
 
         if (unapprovedFines.isNotEmpty()) {
