@@ -4,9 +4,9 @@ fun interface MoitEvent {
     fun getTopic(): String
 }
 
-data class StudyCreateEvent(val moitId: Long) : MoitEvent {
+data class MoitCreateEvent(val moitId: Long) : MoitEvent {
     override fun getTopic(): String {
-        return STUDY_CREATE_TOPIC
+        return MOIT_CREATE_TOPIC
     }
 }
 

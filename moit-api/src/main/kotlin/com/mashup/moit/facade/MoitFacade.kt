@@ -21,7 +21,7 @@ import com.mashup.moit.domain.usermoit.UserMoitRole
 import com.mashup.moit.domain.usermoit.UserMoitService
 import com.mashup.moit.infra.aws.s3.S3Service
 import com.mashup.moit.infra.event.EventProducer
-import com.mashup.moit.infra.event.StudyCreateEvent
+import com.mashup.moit.infra.event.MoitCreateEvent
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
@@ -57,7 +57,7 @@ class MoitFacade(
             isRemindActive = request.isRemindActive,
             remindOption = request.remindOption,
         ).also {
-            eventProducer.produce(StudyCreateEvent(moitId = it.id))
+            eventProducer.produce(MoitCreateEvent(moitId = it.id))
             userMoitService.join(userId, it.id, UserMoitRole.MASTER)
         }
 

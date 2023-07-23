@@ -4,8 +4,8 @@ import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.event.FINE_CREATE_TOPIC
 import com.mashup.moit.infra.event.FineCreateEvent
-import com.mashup.moit.infra.event.STUDY_CREATE_TOPIC
-import com.mashup.moit.infra.event.StudyCreateEvent
+import com.mashup.moit.infra.event.MOIT_CREATE_TOPIC
+import com.mashup.moit.infra.event.MoitCreateEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
@@ -18,9 +18,9 @@ class KafkaConsumer(
 ) {
     private val log: Logger = LoggerFactory.getLogger(KafkaConsumer::class.java)
 
-    @KafkaListener(topics = [STUDY_CREATE_TOPIC])
-    fun consumeStudyCreateEvent(event: StudyCreateEvent) {
-        log.debug("consumeStudyCreateEvent called: {}", event)
+    @KafkaListener(topics = [MOIT_CREATE_TOPIC])
+    fun consumeMoitCreateEvent(event: MoitCreateEvent) {
+        log.debug("consumeMoitCreateEvent called: {}", event)
         studyService.createStudies(event.moitId)
     }
 
