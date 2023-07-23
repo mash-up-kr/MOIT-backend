@@ -1,13 +1,14 @@
 package com.mashup.moit.domain.banner
 
-import com.mashup.moit.domain.banner.update.BannerUpdateConstant.BANNER_CLOSE_MAX_DATE
 import com.mashup.moit.domain.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Table(name = "banner")
 @Entity
@@ -42,7 +43,7 @@ class BannerEntity(
 
     fun open() {
         this.openAt = LocalDateTime.now()
-        this.closeAt = BANNER_CLOSE_MAX_DATE
+        this.closeAt = BANNER_CLOSE_MAX_DATETIME
     }
 
     fun close() {
@@ -50,6 +51,8 @@ class BannerEntity(
     }
 
     companion object {
+        val BANNER_CLOSE_MAX_DATETIME: LocalDateTime = LocalDateTime.of(LocalDate.of(9999, 12, 31), LocalTime.of(23, 59, 59))
+
         fun initializeStudyAttendanceStartBanner(
             userId: Long,
             openAt: LocalDateTime,
@@ -71,7 +74,7 @@ class BannerEntity(
         ) = BannerEntity(
             userId = userId,
             openAt = LocalDateTime.now(),
-            closeAt = BANNER_CLOSE_MAX_DATE,
+            closeAt = BANNER_CLOSE_MAX_DATETIME,
             bannerType = BannerType.MOIT_UNAPPROVED_FINE_EXIST,
             moitId = moitId,
             studyId = null,
