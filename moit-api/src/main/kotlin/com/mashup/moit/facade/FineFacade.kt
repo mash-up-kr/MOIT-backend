@@ -5,6 +5,8 @@ import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.controller.fine.dto.FineListResponse
 import com.mashup.moit.controller.fine.dto.FineResponse
 import com.mashup.moit.controller.fine.dto.FineResponseForListView
+import com.mashup.moit.domain.banner.BannerService
+import com.mashup.moit.domain.banner.update.MoitUnapprovedFineExistBannerUpdateRequest
 import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.user.UserService
@@ -19,6 +21,7 @@ class FineFacade(
     private val studyService: StudyService,
     private val userService: UserService,
     private val userMoitService: UserMoitService,
+    private val bannerService: BannerService,
     private val s3Service: S3Service,
 ) {
 
@@ -54,6 +57,10 @@ class FineFacade(
         }
 
         fineService.updateFineApproveStatus(fineId, confirmFine)
+        if (confirmFine) {
+            // TODO Kafka 머지 후 비동기로 전환 (FineConfirmEvent)
+            bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(fineId))
+        }
     }
 
     fun addFineCertification(userId: Long, userNickname: String, fineId: Long, finePaymentImage: MultipartFile): FineResponse {

@@ -5,6 +5,8 @@ import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.controller.study.dto.StudyDetailsResponse
 import com.mashup.moit.controller.study.dto.StudyFirstAttendanceResponse
 import com.mashup.moit.controller.study.dto.StudyUserAttendanceStatusResponse
+import com.mashup.moit.domain.banner.BannerService
+import com.mashup.moit.domain.banner.update.StudyAttendanceStartBannerUpdateRequest
 import com.mashup.moit.domain.attendance.AttendanceService
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
@@ -20,6 +22,7 @@ class StudyFacade(
     private val studyService: StudyService,
     private val attendanceService: AttendanceService,
     private val userService: UserService,
+    private val bannerService: BannerService,
     private val eventProducer: EventProducer
 ) {
     fun getDetails(studyId: Long): StudyDetailsResponse {
@@ -62,6 +65,8 @@ class StudyFacade(
     fun initializeAttendance(studyId: Long) {
         attendanceService.initializeAttendance(studyId)
         studyService.markAsInitialized(studyId)
+        // TODO Kafka 머지 후 비동기로 전환 (StudyInitializeEvent)
+        bannerService.update(StudyAttendanceStartBannerUpdateRequest(studyId))
     }
 
     fun checkFirstAttendance(studyId: Long): StudyFirstAttendanceResponse {

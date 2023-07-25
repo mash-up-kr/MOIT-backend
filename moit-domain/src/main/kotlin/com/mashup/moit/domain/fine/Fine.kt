@@ -5,6 +5,10 @@ import java.time.LocalDateTime
 
 enum class FineApproveStatus {
     NEW, IN_PROGRESS, REJECTED, APPROVED;
+
+    companion object {
+        val UNAPPROVED_STATUSES = setOf(NEW, IN_PROGRESS, REJECTED)
+    }
 }
 
 data class Fine(
