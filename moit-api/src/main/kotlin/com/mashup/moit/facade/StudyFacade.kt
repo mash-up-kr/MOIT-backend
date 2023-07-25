@@ -5,14 +5,13 @@ import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.controller.study.dto.StudyDetailsResponse
 import com.mashup.moit.controller.study.dto.StudyFirstAttendanceResponse
 import com.mashup.moit.controller.study.dto.StudyUserAttendanceStatusResponse
-import com.mashup.moit.domain.banner.BannerService
-import com.mashup.moit.domain.banner.update.StudyAttendanceStartBannerUpdateRequest
 import com.mashup.moit.domain.attendance.AttendanceService
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.infra.event.EventProducer
-import com.mashup.moit.infra.event.FineCreateEvent
+import com.mashup.moit.infra.event.FineCreateRequestEvent
+import com.mashup.moit.infra.event.StudyInitializeEvent
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -22,7 +21,6 @@ class StudyFacade(
     private val studyService: StudyService,
     private val attendanceService: AttendanceService,
     private val userService: UserService,
-    private val bannerService: BannerService,
     private val eventProducer: EventProducer
 ) {
     fun getDetails(studyId: Long): StudyDetailsResponse {
@@ -49,7 +47,7 @@ class StudyFacade(
     fun registerAttendanceKeyword(userId: Long, studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.registerAttendanceKeyword(studyId, request.attendanceKeyword).also {
             val attendance = attendanceService.requestAttendance(userId, studyId)
-            eventProducer.produce(FineCreateEvent(attendanceId = attendance.id, moitId = it.moitId))
+            eventProducer.produce(FineCreateRequestEvent(attendanceId = attendance.id, moitId = it.moitId))
         }
     }
 
@@ -57,7 +55,7 @@ class StudyFacade(
     fun verifyAttendanceKeyword(userId: Long, studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.verifyAttendanceKeyword(studyId, request.attendanceKeyword).also {
             val attendance = attendanceService.requestAttendance(userId, studyId)
-            eventProducer.produce(FineCreateEvent(attendanceId = attendance.id, moitId = it.moitId))
+            eventProducer.produce(FineCreateRequestEvent(attendanceId = attendance.id, moitId = it.moitId))
         }
     }
 
@@ -65,8 +63,7 @@ class StudyFacade(
     fun initializeAttendance(studyId: Long) {
         attendanceService.initializeAttendance(studyId)
         studyService.markAsInitialized(studyId)
-        // TODO Kafka 머지 후 비동기로 전환 (StudyInitializeEvent)
-        bannerService.update(StudyAttendanceStartBannerUpdateRequest(studyId))
+        eventProducer.produce(StudyInitializeEvent(studyId = studyId))
     }
 
     fun checkFirstAttendance(studyId: Long): StudyFirstAttendanceResponse {

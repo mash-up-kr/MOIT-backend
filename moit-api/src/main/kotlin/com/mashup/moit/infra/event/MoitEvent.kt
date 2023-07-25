@@ -6,12 +6,30 @@ fun interface MoitEvent {
 
 data class MoitCreateEvent(val moitId: Long) : MoitEvent {
     override fun getTopic(): String {
-        return MOIT_CREATE_TOPIC
+        return KafkaEventTopic.MOIT_CREATE
     }
 }
 
-data class FineCreateEvent(val attendanceId: Long, val moitId: Long) : MoitEvent {
+data class FineCreateRequestEvent(val attendanceId: Long, val moitId: Long) : MoitEvent {
     override fun getTopic(): String {
-        return FINE_CREATE_TOPIC
+        return KafkaEventTopic.FINE_CREATE_REQUEST
+    }
+}
+
+data class StudyInitializeEvent(val studyId: Long) : MoitEvent {
+    override fun getTopic(): String {
+        return KafkaEventTopic.STUDY_INITIALIZE
+    }
+}
+
+data class FineCreateEvent(val fineId: Long) : MoitEvent {
+    override fun getTopic(): String {
+        return KafkaEventTopic.FINE_CREATE
+    }
+}
+
+data class FineApproveEvent(val fineId: Long) : MoitEvent {
+    override fun getTopic(): String {
+        return KafkaEventTopic.FINE_APPROVE
     }
 }
