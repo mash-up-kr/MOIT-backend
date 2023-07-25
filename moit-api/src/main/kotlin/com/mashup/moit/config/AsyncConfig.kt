@@ -19,4 +19,15 @@ class AsyncConfig {
             setWaitForTasksToCompleteOnShutdown(true)
         }
     }
+
+    @Bean(name = ["pushSchedulerExecutor"])
+    fun pushSchedulerExecutor(): Executor {
+        return ThreadPoolTaskExecutor().apply {
+            corePoolSize = 5
+            maxPoolSize = 5
+            queueCapacity = 20
+            setThreadNamePrefix("PushSchedulerThread-")
+            setWaitForTasksToCompleteOnShutdown(true)
+        }
+    }
 }

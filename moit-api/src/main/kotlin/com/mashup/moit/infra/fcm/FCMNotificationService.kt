@@ -4,7 +4,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
 import com.mashup.moit.domain.moit.NotificationRemindOption
-import com.mashup.moit.controller.sample.dto.SampleNotificationRequest
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -13,6 +12,30 @@ class FCMNotificationService(
     private val firebaseMessaging: FirebaseMessaging
 ) {
     private val logger = LoggerFactory.getLogger(FCMNotificationService::class.java)
+
+    fun pushStartStudyNotification(startNotification: StudyAttendanceStartNotification) {
+        val topic = getMoitTopic(startNotification.moitId)
+        try {
+            val notification = Notification.builder()
+                .setTitle(startNotification.title)
+                .setBody(startNotification.body)
+                .build()
+
+            val message = Message.builder()
+                .setTopic(topic)
+                .setNotification(notification)
+                .build()
+
+            val response = firebaseMessaging.send(message)
+            logger.info("success to send notification : {}", response)
+        } catch (e: Exception) {
+            logger.error("Fail to send start Attendance Noti. topic-id : [{}], error: [{}]", topic, e.toString())
+        }
+    }
+
+    fun getMoitTopic(moitId: Long): String {
+        return TOPIC_MOIT_PREFIX + moitId
+    }
 
     fun sendTopicSampleNotification(request: SampleNotificationRequest) {
         val title = STUDY_REMINDER_NOTIFICATION
@@ -33,10 +56,10 @@ class FCMNotificationService(
             val msg = Message.builder()
                 .setTopic(topic)
                 .setNotification(notification)
-                .build();
+                .build()
 
-            firebaseMessaging.send(msg)
-            logger.info("success to send notification : {}", msg.toString())
+            val response = firebaseMessaging.send(msg)
+            logger.info("success to send notification : {}", response)
         } catch (e: Exception) {
             logger.error("Fail to send Message. topic-id : {}, title: {}, : [{}]", topic, title, e.toString())
         }
@@ -48,5 +71,6 @@ class FCMNotificationService(
 
     companion object {
         private const val STUDY_REMINDER_NOTIFICATION = "Study Remind Notification"
+        private const val TOPIC_MOIT_PREFIX = "MOIT-"
     }
 }

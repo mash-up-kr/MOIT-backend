@@ -41,6 +41,9 @@ dependencies {
     
     // swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$swaggerVersion")
+    
+    // kafka
+    implementation("org.springframework.kafka:spring-kafka")
 }
 
 configure<JibExtension> {
