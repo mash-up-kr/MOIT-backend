@@ -10,7 +10,7 @@ import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.infra.event.EventProducer
-import com.mashup.moit.infra.event.FineCreateRequestEvent
+import com.mashup.moit.infra.event.StudyAttendanceEvent
 import com.mashup.moit.infra.event.StudyInitializeEvent
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -47,7 +47,7 @@ class StudyFacade(
     fun registerAttendanceKeyword(userId: Long, studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.registerAttendanceKeyword(studyId, request.attendanceKeyword).also {
             val attendance = attendanceService.requestAttendance(userId, studyId)
-            eventProducer.produce(FineCreateRequestEvent(attendanceId = attendance.id, moitId = it.moitId))
+            eventProducer.produce(StudyAttendanceEvent(attendanceId = attendance.id, moitId = it.moitId))
         }
     }
 
@@ -55,7 +55,7 @@ class StudyFacade(
     fun verifyAttendanceKeyword(userId: Long, studyId: Long, request: StudyAttendanceKeywordRequest) {
         studyService.verifyAttendanceKeyword(studyId, request.attendanceKeyword).also {
             val attendance = attendanceService.requestAttendance(userId, studyId)
-            eventProducer.produce(FineCreateRequestEvent(attendanceId = attendance.id, moitId = it.moitId))
+            eventProducer.produce(StudyAttendanceEvent(attendanceId = attendance.id, moitId = it.moitId))
         }
     }
 

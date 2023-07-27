@@ -8,7 +8,7 @@ import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.event.EventProducer
 import com.mashup.moit.infra.event.FineApproveEvent
 import com.mashup.moit.infra.event.FineCreateEvent
-import com.mashup.moit.infra.event.FineCreateRequestEvent
+import com.mashup.moit.infra.event.StudyAttendanceEvent
 import com.mashup.moit.infra.event.KafkaConsumerGroup
 import com.mashup.moit.infra.event.KafkaEventTopic
 import com.mashup.moit.infra.event.MoitCreateEvent
@@ -36,14 +36,6 @@ class KafkaConsumer(
         studyService.createStudies(event.moitId)
     }
 
-    @KafkaListener(topics = [KafkaEventTopic.FINE_CREATE_REQUEST])
-    fun consumeFineCreateEvent(event: FineCreateRequestEvent) {
-        log.debug("consumeFineCreateEvent called: {}", event)
-        fineService.create(event.attendanceId, event.moitId)?.also {
-            eventProducer.produce(FineCreateEvent(fineId = it.id))
-        }
-    }
-
     @KafkaListener(
         topics = [KafkaEventTopic.STUDY_INITIALIZE],
         groupId = KafkaConsumerGroup.STUDY_INITIALIZE_BANNER_UPDATE,
@@ -51,6 +43,17 @@ class KafkaConsumer(
     fun consumeStudyInitializeEvent(event: StudyInitializeEvent) {
         log.debug("consumeStudyInitializeEvent called: {}", event)
         bannerService.update(StudyAttendanceStartBannerUpdateRequest(event.studyId))
+    }
+
+    @KafkaListener(
+        topics = [KafkaEventTopic.STUDY_ATTENDANCE],
+        groupId = KafkaConsumerGroup.STUDY_ATTENDANCE_FINE_CREATE,
+    )
+    fun consumeStudyAttendanceEvent(event: StudyAttendanceEvent) {
+        log.debug("consumeStudyAttendanceEvent called: {}", event)
+        fineService.create(event.attendanceId, event.moitId)?.also {
+            eventProducer.produce(FineCreateEvent(fineId = it.id))
+        }
     }
 
     @KafkaListener(

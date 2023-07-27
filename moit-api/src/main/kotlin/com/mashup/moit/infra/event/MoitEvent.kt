@@ -10,9 +10,9 @@ data class MoitCreateEvent(val moitId: Long) : MoitEvent {
     }
 }
 
-data class FineCreateRequestEvent(val attendanceId: Long, val moitId: Long) : MoitEvent {
+data class StudyAttendanceEvent(val attendanceId: Long, val moitId: Long) : MoitEvent {
     override fun getTopic(): String {
-        return KafkaEventTopic.FINE_CREATE_REQUEST
+        return KafkaEventTopic.STUDY_ATTENDANCE
     }
 }
 
