@@ -49,6 +49,8 @@ data class FineResponseForListView(
     val approveAt: LocalDateTime?,
     @Schema(description = "Fine 인증 상태")
     val approveStatus: FineApproveStatus,
+    @Schema(description = "Fine 인증 이미지")
+    val paymentImageUrl: String?,
 ) {
     companion object {
         fun of(fine: Fine, user: User, study: Study) =
@@ -61,6 +63,7 @@ data class FineResponseForListView(
                 studyOrder = study.order,
                 approveAt = fine.approvedAt,
                 approveStatus = fine.approveStatus,
+                paymentImageUrl = fine.paymentImageUrl,
             )
     }
 }
