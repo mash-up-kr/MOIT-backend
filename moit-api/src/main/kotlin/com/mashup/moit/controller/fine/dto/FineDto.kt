@@ -2,6 +2,7 @@ package com.mashup.moit.controller.fine.dto
 
 import com.mashup.moit.domain.attendance.AttendanceStatus
 import com.mashup.moit.domain.fine.Fine
+import com.mashup.moit.domain.fine.FineApproveStatus
 import com.mashup.moit.domain.study.Study
 import com.mashup.moit.domain.user.User
 import io.swagger.v3.oas.annotations.media.Schema
@@ -44,10 +45,10 @@ data class FineResponseForListView(
     val attendanceStatus: AttendanceStatus,
     @Schema(description = "Fine 대상 스터디 회차")
     val studyOrder: Int,
-    @Schema(description = "Fine 납부 인증 유무")
-    val isApproved: Boolean,
     @Schema(description = "Fine 납부 일자 YYYY-mm-dd")
     val approveAt: LocalDateTime?,
+    @Schema(description = "Fine 인증 상태")
+    val approveStatus: FineApproveStatus,
 ) {
     companion object {
         fun of(fine: Fine, user: User, study: Study) =
@@ -58,8 +59,8 @@ data class FineResponseForListView(
                 userNickname = user.nickname,
                 attendanceStatus = fine.attendanceStatus,
                 studyOrder = study.order,
-                isApproved = fine.isApproved,
-                approveAt = fine.approvedAt
+                approveAt = fine.approvedAt,
+                approveStatus = fine.approveStatus,
             )
     }
 }
