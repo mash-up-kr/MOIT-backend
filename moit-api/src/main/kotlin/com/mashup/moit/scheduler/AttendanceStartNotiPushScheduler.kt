@@ -37,12 +37,12 @@ class AttendanceStartNotiPushScheduler(
             moitService.getMoitById(study.moitId)
         }
 
-        studyMoitMap.entries.forEach {
+        val studyIdWithMoitIds = studyMoitMap.entries.map {
             fcmNotificationService.pushStartStudyNotification(StudyAttendanceStartNotification.of(it.value, it.key))
-        }
+            Pair(it.key.id, it.value.id)
+        }.toSet()
 
-        val studyIds = startedStudy.map { it.id }.toSet()
-        eventProducer.produce(StudyAttendanceStartNotificationPushEvent(studyIds))
+        eventProducer.produce(StudyAttendanceStartNotificationPushEvent(studyIdWithMoitIds = studyIdWithMoitIds, flushAt = LocalDateTime.now()))
 
         logger.info("Done Push notification for {} studies, at {}.", startedStudy.size, LocalDateTime.now())
     }

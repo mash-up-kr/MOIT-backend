@@ -4,6 +4,8 @@ import com.mashup.moit.domain.banner.BannerService
 import com.mashup.moit.domain.banner.update.MoitUnapprovedFineExistBannerUpdateRequest
 import com.mashup.moit.domain.banner.update.StudyAttendanceStartBannerUpdateRequest
 import com.mashup.moit.domain.fine.FineService
+import com.mashup.moit.domain.notification.AttendanceStartNotificationEvent
+import com.mashup.moit.domain.notification.NotificationService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.event.EventProducer
 import com.mashup.moit.infra.event.FineApproveEvent
@@ -26,6 +28,7 @@ class KafkaConsumer(
     private val studyService: StudyService,
     private val fineService: FineService,
     private val bannerService: BannerService,
+    private val notificationService: NotificationService,
     private val eventProducer: EventProducer,
 ) {
     private val log: Logger = LoggerFactory.getLogger(KafkaConsumer::class.java)
@@ -100,13 +103,13 @@ class KafkaConsumer(
         log.debug("consumeFineApproveEvent called: {}", event)
         bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
     }
-    
+
     @KafkaListener(
         topics = [KafkaEventTopic.STUDY_ATTENDANCE_START_NOTIFICATION],
         groupId = KafkaConsumerGroup.STUDY_ATTENDANCE_START_NOTIFICATION_CREATE,
     )
     fun consumeStudyAttendanceStartNotificationPushEvent(event: StudyAttendanceStartNotificationPushEvent) {
         log.debug("consumeStudyAttendanceStartNotificationPushEvent called: {}", event)
-        
+        notificationService.save(AttendanceStartNotificationEvent(event.studyIdWithMoitIds, event.flushAt))
     }
 }
