@@ -19,15 +19,18 @@ class AttendanceStartNotiPushScheduler(
 ) {
     val logger: Logger = LoggerFactory.getLogger(AttendanceStartNotiPushScheduler::class.java)
 
-    @Scheduled(cron = "0 */5 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     @Async("pushSchedulerExecutor")
     fun pushStartAttendanceNotification() {
-        // schedule 특성상 5분 단위로 시점 = a1 일 떄 , 해당 변수(B)는 a1 보다 크다. 
-        // 5분 단위의 스터디 시작 시간을 찾기 위해서 : a0 < B - 1m < a1 < B 이용
+        // schedule 특성상 5분 단위, 5분 단위일 때만 noti 진행 
+        // schedule 시작 = a1 일 떄 , 해당 scheduleContext 변수(B)는 a1 보다 크다. 
+        // 5분 단위의 스터디 시작 시간을 찾기 위해서 : B - 1m < a1 < B 이용 
         val scheduleContext = LocalDateTime.now()
-        val minContext = scheduleContext.minusMinutes(1)
-
-        val startedStudy = studyService.findStudiesByStartTime(minContext, scheduleContext)
+        if (scheduleContext.minute % 5 != 0) {
+            return
+        }
+        
+        val startedStudy = studyService.findStudiesByStartTime(scheduleContext.minusMinutes(1), scheduleContext)
         logger.info("{} studies start! Start Push notification at {}.", startedStudy.size, scheduleContext)
 
         val studyMoitMap = startedStudy.associateWith { study ->
