@@ -19,5 +19,5 @@ class AuthConfig {
 }
 
 @ConfigurationProperties(prefix = "moit.auth")
-data class AuthProperty(val jwtSecretKey: String, val allowOrigins: List<String>)
+data class AuthProperty(val jwtSecretKey: String, val allowOrigins: List<String>?)
 
