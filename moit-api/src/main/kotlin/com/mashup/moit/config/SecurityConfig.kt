@@ -75,7 +75,7 @@ class SecurityConfig(
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration().apply {
-            authProperty.allowOrigins.forEach { addAllowedOrigin(it) }
+            authProperty.allowOrigins?.forEach { addAllowedOrigin(it) }
             addAllowedMethod("*")
             addAllowedHeader("*")
             exposedHeaders = listOf(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE)
