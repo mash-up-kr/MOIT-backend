@@ -1,3 +1,34 @@
 moit:
   auth:
     jwt-secret-key: ENC(011c274SIytPrr5ozweLG7iWoGQVAMo1uA8xRAFyBASndo9yGYtfmDtBO7TchnzRJWVJiauSVzX5LX/XD/3NieuTBKcETvYEjgvo9znrniw=)
+pring:
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: ENC(D4Y7cXR3eszRDBMXMgQzP71FSFdHuCBxg9c8Krbb5JCEsGcQRtuRU/s6dFxr7hPR)
+      auto-offset-reset: earliest
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      max-poll-records: 1
+      fetch-max-wait: 1000
+    bootstrap-servers: ENC(Xa+x29+VyPQQN9cHDf5rVatL4zqmwijZLP+4Qpx4QvbhaLVlgHWms1INBNwfpjR5Uflqv10C8KRB1S3VF3tzbdd2bwi+GZ4eZbUunZjAruA=)
+    properties:
+      spring:
+        deserializer:
+          key:
+            delegate:
+              class: org.apache.kafka.common.serialization.StringDeserializer
+          value:
+            delegate:
+              class: org.springframework.kafka.support.serializer.JsonDeserializer
+        json:
+          trusted:
+            packages: com.mashup.moit.infra.event
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: SCRAM-SHA-256
+        jaas:
+          config: ENC(AbaJ5KM7Qke6Hd42EPDX0T8CwhyUSZ6X48iEctoDWWI7gtrYWN/+J8MH6sGTAhPgY6pgS1ZCRD3hOAFwzM3nJHaO+6OvOTCEQ+jkBm3ekSuyYPYYgYU7/t6SyFAeR72CVke91A4dea+2PL/7CfGM6wluX00CzcuoI8JuGzkfwARvWhPEQessKc0j1m/KAqCmOrMjaj3W9Th0rmE0G5UwxQy9XLxSsh7j+rUjJNrfAxuiWLkoBDj4oy5QBEGFQyMIID4hIW1sAeClJWd5KFulmycg9qc0yAKqErTKpY4z6HE=)
