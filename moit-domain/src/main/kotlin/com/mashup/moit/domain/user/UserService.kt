@@ -14,7 +14,15 @@ class UserService(
 
     @Transactional
     fun createUser(providerUniqueKey: String, nickname: String, profileImage: Int, email: String): User {
-        return userRepository.save(UserEntity(providerUniqueKey, nickname, profileImage, email, setOf(UserRole.USER))).toDomain()
+        val userEntity = UserEntity(
+            providerUniqueKey = providerUniqueKey,
+            nickname = nickname,
+            profileImage = profileImage,
+            email = email,
+            roles = setOf(UserRole.USER)
+        )
+        return userRepository.save(userEntity)
+            .toDomain()
     }
 
     @Transactional

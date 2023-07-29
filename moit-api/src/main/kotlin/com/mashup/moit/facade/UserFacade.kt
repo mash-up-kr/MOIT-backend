@@ -8,6 +8,7 @@ import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.security.authentication.getProviderUniqueKey
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 class UserFacade(
@@ -22,16 +23,18 @@ class UserFacade(
         return userService.findByProviderUniqueKey(oidcUser.getProviderUniqueKey())
     }
 
+    @Transactional
     fun createUser(userRegisterRequest: UserRegisterRequest): User {
         if (userService.findByProviderUniqueKey(userRegisterRequest.providerUniqueKey) != null) {
             throw MoitException.of(MoitExceptionType.ALREADY_EXIST)
         }
-        return userService.createUser(
+        val user = userService.createUser(
             userRegisterRequest.providerUniqueKey,
             userRegisterRequest.nickname,
             userRegisterRequest.profileImage,
             userRegisterRequest.email
         )
+        return user
     }
 
 }

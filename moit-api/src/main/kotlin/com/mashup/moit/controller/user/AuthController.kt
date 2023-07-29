@@ -12,7 +12,11 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.net.URI
 
 @Tag(name = "SignUp/SignIn API", description = "회원가입 및 로그인 Api 입니다.")
@@ -48,7 +52,8 @@ class AuthController(
     @Operation(summary = "회원가입", description = "회원가입 API")
     @PostMapping("/sign-up")
     fun signUp(@RequestBody request: UserRegisterRequest): ResponseEntity<Any> {
-        val jwtToken = userFacade.createUser(request).let { jwtTokenSupporter.createToken(UserInfo.from(it)) }
+        val jwtToken = userFacade.createUser(request)
+            .let { jwtTokenSupporter.createToken(UserInfo.from(it)) }
         return ResponseEntity.noContent()
             .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken")
             .build()
