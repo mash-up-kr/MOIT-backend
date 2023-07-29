@@ -30,15 +30,4 @@ class AsyncConfig {
             setWaitForTasksToCompleteOnShutdown(true)
         }
     }
-
-    @Bean(name = ["absenceSchedulerExecutor"])
-    fun absenceSchedulerExecutor(): Executor {
-        return ThreadPoolTaskExecutor().apply {
-            corePoolSize = 5
-            maxPoolSize = 5
-            queueCapacity = 20
-            setThreadNamePrefix("AbsenceSchedulerThread-")
-            setWaitForTasksToCompleteOnShutdown(true)
-        }
-    }
 }
