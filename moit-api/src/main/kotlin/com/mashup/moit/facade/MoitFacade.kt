@@ -3,6 +3,7 @@ package com.mashup.moit.facade
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.controller.moit.dto.MoitCreateRequest
+import com.mashup.moit.controller.moit.dto.MoitCreateResponse
 import com.mashup.moit.controller.moit.dto.MoitDetailsResponse
 import com.mashup.moit.controller.moit.dto.MoitJoinResponse
 import com.mashup.moit.controller.moit.dto.MoitJoinUserListResponse
@@ -40,7 +41,7 @@ class MoitFacade(
     private val eventProducer: EventProducer,
 ) {
     @Transactional
-    fun create(userId: Long, request: MoitCreateRequest): Long {
+    fun create(userId: Long, request: MoitCreateRequest): MoitCreateResponse {
         val moit = moitService.createMoit(
             name = request.name,
             description = request.description,
@@ -61,7 +62,7 @@ class MoitFacade(
             userMoitService.join(userId, it.id, UserMoitRole.MASTER)
         }
 
-        return moit.id
+        return MoitCreateResponse.of(moit)
     }
 
     fun getMoitDetails(moitId: Long): MoitDetailsResponse {

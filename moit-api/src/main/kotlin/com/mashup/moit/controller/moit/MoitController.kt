@@ -2,6 +2,7 @@ package com.mashup.moit.controller.moit
 
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.controller.moit.dto.MoitCreateRequest
+import com.mashup.moit.controller.moit.dto.MoitCreateResponse
 import com.mashup.moit.controller.moit.dto.MoitDetailsResponse
 import com.mashup.moit.controller.moit.dto.MoitJoinRequest
 import com.mashup.moit.controller.moit.dto.MoitJoinResponse
@@ -35,7 +36,7 @@ class MoitController(
     fun createMoit(
         @GetAuth userInfo: UserInfo,
         @Valid @RequestBody request: MoitCreateRequest,
-    ): MoitApiResponse<Long> {
+    ): MoitApiResponse<MoitCreateResponse> {
         return MoitApiResponse.success(moitFacade.create(userInfo.id, request))
     }
 
