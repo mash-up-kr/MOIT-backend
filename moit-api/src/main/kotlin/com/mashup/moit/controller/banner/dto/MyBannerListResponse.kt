@@ -39,7 +39,7 @@ data class MoitUnapprovedFineExistBannerResponse(
     val userId: Long,
     val moitId: Long,
     val moitName: String,
-    val findAmount: Long,
+    val fineAmount: Long,
 ) {
     companion object {
         fun of(banner: MoitUnapprovedFineExistBanner): MoitUnapprovedFineExistBannerResponse {
@@ -47,7 +47,7 @@ data class MoitUnapprovedFineExistBannerResponse(
                 userId = banner.userId,
                 moitId = banner.moitId,
                 moitName = banner.moitName,
-                findAmount = banner.fineAmount,
+                fineAmount = banner.fineAmount,
             )
         }
     }
