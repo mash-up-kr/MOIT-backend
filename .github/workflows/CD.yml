@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - develop
+      - infra/cloud-watch
 
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
