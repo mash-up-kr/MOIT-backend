@@ -1,7 +1,7 @@
 moit:
   auth:
     jwt-secret-key: ENC(011c274SIytPrr5ozweLG7iWoGQVAMo1uA8xRAFyBASndo9yGYtfmDtBO7TchnzRJWVJiauSVzX5LX/XD/3NieuTBKcETvYEjgvo9znrniw=)
-pring:
+spring:
   kafka:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
