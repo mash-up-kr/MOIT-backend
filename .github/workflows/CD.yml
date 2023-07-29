@@ -30,14 +30,19 @@ jobs:
           utcOffset: "+09:00"
 
       - run: chmod +x gradlew && ./gradlew build
-
+      
+      - name: 외부 환경 변수 주입 
+        run: |
+          sed -i 's/{aws_access_key}/${{ secrets.DOCKERHUB_USERNAME }}/' ./moit-api/src/main/resources/application.yml
+          sed -i 's/{aws_secret_key}/${{ secrets.DOCKERHUB_PASSWORD }}/' ./moit-api/src/main/resources/application.yml
+          
       - name: 도커 이미지 빌드 & 푸시 by jib
         run: |
           ./gradlew :moit-api:jib -Prelease
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-
+      
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v21
         with:

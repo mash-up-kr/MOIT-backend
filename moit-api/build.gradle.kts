@@ -12,6 +12,7 @@ val swaggerVersion: String by project.extra
 val jjwtVersion: String by project.extra
 val awsVersion: String by project.extra
 val firebaseVersion: String by project.extra
+val appenderVersion: String by project.extra 
 
 apply(plugin = "com.google.cloud.tools.jib")
 
@@ -44,6 +45,9 @@ dependencies {
     
     // kafka
     implementation("org.springframework.kafka:spring-kafka")
+    
+    // cloudwatch
+    implementation ("ca.pjer:logback-awslogs-appender:$appenderVersion")
 }
 
 configure<JibExtension> {

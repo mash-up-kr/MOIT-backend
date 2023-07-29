@@ -99,9 +99,12 @@ cloud:
     s3:
       domain: ENC(7F1WPrRa7fvFEYOfGsTFYIhe7R5bQmmCJMwgghCEvPOB7/4SipK+Nnr5EEED0JUICQUtoRUzPmPBNhQ5QXS+2KD4vhmEYkkh3jOT8Lqr1KDITPcs41c7J7m1/6lf74DO)
       bucket-name: ENC(/sQSONSoi0685DnJHPl4WSRI8E5ARagYcbvkA15RUWTcH5s6wAgMut0+A7EqDQeXQT8FR97Kbpt2FacUNQrg3Q==)
+    cloudwatch:
+      access-key: {aws_access_key}
+      secret-key: {aws_secret_key}
     region:
       static: "ap-northeast-2"
       auto: false
 
-fcm: 
+fcm:
   certification: firebase/moit-firebase-adminsdk.json
