@@ -44,23 +44,25 @@ class AuthController(
             ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .headers(oidcUser.toHttpHeader())
                 .body(MoitApiResponse.success(null))
-        
+
         val jwtToken = jwtTokenSupporter.createToken(UserInfo.from(user))
-        
+
         return ResponseEntity.ok()
-            .body(MoitApiResponse.success(
-                TokenResponse("${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken"))
-            )
+            .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken")
+            .build()
     }
 
     @Operation(summary = "회원가입", description = "회원가입 API")
     @PostMapping("/sign-up")
-    fun signUp(@RequestBody request: UserRegisterRequest): ResponseEntity<Any> {
+    fun signUp(@RequestBody request: UserRegisterRequest): ResponseEntity<MoitApiResponse<TokenResponse>> {
         val userInfo = UserInfo.from(userFacade.createUser(request))
         val jwtToken = jwtTokenSupporter.createToken(userInfo)
-        return ResponseEntity.noContent()
-            .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken")
-            .build()
+        return ResponseEntity.ok()
+            .body(
+                MoitApiResponse.success(
+                    TokenResponse("${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken")
+                )
+            )
     }
 
 }
