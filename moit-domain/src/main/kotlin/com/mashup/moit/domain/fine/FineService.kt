@@ -42,6 +42,12 @@ class FineService(
         ).toDomain()
     }
 
+    fun getFine(fineId: Long): Fine {
+        return fineRepository.findById(fineId)
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+            .toDomain()
+    }
+
     fun getFineListByMoitId(moitId: Long): List<Fine> {
         return fineRepository.findByMoitId(moitId)
             .sortedByDescending { it.createdAt }

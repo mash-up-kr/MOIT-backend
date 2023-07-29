@@ -50,6 +50,10 @@ class FineFacade(
         return FineListResponse(totalFineAmount, fineNotYet, fineComplete)
     }
 
+    fun getFine(fineId: Long, userNickname: String): FineResponse {
+        return FineResponse.of(fineService.getFine(fineId), userNickname)
+    }
+    
     fun evaluateFine(userId: Long, moitId: Long, fineId: Long, confirmFine: Boolean) {
         val masterId = userMoitService.findMasterUserByMoitId(moitId).userId
         if (userId != masterId) {
