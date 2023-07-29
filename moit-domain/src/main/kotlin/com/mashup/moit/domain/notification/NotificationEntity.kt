@@ -8,25 +8,21 @@ import jakarta.persistence.Table
 @Table(name = "notification")
 @Entity
 data class NotificationEntity(
-    @Column("type", nullable = false)
+    @Column(name = "type", nullable = false)
     val type: NotificationType,
 
-    @Column("user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     val userId: Long,
 
-    @Column("title", nullable = false)
+    @Column(name = "title", nullable = false)
     val title: String,
 
-    @Column("body", nullable = false)
+    @Column(name = "body", nullable = false)
     val body: String,
 
-    @Column("url_link", nullable = false)
+    @Column(name = "url_link", nullable = false)
     val urlScheme: String,
-) : BaseEntity() {
-    companion object {
-        
-    }
-}
+) : BaseEntity()
 
 
 enum class NotificationType {

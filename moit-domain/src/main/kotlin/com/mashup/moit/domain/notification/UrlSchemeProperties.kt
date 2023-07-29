@@ -2,7 +2,6 @@ package com.mashup.moit.domain.notification
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.boot.context.properties.bind.ConstructorBinding
 import org.springframework.context.annotation.Configuration
 
 
@@ -11,8 +10,7 @@ import org.springframework.context.annotation.Configuration
 class UrlSchemePropertiesConfiguration
 
 
-@ConfigurationProperties("url-scheme")
-@ConstructorBinding
+@ConfigurationProperties(prefix = "url-scheme")
 data class UrlSchemeProperties(
     val studyScheduled: String,
     val attendanceStart: String,
