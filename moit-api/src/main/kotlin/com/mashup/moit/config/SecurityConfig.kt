@@ -6,6 +6,8 @@ import com.mashup.moit.security.handler.HttpStatusAccessDeniedHandler
 import com.mashup.moit.security.handler.HttpStatusAuthenticationEntryPoint
 import com.mashup.moit.security.jwt.JwtTokenFilter
 import com.mashup.moit.security.jwt.JwtTokenSupporter
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -18,6 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
+@EnableConfigurationProperties(SecurityProperty::class)
 class SecurityConfig(
     private val logoutHandler: LogoutHandler,
     private val jwtTokenSupporter: JwtTokenSupporter,
@@ -63,3 +66,6 @@ class SecurityConfig(
     }
 
 }
+
+@ConfigurationProperties(prefix = "moit.security")
+data class SecurityProperty(val allowOrigins: List<String>?)

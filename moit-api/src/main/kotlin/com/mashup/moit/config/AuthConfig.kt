@@ -1,7 +1,6 @@
 package com.mashup.moit.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mashup.moit.config.AuthConfig.AuthProperty
 import com.mashup.moit.security.jwt.JwtTokenSupporter
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -17,8 +16,8 @@ class AuthConfig {
         return JwtTokenSupporter(authProperty.jwtSecretKey, mapper)
     }
 
-    @ConfigurationProperties(prefix = "moit.auth")
-    data class AuthProperty(val jwtSecretKey: String)
-
 }
+
+@ConfigurationProperties(prefix = "moit.auth")
+data class AuthProperty(val jwtSecretKey: String, val allowOrigins: List<String>)
 

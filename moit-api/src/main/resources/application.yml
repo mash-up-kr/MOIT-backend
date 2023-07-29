@@ -90,6 +90,12 @@ management:
 moit:
   auth:
     jwt-secret-key: ENC(011c274SIytPrr5ozweLG7iWoGQVAMo1uA8xRAFyBASndo9yGYtfmDtBO7TchnzRJWVJiauSVzX5LX/XD/3NieuTBKcETvYEjgvo9znrniw=)
+  security:
+    allow-origins:
+      - http://localhost:5173
+      - http://localhost:4173
+      - ENC(uXx5O7pACezVpodzx1cbvPVb+4qQefsL8u235ZWRD4hP2IThgOgIla6BJVEupoNI6IB564Isk2I/K7brxrJDJg==)
+      - ENC(lworToUh9KWXM1aod0J7cFCe/iblZzRNkR5V+geeZrW3TfgKqT7o2JpbdBO+AV7O8g79HWp0E39Gu2PebYj1mQ==)
 
 cloud:
   aws:
@@ -108,3 +114,4 @@ cloud:
 
 fcm:
   certification: firebase/moit-firebase-adminsdk.json
+
