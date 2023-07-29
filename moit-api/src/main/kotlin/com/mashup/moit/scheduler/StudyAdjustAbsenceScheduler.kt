@@ -3,7 +3,7 @@ package com.mashup.moit.scheduler
 import com.mashup.moit.domain.attendance.AttendanceService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.event.EventProducer
-import com.mashup.moit.infra.event.StudyAttendanceEvent
+import com.mashup.moit.infra.event.StudyAttendanceEventBulk
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Async
@@ -30,12 +30,14 @@ class StudyAdjustAbsenceScheduler(
             .findUnfinalizedStudiesByEndAtBefore(scheduleContext.minusSeconds(DECIDE_ABSENCE_RANGE_SECONDS))
         logger.info("{} undecided studies start! Start adjusting absence status at {}.", undecided.size, scheduleContext)
 
+        val attendanceIdWithMoitIds = mutableListOf<Pair<Long, Long>>()
         undecided.forEach { study ->
-            attendanceService.adjustUndecidedAttendancesByStudyId(study.id)
-                .forEach { attendanceId ->
-                    eventProducer.produce(StudyAttendanceEvent(attendanceId = attendanceId, moitId = study.moitId))
-                }
+            attendanceIdWithMoitIds.addAll(
+                attendanceService.adjustUndecidedAttendancesByStudyId(study.id)
+                    .map { attendanceId -> attendanceId to study.moitId }
+            )
         }
+        eventProducer.produce(StudyAttendanceEventBulk(attendanceIdWithMoitIds))
 
         logger.info("Done adjusting absence status for {} studies, at {}", undecided.size, LocalDateTime.now())
     }

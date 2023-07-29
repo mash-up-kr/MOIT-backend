@@ -16,6 +16,12 @@ data class StudyAttendanceEvent(val attendanceId: Long, val moitId: Long) : Moit
     }
 }
 
+data class StudyAttendanceEventBulk(val attendanceIdWithMoitIds: List<Pair<Long, Long>>) : MoitEvent {
+    override fun getTopic(): String {
+        return KafkaEventTopic.STUDY_ATTENDANCE_BULK
+    }
+}
+
 data class StudyInitializeEvent(val studyId: Long) : MoitEvent {
     override fun getTopic(): String {
         return KafkaEventTopic.STUDY_INITIALIZE
@@ -25,6 +31,12 @@ data class StudyInitializeEvent(val studyId: Long) : MoitEvent {
 data class FineCreateEvent(val fineId: Long) : MoitEvent {
     override fun getTopic(): String {
         return KafkaEventTopic.FINE_CREATE
+    }
+}
+
+data class FineCreateEventBulk(val fineIds: Set<Long>) : MoitEvent {
+    override fun getTopic(): String {
+        return KafkaEventTopic.FINE_CREATE_BULK
     }
 }
 
