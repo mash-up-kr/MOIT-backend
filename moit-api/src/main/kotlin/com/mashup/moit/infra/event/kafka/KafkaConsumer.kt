@@ -14,6 +14,7 @@ import com.mashup.moit.infra.event.KafkaEventTopic
 import com.mashup.moit.infra.event.MoitCreateEvent
 import com.mashup.moit.infra.event.StudyAttendanceEvent
 import com.mashup.moit.infra.event.StudyAttendanceEventBulk
+import com.mashup.moit.infra.event.StudyAttendanceStartNotificationPushEvent
 import com.mashup.moit.infra.event.StudyInitializeEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -98,5 +99,14 @@ class KafkaConsumer(
     fun consumeFineApproveEvent(event: FineApproveEvent) {
         log.debug("consumeFineApproveEvent called: {}", event)
         bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
+    }
+    
+    @KafkaListener(
+        topics = [KafkaEventTopic.STUDY_ATTENDANCE_START_NOTIFICATION],
+        groupId = KafkaConsumerGroup.STUDY_ATTENDANCE_START_NOTIFICATION_CREATE,
+    )
+    fun consumeStudyAttendanceStartNotificationPushEvent(event: StudyAttendanceStartNotificationPushEvent) {
+        log.debug("consumeStudyAttendanceStartNotificationPushEvent called: {}", event)
+        
     }
 }

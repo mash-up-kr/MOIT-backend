@@ -45,3 +45,9 @@ data class FineApproveEvent(val fineId: Long) : MoitEvent {
         return KafkaEventTopic.FINE_APPROVE
     }
 }
+
+data class StudyAttendanceStartNotificationPushEvent(val studyIds: Set<Long>): MoitEvent {
+    override fun getTopic(): String {
+        return KafkaEventTopic.STUDY_ATTENDANCE_START_NOTIFICATION
+    }
+}
