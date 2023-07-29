@@ -1,14 +1,15 @@
 package com.mashup.moit.controller.study
 
 import com.mashup.moit.common.MoitApiResponse
-import com.mashup.moit.security.authentication.UserInfo
-import com.mashup.moit.security.resolver.GetAuth
+import com.mashup.moit.controller.study.dto.StudyAdjustAbsenceRequest
 import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordRequest
 import com.mashup.moit.controller.study.dto.StudyAttendanceKeywordResponse
 import com.mashup.moit.controller.study.dto.StudyDetailsResponse
 import com.mashup.moit.controller.study.dto.StudyFirstAttendanceResponse
 import com.mashup.moit.controller.study.dto.StudyUserAttendanceStatusResponse
 import com.mashup.moit.facade.StudyFacade
+import com.mashup.moit.security.authentication.UserInfo
+import com.mashup.moit.security.resolver.GetAuth
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -77,5 +78,13 @@ class StudyController(
     fun initializeAttendance(@PathVariable studyId: Long): MoitApiResponse<Unit> {
         studyFacade.initializeAttendance(studyId)
         return MoitApiResponse.success()
+    }
+
+    @Operation(summary = "Adjust Absence Status", description = "Study 결석 처리")
+    @PostMapping("/attendance/adjust/absence")
+    fun adjustAbsenceStatus(@RequestBody request: StudyAdjustAbsenceRequest): MoitApiResponse<Unit> {
+        studyFacade.adjustAbsenceStatus(request.studyIds.toSet())
+        return MoitApiResponse.success()
+
     }
 }

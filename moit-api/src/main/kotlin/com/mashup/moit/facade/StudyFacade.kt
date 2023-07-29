@@ -6,6 +6,7 @@ import com.mashup.moit.controller.study.dto.StudyDetailsResponse
 import com.mashup.moit.controller.study.dto.StudyFirstAttendanceResponse
 import com.mashup.moit.controller.study.dto.StudyUserAttendanceStatusResponse
 import com.mashup.moit.domain.attendance.AttendanceService
+import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.domain.user.UserService
@@ -20,6 +21,7 @@ class StudyFacade(
     private val moitService: MoitService,
     private val studyService: StudyService,
     private val attendanceService: AttendanceService,
+    private val fineService: FineService,
     private val userService: UserService,
     private val eventProducer: EventProducer
 ) {
@@ -68,5 +70,13 @@ class StudyFacade(
 
     fun checkFirstAttendance(studyId: Long): StudyFirstAttendanceResponse {
         return StudyFirstAttendanceResponse.of(attendanceService.existFirstAttendanceByStudyId(studyId))
+    }
+
+    @Transactional
+    fun adjustAbsenceStatus(studyIds: Set<Long>) {
+        studyService.findByStudyIds(studyIds.toList()).forEach { study ->
+            attendanceService.adjustUndecidedAttendancesByStudyId(study.id)
+                .forEach { attendanceId -> fineService.create(attendanceId, study.moitId) }
+        }
     }
 }
