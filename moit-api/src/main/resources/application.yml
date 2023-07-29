@@ -31,6 +31,8 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      max-poll-records: 1
+      fetch-max-wait: 1000
     bootstrap-servers: ENC(UUoAbkwFVTtdbHDG5VO6mjQtHIkt6C72SXZGMls+Wz/Ygg5ICtbX7OEV47/AddxgHvrdGwbFQhUfdQNaND4rlK2675cA9ZWdjDryXgcqPDI=)
     properties:
       spring:
