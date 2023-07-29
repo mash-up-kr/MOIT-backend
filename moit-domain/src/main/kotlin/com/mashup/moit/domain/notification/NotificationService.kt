@@ -7,7 +7,7 @@ class NotificationService(
     private val notificationRepository: NotificationRepository
 ) {
     fun getNotificationByUserId(userId: Long): List<Notification> {
-        return notificationRepository.findByUserIdOrderByCreatedAt(userId)
+        return notificationRepository.findByUserIdOrderByCreatedAtDesc(userId)
             .map { Notification.of(it) }
     }
 }

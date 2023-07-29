@@ -20,7 +20,7 @@ data class NotificationEntity(
     @Column(name = "body", nullable = false)
     val body: String,
 
-    @Column(name = "url_link", nullable = false)
+    @Column(name = "url_scheme", nullable = false)
     val urlScheme: String,
 ) : BaseEntity()
 
