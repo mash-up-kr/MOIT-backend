@@ -1,6 +1,8 @@
 package com.mashup.moit.controller.user
 
-import com.mashup.moit.controller.dto.UserRegisterRequest
+import com.mashup.moit.common.MoitApiResponse
+import com.mashup.moit.controller.user.dto.TokenResponse
+import com.mashup.moit.controller.user.dto.UserRegisterRequest
 import com.mashup.moit.facade.UserFacade
 import com.mashup.moit.security.authentication.UserInfo
 import com.mashup.moit.security.authentication.toHttpHeader
@@ -37,16 +39,18 @@ class AuthController(
 
     @Operation(summary = "로그인 성공 (리다이렉트용)", description = "로그인 성공 API - 서버 단 Redirect 용")
     @GetMapping("/sign-in/success")
-    fun signInSuccess(@AuthenticationPrincipal oidcUser: OidcUser): ResponseEntity<Any> {
+    fun signInSuccess(@AuthenticationPrincipal oidcUser: OidcUser): ResponseEntity<MoitApiResponse<Any?>> {
         val user = userFacade.findByProviderUniqueKey(oidcUser)
             ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .headers(oidcUser.toHttpHeader())
-                .build()
-
+                .body(MoitApiResponse.success(null))
+        
         val jwtToken = jwtTokenSupporter.createToken(UserInfo.from(user))
+        
         return ResponseEntity.ok()
-            .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken")
-            .build()
+            .body(MoitApiResponse.success(
+                TokenResponse("${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken"))
+            )
     }
 
     @Operation(summary = "회원가입", description = "회원가입 API")
