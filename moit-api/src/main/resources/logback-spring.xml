@@ -59,10 +59,6 @@
         <logger name="com.mashup.moit" level="debug" additivity="false">
             <appender-ref ref="CONSOLE"/>
         </logger>
-
-        <logger name="com.mashup.moit" level="error" additivity="false">
-            <appender-ref ref="CONSOLE"/>
-        </logger>
     </springProfile>
 
     <springProfile name="release">
