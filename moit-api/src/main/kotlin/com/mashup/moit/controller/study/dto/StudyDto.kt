@@ -93,3 +93,10 @@ data class StudyUserAttendanceStatusResponse(
         )
     }
 }
+
+@Schema(description = "Study 결석 처리 요청")
+data class StudyAdjustAbsenceRequest(
+    @Schema(description = "Study Ids")
+    @field:NotBlank
+    val studyIds: List<Long>
+)

@@ -59,4 +59,11 @@ class AttendanceService(
     fun existFirstAttendanceByStudyId(studyId: Long): Boolean {
         return attendanceRepository.existsByStudyIdAndStatus(studyId, AttendanceStatus.ATTENDANCE)
     }
+
+    @Transactional
+    fun adjustUndecidedAttendancesByStudyId(studyId: Long, status: AttendanceStatus = AttendanceStatus.ABSENCE): List<Long> {
+        val attendances = attendanceRepository.findAllByStudyIdAndStatus(studyId, AttendanceStatus.UNDECIDED)
+        attendances.forEach { attendance -> attendance.status = status }
+        return attendances.map { it.id }
+    }
 }

@@ -40,6 +40,9 @@ class StudyEntity(
     @Column(name = "is_initialized", nullable = false)
     var isInitialized: Boolean = false
 
+    @Column(name = "is_finalized", nullable = false)
+    var isFinalized: Boolean = false
+
     fun toDomain() = Study(
         id = id,
         moitId = moitId,

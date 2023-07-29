@@ -113,4 +113,9 @@ class StudyService(
             .filter { !it.isInitialized } // 모종의 initialize 실패 인입 방지 
             .map { it.toDomain() }
     }
+
+    fun findUnfinalizedStudiesByEndAt(endAt: LocalDateTime): List<Study> {
+        return studyRepository.findAllByEndAtBeforeAndIsFinalizedFalse(endAt)
+            .map { it.toDomain() }
+    }
 }
