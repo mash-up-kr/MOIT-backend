@@ -1,4 +1,4 @@
-package com.mashup.moit.controller.dto
+package com.mashup.moit.controller.user.dto
 
 data class UserBeforeSignUpInfoResponse(
     val providerUniqueKey: String,
