@@ -33,19 +33,25 @@ class UserFacade(
         if (userService.findByProviderUniqueKey(userRegisterRequest.providerUniqueKey) != null) {
             throw MoitException.of(MoitExceptionType.ALREADY_EXIST)
         }
-        val user = userService.createUser(
+        return userService.createUser(
             userRegisterRequest.providerUniqueKey,
             userRegisterRequest.nickname,
             userRegisterRequest.profileImage,
             userRegisterRequest.email
         ).also {
-            val userId = it.id
-            userRegisterRequest.moitInvitationCode?.apply {
-                val moit = moitService.getMoitByInvitationCode(this)
-                userMoitService.join(userId, moit.id, UserMoitRole.MEMBER)
-            }
+            registerMoit(it, userRegisterRequest.moitInvitationCode)
         }
-        return user
+    }
+
+    private fun registerMoit(
+        it: User,
+        moitInvitationCode: String?
+    ) {
+        val userId = it.id
+        moitInvitationCode?.apply {
+            val moit = moitService.getMoitByInvitationCode(this)
+            userMoitService.join(userId, moit.id, UserMoitRole.MEMBER)
+        }
     }
 
 }
