@@ -114,7 +114,7 @@ class StudyService(
             .map { it.toDomain() }
     }
 
-    fun findUnfinalizedStudiesByEndAt(endAt: LocalDateTime): List<Study> {
+    fun findUnfinalizedStudiesByEndAtBefore(endAt: LocalDateTime): List<Study> {
         return studyRepository.findAllByEndAtBeforeAndIsFinalizedFalse(endAt)
             .map { it.toDomain() }
     }

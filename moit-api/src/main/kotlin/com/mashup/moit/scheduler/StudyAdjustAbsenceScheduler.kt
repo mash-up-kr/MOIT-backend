@@ -26,7 +26,7 @@ class StudyAdjustAbsenceScheduler(
         // 결석 확정을 지을 때 endAt을 현재 시간보다 15초 정도 유예기간을 줌. 5분마다 배치가 돌기 때문에 95% 시간 내에 끝난 스터디를 반환함
         val scheduleContext = LocalDateTime.now()
         val undecided = studyService
-            .findUnfinalizedStudiesByEndAt(LocalDateTime.now().minusSeconds(DECIDE_ABSENCE_RANGE_SECONDS))
+            .findUnfinalizedStudiesByEndAtBefore(LocalDateTime.now().minusSeconds(DECIDE_ABSENCE_RANGE_SECONDS))
             .map { it.id }
         logger.info("{} undecided studies start! Start adjusting absence status at {}.", undecided.size, scheduleContext)
 

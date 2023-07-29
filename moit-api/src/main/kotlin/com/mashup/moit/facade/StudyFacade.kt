@@ -74,13 +74,9 @@ class StudyFacade(
 
     @Transactional
     fun adjustAbsenceStatus(studyIds: Set<Long>) {
-        studyService.findByStudyIds(studyIds.toList())
-            .groupBy { study -> study.moitId }
-            .forEach { (moitId, studies) ->
-                studies.forEach { study ->
-                    attendanceService.adjustUndecidedAttendancesByStudyId(study.id)
-                        .forEach { attendanceId -> fineService.create(attendanceId, moitId) }
-                }
-            }
+        studyService.findByStudyIds(studyIds.toList()).forEach { study ->
+            attendanceService.adjustUndecidedAttendancesByStudyId(study.id)
+                .forEach { attendanceId -> fineService.create(attendanceId, study.moitId) }
+        }
     }
 }
