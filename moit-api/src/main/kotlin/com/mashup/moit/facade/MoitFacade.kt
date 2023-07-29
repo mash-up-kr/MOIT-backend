@@ -58,8 +58,8 @@ class MoitFacade(
             isRemindActive = request.isRemindActive,
             remindOption = request.remindOption,
         ).also {
-            eventProducer.produce(MoitCreateEvent(moitId = it.id))
             userMoitService.join(userId, it.id, UserMoitRole.MASTER)
+            eventProducer.produce(MoitCreateEvent(moitId = it.id))
         }
 
         return MoitCreateResponse.of(moit)
