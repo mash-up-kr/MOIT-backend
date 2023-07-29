@@ -1,0 +1,3 @@
+### Notification List 
+GET {{moit-api}}/api/v1/notification
+Authorization: {{authorizationHeader}}

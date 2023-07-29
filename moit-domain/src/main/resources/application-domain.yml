@@ -9,3 +9,8 @@ spring:
     properties:
       hibernate:
         jdbc.lob.non_contextual_creation: true # if not, error occurs Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented.
+
+url-scheme:
+  study-scheduled: "moit://details?moitId={moitId}" # 모잇 상세 페이지
+  attendance-start: "moit://attendance?moitId={moitId}" # 출석 시작 -> 모잇 상세 페이지 
+  check-fine: "moit://fine?moitId={moitId}&findId={findId}" # 벌금 상세 
