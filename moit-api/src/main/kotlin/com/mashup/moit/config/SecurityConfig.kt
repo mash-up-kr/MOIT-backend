@@ -30,7 +30,7 @@ class SecurityConfig(
     private val logoutHandler: LogoutHandler,
     private val jwtTokenSupporter: JwtTokenSupporter,
     private val objectMapper: ObjectMapper,
-    private val authProperty: AuthProperty,
+    private val securityProperty: SecurityProperty,
 ) {
 
     @Bean
@@ -75,7 +75,7 @@ class SecurityConfig(
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration().apply {
-            authProperty.allowOrigins?.forEach { addAllowedOrigin(it) }
+            securityProperty.allowOrigins?.forEach { addAllowedOrigin(it) }
             addAllowedMethod("*")
             addAllowedHeader("*")
             exposedHeaders = listOf(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE)
