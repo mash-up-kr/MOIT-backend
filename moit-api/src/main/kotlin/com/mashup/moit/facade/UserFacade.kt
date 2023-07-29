@@ -2,7 +2,7 @@ package com.mashup.moit.facade
 
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
-import com.mashup.moit.controller.dto.UserRegisterRequest
+import com.mashup.moit.controller.user.dto.UserRegisterRequest
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.user.User
 import com.mashup.moit.domain.user.UserService

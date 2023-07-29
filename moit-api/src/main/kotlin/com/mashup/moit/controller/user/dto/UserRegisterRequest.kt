@@ -1,4 +1,4 @@
-package com.mashup.moit.controller.dto
+package com.mashup.moit.controller.user.dto
 
 data class UserRegisterRequest(
     val providerUniqueKey: String,
