@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - develop
 
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
@@ -23,28 +24,19 @@ jobs:
 
       - name: Get CurrentTime
         uses: 1466587594/get-current-time@v2
+        id: current-time
         with:
           format: YYYY-MM-DDTHH-mm-ss
           utcOffset: "+09:00"
 
       - run: chmod +x gradlew && ./gradlew build
 
-      - uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: 도커 이미지 빌드 & 푸시
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: electroncorps/moit-api:latest
-          
-      - run: |
-          cd deploy && zip -r deploy.zip .
-
-      - run: ls
+      - name: 도커 이미지 빌드 & 푸시 by jib
+        run: |
+          ./gradlew :moit-api:jib -Prelease
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v21

@@ -7,5 +7,5 @@ data class Sample(
     val name: String,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
-    val deleted: Boolean,
+    val isDeleted: Boolean,
 )

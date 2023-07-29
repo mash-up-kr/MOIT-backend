@@ -1,0 +1,11 @@
+### Fine 리스트 조회 
+GET {{moit-api}}/api/v1/moit/{{moitId}}/fine
+
+### Fine 평가
+POST {{moit-api}}/api/v1/moit/{{moitId}}/fine/{{fineId}}/evaluate
+Authorization: {{authorizationHeader}}
+Content-Type: application/json
+
+{
+    "confirm": true
+}

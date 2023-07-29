@@ -1,9 +1,55 @@
 spring:
   application:
     name: moit-api
+  profiles:
+    default: dev
   config:
     import:
-      - application-domain.yml
+      - classpath:/application-domain.yml
+
+  # OAuth login
+  security:
+    oauth2:
+      client:
+        registration:
+          auth0:
+            client-id: ENC(NNbSuxBd5Gl+LZJwCws0IYoYmA2Pe4+sX0Hm7+QToWpU1F5HFQg7jLVy6phcyTdcUc2NXUtul8jYJZCV5AGaVAxyPQX75r2KkwJQ7Zcjqkw=)
+            client-secret: ENC(sruib4iDMuuI7Z5anBNzBf89Zoi1mZ7EII1pml9sO9kAOydk1YDhpEUb6gscCvXIkkGiShNQ+Y8fMXv129DMORolgW3AF2lRyMhnpryxRABTgJ5mUTSkH/thUb/Y6ejSH9SBQUu7AJV1OtEZonJ3lg==)
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          auth0:
+            issuer-uri: ENC(G0yAcdZjTXv3nDDqIA8AKZs7ec6+Trbo7Fo/CNvDMcqNlr6h+7VHIDbjtA9A5QAH7LARlMBuv7IOh+SnHXAzU4+2MzrciU3DygNAjvI5ckw=)
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: ENC(D4Y7cXR3eszRDBMXMgQzP71FSFdHuCBxg9c8Krbb5JCEsGcQRtuRU/s6dFxr7hPR)
+      auto-offset-reset: earliest
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+    bootstrap-servers: ENC(UUoAbkwFVTtdbHDG5VO6mjQtHIkt6C72SXZGMls+Wz/Ygg5ICtbX7OEV47/AddxgHvrdGwbFQhUfdQNaND4rlK2675cA9ZWdjDryXgcqPDI=)
+    properties:
+      spring:
+        deserializer:
+          key:
+            delegate:
+              class: org.apache.kafka.common.serialization.StringDeserializer
+          value:
+            delegate:
+              class: org.springframework.kafka.support.serializer.JsonDeserializer
+        json:
+          trusted:
+            packages: com.mashup.moit.infra.event
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: SCRAM-SHA-256
+        jaas:
+          config: ENC(18qmH7MluXlgiDmBymlr5Ljoy/hFuIqrl/YThyZjnUPrRqUY7A/JS4kq30Cf/ASBeLX7o/QM76EjyVe6/By79fxuhCUoou6J3Dk5j589Jme/Z5J3yOGnZfGxQRn9UtPcm4P7X/Gq7U0IoNSaxd/JW0ZJ4TM5HoaHNUYhpAZnR/k58R80YadjUu/pOebMJowGapABJUoTN3kHtAnDgs7jGlOsiqhjzjj8uEhcr/0m9w1FN74J8FkSJ/E1p4OIhwVgm8SOpWtSoJTeVpjg9XApu3xtxUvITrzMMq4QOn261kw=)
 
 # swagger doc 
 springdoc:
@@ -31,10 +77,29 @@ management:
       enabled: true
     health:
       enabled: true
-      show-details : always
+      show-details: always
     metrics:
       enabled: true
     prometheus:
       enabled: true
   server:
     port: 8077
+
+moit:
+  auth:
+    jwt-secret-key: ENC(011c274SIytPrr5ozweLG7iWoGQVAMo1uA8xRAFyBASndo9yGYtfmDtBO7TchnzRJWVJiauSVzX5LX/XD/3NieuTBKcETvYEjgvo9znrniw=)
+
+cloud:
+  aws:
+    credentials:
+      access-key: ENC(59QcBpydXsm/54kH3O8aPU6bPuTIdxpCTet6FuU5XC5z5Zwi52AfYlTjyjxZwPWyBM1AaI8lW+FZYQnwzP6hBw==)
+      secret-key: ENC(V1ZQWaHkDE5DgMCB+9zKg7zGG6L9fZGXMCI0+iwPrX2/7cu79E60tVxQQ1MWh4taVLMwjaE3nptBBuRIIeIfguvilK91bO+lBU/9Ue//g0Y=)
+    s3:
+      domain: ENC(7F1WPrRa7fvFEYOfGsTFYIhe7R5bQmmCJMwgghCEvPOB7/4SipK+Nnr5EEED0JUICQUtoRUzPmPBNhQ5QXS+2KD4vhmEYkkh3jOT8Lqr1KDITPcs41c7J7m1/6lf74DO)
+      bucket-name: ENC(/sQSONSoi0685DnJHPl4WSRI8E5ARagYcbvkA15RUWTcH5s6wAgMut0+A7EqDQeXQT8FR97Kbpt2FacUNQrg3Q==)
+    region:
+      static: "ap-northeast-2"
+      auto: false
+
+fcm: 
+  certification: firebase/moit-firebase-adminsdk.json
