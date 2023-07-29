@@ -52,8 +52,8 @@ class AuthController(
     @Operation(summary = "회원가입", description = "회원가입 API")
     @PostMapping("/sign-up")
     fun signUp(@RequestBody request: UserRegisterRequest): ResponseEntity<Any> {
-        val jwtToken = userFacade.createUser(request)
-            .let { jwtTokenSupporter.createToken(UserInfo.from(it)) }
+        val userInfo = UserInfo.from(userFacade.createUser(request))
+        val jwtToken = jwtTokenSupporter.createToken(userInfo)
         return ResponseEntity.noContent()
             .header(HttpHeaders.AUTHORIZATION, "${JwtTokenSupporter.BEARER_TOKEN_PREFIX} $jwtToken")
             .build()
