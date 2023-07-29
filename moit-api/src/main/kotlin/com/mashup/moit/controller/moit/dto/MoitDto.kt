@@ -52,6 +52,22 @@ data class MoitCreateRequest(
     val remindOption: NotificationRemindOption?,
 )
 
+@Schema(description = "moit 가입 Response")
+data class MoitCreateResponse(
+    @Schema(description = "moit id")
+    val moitId: Long,
+
+    @Schema(description = "moit 초대 코드")
+    val invitationCode: String
+) {
+    companion object {
+        fun of(moit: Moit): MoitCreateResponse = MoitCreateResponse(
+            moitId = moit.id,
+            invitationCode = moit.invitationCode
+        )
+    }
+}
+
 @Schema(description = "moit 가입 RequestBody")
 data class MoitJoinRequest(
     @Schema(description = "유저 id")
