@@ -81,10 +81,10 @@ data class FineResponse(
     val userNickname: String,
     @Schema(description = "Fine 대상 출석 상태 (LATE, ABSENCE)")
     val attendanceStatus: AttendanceStatus,
-    @Schema(description = "Fine 납부 인증 유무")
-    val isApproved: Boolean,
     @Schema(description = "Fine 납부 일자 YYYY-mm-dd")
     val approveAt: LocalDateTime?,
+    @Schema(description = "Fine 인증 상태")
+    val approveStatus: FineApproveStatus,
     @Schema(description = "Fine 인증 이미지")
     val paymentImageUrl: String?,
 ) {
@@ -96,8 +96,8 @@ data class FineResponse(
                 userId = fine.userId,
                 userNickname = userNickname,
                 attendanceStatus = fine.attendanceStatus,
-                isApproved = fine.isApproved,
                 approveAt = fine.approvedAt,
+                approveStatus = fine.approveStatus,
                 paymentImageUrl = fine.paymentImageUrl
             )
     }
