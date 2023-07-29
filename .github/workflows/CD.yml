@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - develop
+      - chore/cloud-watch-fix
 
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
@@ -33,8 +34,8 @@ jobs:
       
       - name: 외부 환경 변수 주입 
         run: |
-          sed -i 's/{aws_access_key}/${{ secrets.DOCKERHUB_USERNAME }}/' ./moit-api/src/main/resources/application.yml
-          sed -i 's/{aws_secret_key}/${{ secrets.DOCKERHUB_PASSWORD }}/' ./moit-api/src/main/resources/application.yml
+          sed -i 's/{aws_access_key}/${{ secrets.AWS_BEANSTALK_ACCESS_KEY }}/' ./moit-api/src/main/resources/application.yml
+          sed -i 's/{aws_secret_key}/${{ secrets.AWS_BEANSTALK_SECRET_KEY }}/' ./moit-api/src/main/resources/application.yml
           
       - name: 도커 이미지 빌드 & 푸시 by jib
         run: |
