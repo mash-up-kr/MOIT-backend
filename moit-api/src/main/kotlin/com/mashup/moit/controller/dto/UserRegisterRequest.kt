@@ -4,5 +4,6 @@ data class UserRegisterRequest(
     val providerUniqueKey: String,
     val nickname: String,
     val email: String,
-    val profileImage: Int
+    val profileImage: Int,
+    val moitInvitationCode: String?,
 )
