@@ -57,7 +57,17 @@ class FineController(
 
     @Operation(summary = "벌금 리스트 조회 API", description = "벌금 리스트 조회 API")
     @GetMapping
-    fun fineList(@PathVariable("moitId") moitId: Long): MoitApiResponse<FineListResponse> {
+    fun getFineList(@PathVariable("moitId") moitId: Long): MoitApiResponse<FineListResponse> {
         return MoitApiResponse.success(fineFacade.getFineList(moitId))
     }
+
+    @Operation(summary = "벌금 단건 조회 API", description = "벌금 단건 조회 API")
+    @GetMapping("/{fineId}")
+    fun getFine(
+        @GetAuth userInfo: UserInfo,
+        @PathVariable("fineId") fineId: Long
+    ): MoitApiResponse<FineResponse> {
+        return MoitApiResponse.success(fineFacade.getFine(fineId, userInfo.nickname))
+    }
+
 }
