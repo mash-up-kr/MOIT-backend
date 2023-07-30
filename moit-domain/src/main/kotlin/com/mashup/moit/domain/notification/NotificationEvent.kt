@@ -8,5 +8,3 @@ data class AttendanceStartNotificationEvent(
     val studyIdWithMoitIds: Set<Pair<Long, Long>>,
     val flushAt: LocalDateTime
 ) : NotificationEvent
-
-
