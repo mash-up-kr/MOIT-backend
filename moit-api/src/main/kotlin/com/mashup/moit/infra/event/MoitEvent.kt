@@ -1,5 +1,7 @@
 package com.mashup.moit.infra.event
 
+import java.time.LocalDateTime
+
 fun interface MoitEvent {
     fun getTopic(): String
 }
@@ -43,5 +45,11 @@ data class FineCreateEventBulk(val fineIds: Set<Long>) : MoitEvent {
 data class FineApproveEvent(val fineId: Long) : MoitEvent {
     override fun getTopic(): String {
         return KafkaEventTopic.FINE_APPROVE
+    }
+}
+
+data class StudyAttendanceStartNotificationPushEvent(val studyIdWithMoitIds: Set<Pair<Long, Long>>, val flushAt: LocalDateTime) : MoitEvent {
+    override fun getTopic(): String {
+        return KafkaEventTopic.STUDY_ATTENDANCE_START_NOTIFICATION
     }
 }

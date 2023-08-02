@@ -2,6 +2,8 @@ package com.mashup.moit.scheduler
 
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
+import com.mashup.moit.infra.event.EventProducer
+import com.mashup.moit.infra.event.StudyAttendanceStartNotificationPushEvent
 import com.mashup.moit.infra.fcm.FCMNotificationService
 import com.mashup.moit.infra.fcm.StudyAttendanceStartNotification
 import org.slf4j.Logger
@@ -15,7 +17,8 @@ import java.time.LocalDateTime
 class AttendanceStartNotiPushScheduler(
     private val studyService: StudyService,
     private val moitService: MoitService,
-    private val fcmNotificationService: FCMNotificationService
+    private val fcmNotificationService: FCMNotificationService,
+    private val eventProducer: EventProducer
 ) {
     val logger: Logger = LoggerFactory.getLogger(AttendanceStartNotiPushScheduler::class.java)
 
@@ -34,9 +37,12 @@ class AttendanceStartNotiPushScheduler(
             moitService.getMoitById(study.moitId)
         }
 
-        studyMoitMap.entries.forEach {
+        val studyIdWithMoitIds = studyMoitMap.entries.map {
             fcmNotificationService.pushStartStudyNotification(StudyAttendanceStartNotification.of(it.value, it.key))
-        }
+            Pair(it.key.id, it.value.id)
+        }.toSet()
+
+        eventProducer.produce(StudyAttendanceStartNotificationPushEvent(studyIdWithMoitIds = studyIdWithMoitIds, flushAt = LocalDateTime.now()))
 
         logger.info("Done Push notification for {} studies, at {}.", startedStudy.size, LocalDateTime.now())
     }
