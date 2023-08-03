@@ -50,5 +50,5 @@ GET {{moit-api}}/api/v1/moit/{{moitId}}/attendance
 Authorization: {{authorizationHeader}}
 
 ### Moit Delete 
-DELETE {{moit-api}}/api/v1/moit/68
+DELETE {{moit-api}}/api/v1/moit/{{moitId}}
 Authorization: {{authorizationHeader}}
