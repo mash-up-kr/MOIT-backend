@@ -53,6 +53,7 @@ class StudyEntity(
         lateAt = lateAt,
         absenceAt = absenceAt,
         firstAttendanceUserId = firstAttendanceUserId,
+        isInitialized = isInitialized,
     )
 
     fun attendanceStatus(dateTime: LocalDateTime): AttendanceStatus {

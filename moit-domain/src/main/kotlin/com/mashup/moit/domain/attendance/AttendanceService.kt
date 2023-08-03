@@ -18,12 +18,14 @@ class AttendanceService(
     @Transactional
     fun initializeAttendance(studyId: Long) {
         val study = studyRepository.findById(studyId).orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
-        val userMoits = userMoitRepository.findAllByMoitId(study.moitId)
+        val studyUserIds = userMoitRepository.findAllByMoitId(study.moitId).map { it.userId }
 
-        userMoits.map {
+        val existedAttendanceUserIds = attendanceRepository.findAllByStudyIdOrderByAttendanceAtAsc(studyId).map { it.userId }
+
+        studyUserIds.filter { it !in existedAttendanceUserIds }.map {
             AttendanceEntity(
                 studyId = studyId,
-                userId = it.userId,
+                userId = it,
                 status = AttendanceStatus.UNDECIDED,
                 attendanceAt = null,
             )
