@@ -42,3 +42,6 @@ GET {{moit-api}}/api/v1/moit/{{moitId}}
 
 ### Moit Attendance 
 GET {{moit-api}}/api/v1/moit/{{moitId}}/attendance
+
+### Moit Delete 
+DELETE {{moit-api}}/api/v1/moit/{{moitId}}

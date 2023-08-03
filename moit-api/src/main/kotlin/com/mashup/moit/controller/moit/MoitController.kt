@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -89,6 +90,15 @@ class MoitController(
     ): MoitApiResponse<Unit> {
         moitFacade.addMoitImage(moitId, moitImage)
         return MoitApiResponse.success()
+    }
+
+    @Operation(summary = "Moit 삭제", description = "Moit 삭제 API")
+    @DeleteMapping("/{moitId}")
+    fun deleteMoit(
+        @GetAuth userInfo: UserInfo,
+        @PathVariable("moitId") moitId: Long,
+    ): MoitApiResponse<Unit> {
+        return MoitApiResponse.success(moitFacade.deleteMoit(userId = userInfo.id, moitId = moitId))
     }
 
 }

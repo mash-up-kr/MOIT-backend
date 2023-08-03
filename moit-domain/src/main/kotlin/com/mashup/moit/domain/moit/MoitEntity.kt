@@ -7,10 +7,12 @@ import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
+import org.hibernate.annotations.Where
 import java.time.LocalDate
 
 @Table(name = "moit")
 @Entity
+@Where(clause = "is_deleted = false")
 class MoitEntity(
     @Column(name = "name", nullable = false)
     val name: String,

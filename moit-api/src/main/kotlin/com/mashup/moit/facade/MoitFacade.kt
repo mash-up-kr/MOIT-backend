@@ -134,6 +134,10 @@ class MoitFacade(
         moitService.addMoitImage(moit.id, moitImageUrl)
     }
 
+    fun deleteMoit(userId: Long, moitId: Long) {
+        moitService.deleteMoit(userId = userId, moitId = moitId)
+    }
+
     private fun getMoitByInvitationCode(invitationCode: String): Moit {
         return moitService.getMoitByInvitationCode(invitationCode)
     }
