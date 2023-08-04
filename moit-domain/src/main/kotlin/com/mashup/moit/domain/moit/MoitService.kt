@@ -3,6 +3,7 @@ package com.mashup.moit.domain.moit
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.domain.usermoit.UserMoitRepository
+import com.mashup.moit.domain.usermoit.UserMoitRole
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -95,4 +96,17 @@ class MoitService(
             .apply { this.profileUrl = moitImageUrl }
     }
 
+    @Transactional
+    fun deleteMoit(userId: Long, moitId: Long) {
+        userMoitRepository.findByMoitIdAndRole(moitId = moitId, role = UserMoitRole.MASTER)
+            ?.takeIf { it.userId == userId }
+            ?.run {
+                moitRepository.findById(moitId)
+                    .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+                    .apply { this.isDeleted = true }
+                // TODO 삭제 고도화 시, 트랜잭션 밖으로 빼는 것을 고려
+                userMoitRepository.findAllByMoitId(moitId)
+                    .forEach { it.isDeleted = true }
+            } ?: throw MoitException.of(MoitExceptionType.ONLY_MOIT_MASTER)
+    }
 }

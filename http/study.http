@@ -1,11 +1,14 @@
 ### 스터디 출석 키워드 조회
 GET {{moit-api}}/api/v1/study/{{studyId}}/attendance/keyword
+Authorization: {{authorizationHeader}}
 
 ### 스터디 출석 상태 조회
 GET {{moit-api}}/api/v1/study/{{studyId}}/attendance/status
+Authorization: {{authorizationHeader}}
 
 ### 스터디 출석 키워드 등록
 POST {{moit-api}}/api/v1/study/{{studyId}}/attendance/keyword/register
+Authorization: {{authorizationHeader}}
 Content-Type: application/json
 
 {
@@ -14,6 +17,7 @@ Content-Type: application/json
 
 ### 스터디 출석 키워드 인증
 POST {{moit-api}}/api/v1/study/{{studyId}}/attendance/keyword/verify
+Authorization: {{authorizationHeader}}
 Content-Type: application/json
 
 {
@@ -22,6 +26,8 @@ Content-Type: application/json
 
 ### 스터디 출석 초기화
 POST {{moit-api}}/api/v1/study/{{studyId}}/attendance/initialize
+Authorization: {{authorizationHeader}}
 
 ### 스터디 첫 출석자 존재 여부 조회 
 GET {{moit-api}}/api/v1/study/{{studyId}}/attendance/is-first
+Authorization: {{authorizationHeader}}
