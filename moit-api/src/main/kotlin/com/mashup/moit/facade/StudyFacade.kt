@@ -69,7 +69,7 @@ class StudyFacade(
     }
 
     fun checkFirstAttendance(studyId: Long): StudyFirstAttendanceResponse {
-        return StudyFirstAttendanceResponse.of(attendanceService.existFirstAttendanceByStudyId(studyId))
+        return StudyFirstAttendanceResponse.of(!attendanceService.existFirstAttendanceByStudyId(studyId))
     }
 
     @Transactional
