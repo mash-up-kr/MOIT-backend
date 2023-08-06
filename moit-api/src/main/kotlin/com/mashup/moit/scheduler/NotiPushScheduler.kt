@@ -4,6 +4,7 @@ import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.Study
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.event.EventProducer
+import com.mashup.moit.infra.event.ScheduledStudyNotificationPushEvent
 import com.mashup.moit.infra.event.StudyAttendanceStartNotificationPushEvent
 import com.mashup.moit.infra.fcm.FCMNotificationService
 import com.mashup.moit.infra.fcm.ScheduledStudyNotification
@@ -72,6 +73,11 @@ class NotiPushScheduler(
             Pair(it.key.id, it.value.id)
         }.toSet()
         
+        eventProducer.produce(
+            ScheduledStudyNotificationPushEvent(studyIdWithMoitIds = studyIdWithMoitIds, flushAt = LocalDateTime.now())
+        )
+
+        logger.info("Done Push notification for {} scheduled studies, at {}.", studyMoitMap.size, LocalDateTime.now())
     }
 
     // schedule 특성상 5분 단위로 시점 = a1 일 떄 , 해당 변수(B)는 a1 보다 크다. 
