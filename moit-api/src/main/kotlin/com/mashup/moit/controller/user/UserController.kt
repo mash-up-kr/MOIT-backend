@@ -35,7 +35,7 @@ class UserController(
     }
 
     @Operation(summary = "FCM Token 갱신", description = "Update FCM Token API")
-    @PostMapping
+    @PostMapping("/fcm-token")
     fun updateFcmToken(@GetAuth userInfo: UserInfo, @RequestBody request: UserFcmTokenRequest): MoitApiResponse<Unit> {
         userFacade.updateFcmToken(userInfo.id, request.fcmToken)
         return MoitApiResponse.success()
