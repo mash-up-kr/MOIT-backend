@@ -37,7 +37,8 @@ class UserFacade(
             userRegisterRequest.providerUniqueKey,
             userRegisterRequest.nickname,
             userRegisterRequest.profileImage,
-            userRegisterRequest.email
+            userRegisterRequest.email,
+            userRegisterRequest.fcmToken
         ).also {
             registerMoit(it, userRegisterRequest.moitInvitationCode)
         }

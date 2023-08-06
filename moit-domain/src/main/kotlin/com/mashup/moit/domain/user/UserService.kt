@@ -13,12 +13,13 @@ class UserService(
 ) {
 
     @Transactional
-    fun createUser(providerUniqueKey: String, nickname: String, profileImage: Int, email: String): User {
+    fun createUser(providerUniqueKey: String, nickname: String, profileImage: Int, email: String, fcmToken: String?): User {
         val userEntity = UserEntity(
             providerUniqueKey = providerUniqueKey,
             nickname = nickname,
             profileImage = profileImage,
             email = email,
+            fcmToken = fcmToken,
             roles = setOf(UserRole.USER)
         )
         return userRepository.save(userEntity)
