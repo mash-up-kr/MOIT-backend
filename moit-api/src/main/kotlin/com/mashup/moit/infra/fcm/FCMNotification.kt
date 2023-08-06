@@ -21,11 +21,17 @@ data class SampleNotificationRequest(
     }
 }
 
+abstract class StudyNotification(
+    open val moitId: Long,
+    open val title: String,
+    open val body: String,
+)
+
 data class StudyAttendanceStartNotification(
-    val moitId: Long,
-    val title: String,
-    val body: String,
-) {
+    override val moitId: Long,
+    override val title: String,
+    override val body: String,
+) : StudyNotification(moitId, title, body) {
     companion object {
         // todo edit push message depends on notification level 
         fun of(moit: Moit, study: Study) = StudyAttendanceStartNotification(
@@ -57,13 +63,13 @@ data class FineRemindNotification(
 }
 
 data class ScheduledStudyNotification(
-    val moitId: Long,
-    val title: String,
-    val body: String,
-) {
+    override val moitId: Long,
+    override val title: String,
+    override val body: String,
+) : StudyNotification(moitId, title, body) {
     companion object {
         fun of(moit: Moit, study: Study) = ScheduledStudyNotification(
-            moitId = moit.id, 
+            moitId = moit.id,
             title = "NPE",
             body = "NPE"
         )

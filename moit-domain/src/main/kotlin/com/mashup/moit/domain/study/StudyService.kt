@@ -39,6 +39,14 @@ class StudyService(
             .toDomain()
     }
 
+    @Transactional
+    fun markAsPushed(studyId: Long): Study {
+        return studyRepository.findById(studyId)
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+            .apply { this.isPushed = true }
+            .toDomain()
+    }
+
     fun findAllByMoitIdStartAtBefore(moitId: Long, startAt: LocalDateTime): List<Study> {
         return studyRepository.findAllByMoitIdAndStartAtBeforeOrderByOrderDesc(moitId, startAt)
             .map { it.toDomain() }

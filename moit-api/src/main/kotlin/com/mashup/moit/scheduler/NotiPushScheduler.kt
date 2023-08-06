@@ -15,7 +15,6 @@ import org.springframework.scheduling.annotation.Async
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
-import kotlin.math.min
 
 @Component
 class NotiPushScheduler(
@@ -40,7 +39,7 @@ class NotiPushScheduler(
         }
 
         val studyIdWithMoitIds = studyMoitMap.entries.map {
-            fcmNotificationService.pushStartStudyNotification(StudyAttendanceStartNotification.of(it.value, it.key))
+            fcmNotificationService.pushStudyNotification(StudyAttendanceStartNotification.of(it.value, it.key))
             Pair(it.key.id, it.value.id)
         }.toSet()
 
@@ -69,14 +68,15 @@ class NotiPushScheduler(
         }
 
         val studyIdWithMoitIds = studyMoitMap.entries.map {
-            fcmNotificationService.pushScheduledStudyNotification(ScheduledStudyNotification.of(it.value, it.key))
+            fcmNotificationService.pushStudyNotification(ScheduledStudyNotification.of(it.value, it.key))
             Pair(it.key.id, it.value.id)
         }.toSet()
-        
+
         eventProducer.produce(
             ScheduledStudyNotificationPushEvent(studyIdWithMoitIds = studyIdWithMoitIds, flushAt = LocalDateTime.now())
         )
 
+        studies.forEach { study -> studyService.markAsPushed(study.id) }
         logger.info("Done Push notification for {} scheduled studies, at {}.", studyMoitMap.size, LocalDateTime.now())
     }
 
@@ -84,7 +84,7 @@ class NotiPushScheduler(
     // 5분 단위의 스터디 시작 시간을 찾기 위해서 : a0 < B - 1m < a1 < B 이용
     private fun getStartStudiesAtScheduleContext(scheduleContext: LocalDateTime, minutes: Long): List<Study> {
         val minContext = scheduleContext.minusMinutes(minutes)
-        
+
         return studyService.findStudiesByStartTime(minContext, scheduleContext)
     }
 }

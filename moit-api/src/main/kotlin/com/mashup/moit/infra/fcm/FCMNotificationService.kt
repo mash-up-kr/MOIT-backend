@@ -13,12 +13,13 @@ class FCMNotificationService(
 ) {
     private val logger = LoggerFactory.getLogger(FCMNotificationService::class.java)
 
-    fun pushStartStudyNotification(startNotification: StudyAttendanceStartNotification) {
-        val topic = getMoitTopic(startNotification.moitId)
-        try {
+    fun pushStudyNotification(studyNotification: StudyNotification) {
+        val topic = getMoitTopic(studyNotification.moitId)
+
+        runCatching {
             val notification = Notification.builder()
-                .setTitle(startNotification.title)
-                .setBody(startNotification.body)
+                .setTitle(studyNotification.title)
+                .setBody(studyNotification.body)
                 .build()
 
             val message = Message.builder()
@@ -26,29 +27,10 @@ class FCMNotificationService(
                 .setNotification(notification)
                 .build()
 
-            val response = firebaseMessaging.send(message)
-            logger.info("success to send notification : {}", response)
-        } catch (e: Exception) {
-            logger.error("Fail to send start Attendance Noti. topic-id : [{}], error: [{}]", topic, e.toString())
-        }
-    }
-
-    fun pushScheduledStudyNotification(scheduledNotification: ScheduledStudyNotification) {
-        val topic = getMoitTopic(scheduledNotification.moitId)
-        try {
-            val notification = Notification.builder()
-                .setTitle(scheduledNotification.title)
-                .setBody(scheduledNotification.body)
-                .build()
-
-            val message = Message.builder()
-                .setTopic(topic)
-                .setNotification(notification)
-                .build()
-
-            val response = firebaseMessaging.send(message)
-            logger.info("success to send notification : {}", response)
-        } catch (e: Exception) {
+            firebaseMessaging.send(message)
+        }.onSuccess { res ->
+            logger.info("success to send notification : {}", res)
+        }.onFailure { e ->
             logger.error("Fail to send scheduled Study Noti. topic-id : [{}], error: [{}]", topic, e.toString())
         }
     }
