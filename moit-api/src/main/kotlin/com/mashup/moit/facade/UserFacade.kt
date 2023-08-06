@@ -34,11 +34,11 @@ class UserFacade(
             throw MoitException.of(MoitExceptionType.ALREADY_EXIST)
         }
         return userService.createUser(
-            userRegisterRequest.providerUniqueKey,
-            userRegisterRequest.nickname,
-            userRegisterRequest.profileImage,
-            userRegisterRequest.email,
-            userRegisterRequest.fcmToken
+            providerUniqueKey = userRegisterRequest.providerUniqueKey,
+            nickname = userRegisterRequest.nickname,
+            profileImage = userRegisterRequest.profileImage,
+            email = userRegisterRequest.email,
+            fcmToken = userRegisterRequest.fcmToken
         ).also {
             registerMoit(it, userRegisterRequest.moitInvitationCode)
         }
