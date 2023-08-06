@@ -51,7 +51,7 @@ data class StudyDetailsResponse(
 data class StudyAttendanceKeywordRequest(
     @Schema(description = "Study 참석 코드")
     @field:NotBlank
-    @Size(min = 4, max = 4)
+    @field:Size(min = 4, max = 4)
     val attendanceKeyword: String
 )
 

@@ -75,7 +75,7 @@ data class MoitJoinRequest(
 
     @Schema(description = "moit 초대 코드")
     @field:NotBlank
-    @Size(min = 6, max = 6)
+    @field:Size(min = 6, max = 6)
     val invitationCode: String,
 )
 
