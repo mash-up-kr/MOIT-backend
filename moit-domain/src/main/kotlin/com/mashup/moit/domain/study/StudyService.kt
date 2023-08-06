@@ -6,7 +6,9 @@ import com.mashup.moit.domain.moit.MoitRepository
 import com.mashup.moit.domain.moit.NotificationPolicyColumns
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Service
 @Transactional(readOnly = true)
@@ -116,6 +118,11 @@ class StudyService(
 
     fun findUnfinalizedStudiesByEndAtBefore(endAt: LocalDateTime): List<Study> {
         return studyRepository.findAllByEndAtBeforeAndIsFinalizedFalse(endAt)
+            .map { it.toDomain() }
+    }
+
+    fun findStudiesRemind10AMAtToday(): List<Study> {
+        return studyRepository.findAllByStartAtEquals(LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0)))
             .map { it.toDomain() }
     }
 }

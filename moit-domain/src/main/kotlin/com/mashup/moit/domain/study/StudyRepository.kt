@@ -14,4 +14,5 @@ interface StudyRepository : JpaRepository<StudyEntity, Long> {
     
     // findAll By minDt <= StartAt <= maxDt (cause: Between Index performance degradation)
     fun findAllByStartAtGreaterThanEqualAndStartAtLessThanEqual(minStartAt: LocalDateTime, maxStartAt: LocalDateTime): List<StudyEntity>
+    fun findAllByStartAtEquals(startAt: LocalDateTime): List<StudyEntity>
 }

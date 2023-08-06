@@ -55,3 +55,17 @@ data class FineRemindNotification(
         }
     }
 }
+
+data class ScheduledStudyNotification(
+    val moitId: Long,
+    val title: String,
+    val body: String,
+) {
+    companion object {
+        fun of(moit: Moit, study: Study) = ScheduledStudyNotification(
+            moitId = moit.id, 
+            title = "NPE",
+            body = "NPE"
+        )
+    }
+}

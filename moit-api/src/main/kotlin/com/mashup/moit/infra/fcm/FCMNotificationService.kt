@@ -33,6 +33,26 @@ class FCMNotificationService(
         }
     }
 
+    fun pushScheduledStudyNotification(scheduledNotification: ScheduledStudyNotification) {
+        val topic = getMoitTopic(scheduledNotification.moitId)
+        try {
+            val notification = Notification.builder()
+                .setTitle(scheduledNotification.title)
+                .setBody(scheduledNotification.body)
+                .build()
+
+            val message = Message.builder()
+                .setTopic(topic)
+                .setNotification(notification)
+                .build()
+
+            val response = firebaseMessaging.send(message)
+            logger.info("success to send notification : {}", response)
+        } catch (e: Exception) {
+            logger.error("Fail to send scheduled Study Noti. topic-id : [{}], error: [{}]", topic, e.toString())
+        }
+    }
+
     fun pushRemindFineNotification(fineNotification: FineRemindNotification) {
         val userFcmToken = fineNotification.userFcmToken
         runCatching {
@@ -54,10 +74,6 @@ class FCMNotificationService(
         }
     }
 
-    fun getMoitTopic(moitId: Long): String {
-        return TOPIC_MOIT_PREFIX + moitId
-    }
-
     fun sendTopicSampleNotification(request: SampleNotificationRequest) {
         val title = STUDY_REMINDER_NOTIFICATION
         val body = when (request.remainMinutes) {
@@ -65,7 +81,7 @@ class FCMNotificationService(
             else -> "${request.studyName} 시작, ${request.remainMinutes.mean} 전입니다"
         }
 
-        val topic = getStudyTopic(request.studyId)
+        val topic = getMoitTopic(request.studyId)
 
         try {
             val notification = Notification.builder()
@@ -86,8 +102,8 @@ class FCMNotificationService(
         }
     }
 
-    fun getStudyTopic(studyId: Long): String {
-        return "study-$studyId"
+    private fun getMoitTopic(moitId: Long): String {
+        return TOPIC_MOIT_PREFIX + moitId
     }
 
     companion object {
