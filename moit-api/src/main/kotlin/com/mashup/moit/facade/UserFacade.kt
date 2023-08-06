@@ -55,4 +55,8 @@ class UserFacade(
         }
     }
 
+    @Transactional
+    fun updateFcmToken(userId: Long, fcmToken: String?) {
+        userService.updateFcmToken(userId, fcmToken)
+    }
 }
