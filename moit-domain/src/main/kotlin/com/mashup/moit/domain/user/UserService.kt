@@ -27,6 +27,11 @@ class UserService(
     }
 
     @Transactional
+    fun updateFcmToken(userId: Long, fcmToken: String?) {
+        userRepository.findByIdOrNull(userId)?.fcmToken = fcmToken
+    }
+
+    @Transactional
     fun deleteUser(userId: Long) {
         userRepository.deleteById(userId);
     }

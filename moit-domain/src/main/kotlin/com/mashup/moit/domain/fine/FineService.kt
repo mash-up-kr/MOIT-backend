@@ -54,6 +54,12 @@ class FineService(
             .map { it.toDomain() }
     }
 
+    fun getUnrequestedFines(): List<Fine> {
+        return fineRepository.findAllByApproveStatusIn(
+            listOf(FineApproveStatus.NEW, FineApproveStatus.REJECTED)
+        ).map { it.toDomain() }
+    }
+
     @Transactional
     fun updateFineApproveStatus(fineId: Long, confirmFine: Boolean) {
         val approveStatus = if (confirmFine) FineApproveStatus.APPROVED else FineApproveStatus.REJECTED
