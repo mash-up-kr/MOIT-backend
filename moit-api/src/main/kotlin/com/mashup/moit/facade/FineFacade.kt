@@ -3,7 +3,6 @@ package com.mashup.moit.facade
 import com.mashup.moit.common.exception.MoitException
 import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.controller.fine.dto.FineListResponse
-import com.mashup.moit.controller.fine.dto.FineCertificateResponse
 import com.mashup.moit.controller.fine.dto.FineResponse
 import com.mashup.moit.controller.fine.dto.FineResponseForListView
 import com.mashup.moit.domain.fine.FineService
@@ -72,9 +71,14 @@ class FineFacade(
         }
     }
 
-    fun addFineCertification(userId: Long, userNickname: String, fineId: Long, finePaymentImage: MultipartFile): FineCertificateResponse {
+    fun addFineCertification(userId: Long, userNickname: String, fineId: Long, finePaymentImage: MultipartFile): FineResponse {
         val finePaymentImageUrl = s3Service.upload(FINE_PAYMENT_IMAGE_DIRECTORY, finePaymentImage)
-        return FineCertificateResponse.of(fineService.addFinePaymentImage(userId, fineId, finePaymentImageUrl), userNickname)
+        val fine = fineService.addFinePaymentImage(userId, fineId, finePaymentImageUrl)
+        return FineResponse.of(
+            fine = fine,
+            study = studyService.findById(fine.studyId),
+            userNickname = userNickname,
+        )
     }
 
     companion object {

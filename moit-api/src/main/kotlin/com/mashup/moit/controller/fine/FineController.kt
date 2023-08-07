@@ -3,7 +3,6 @@ package com.mashup.moit.controller.fine
 import com.mashup.moit.common.MoitApiResponse
 import com.mashup.moit.controller.fine.dto.FineEvaluateRequest
 import com.mashup.moit.controller.fine.dto.FineListResponse
-import com.mashup.moit.controller.fine.dto.FineCertificateResponse
 import com.mashup.moit.controller.fine.dto.FineResponse
 import com.mashup.moit.facade.FineFacade
 import com.mashup.moit.security.authentication.UserInfo
@@ -38,7 +37,7 @@ class FineController(
         @PathVariable("moitId") moitId: Long,
         @PathVariable("fineId") fineId: Long,
         @RequestParam("finePaymentImage") finePaymentImage: MultipartFile
-    ): MoitApiResponse<FineCertificateResponse> {
+    ): MoitApiResponse<FineResponse> {
         return MoitApiResponse.success(
             fineFacade.addFineCertification(userInfo.id, userInfo.nickname, fineId, finePaymentImage)
         )
