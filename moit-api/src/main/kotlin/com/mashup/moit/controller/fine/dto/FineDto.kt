@@ -70,7 +70,7 @@ data class FineResponseForListView(
 
 
 @Schema(description = "Fine 정보 - Fine payment 추가 시 정보 조회로 반환")
-data class FineResponse(
+data class FineCertificateResponse(
     @Schema(description = "Fine id")
     val id: Long,
     @Schema(description = "Fine 금액")
@@ -90,6 +90,42 @@ data class FineResponse(
 ) {
     companion object {
         fun of(fine: Fine, userNickname: String) =
+            FineCertificateResponse(
+                id = fine.id,
+                fineAmount = fine.amount,
+                userId = fine.userId,
+                userNickname = userNickname,
+                attendanceStatus = fine.attendanceStatus,
+                approveAt = fine.approvedAt,
+                approveStatus = fine.approveStatus,
+                paymentImageUrl = fine.paymentImageUrl,
+            )
+    }
+}
+
+@Schema(description = "Fine 정보 - Fine 단건 조회")
+data class FineResponse(
+    @Schema(description = "Fine id")
+    val id: Long,
+    @Schema(description = "Fine 금액")
+    val fineAmount: Long,
+    @Schema(description = "Fine 대상 User id")
+    val userId: Long,
+    @Schema(description = "Fine 대상 User nickname")
+    val userNickname: String,
+    @Schema(description = "Fine 대상 출석 상태 (LATE, ABSENCE)")
+    val attendanceStatus: AttendanceStatus,
+    @Schema(description = "Fine 납부 일자 YYYY-mm-dd")
+    val approveAt: LocalDateTime?,
+    @Schema(description = "Fine 인증 상태")
+    val approveStatus: FineApproveStatus,
+    @Schema(description = "Fine 인증 이미지")
+    val paymentImageUrl: String?,
+    @Schema(description = "Study 차수")
+    val studyOrder: Int,
+) {
+    companion object {
+        fun of(fine: Fine, study: Study, userNickname: String) =
             FineResponse(
                 id = fine.id,
                 fineAmount = fine.amount,
@@ -98,7 +134,8 @@ data class FineResponse(
                 attendanceStatus = fine.attendanceStatus,
                 approveAt = fine.approvedAt,
                 approveStatus = fine.approveStatus,
-                paymentImageUrl = fine.paymentImageUrl
+                paymentImageUrl = fine.paymentImageUrl,
+                studyOrder = study.order,
             )
     }
 }
