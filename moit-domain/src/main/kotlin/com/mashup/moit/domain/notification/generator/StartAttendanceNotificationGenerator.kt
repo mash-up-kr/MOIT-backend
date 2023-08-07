@@ -25,7 +25,7 @@ class StartAttendanceNotificationGenerator(
     private val urlSchemeProperties: UrlSchemeProperties,
 ) : NotificationGenerator {
     companion object {
-        fun titleTemplate() = "출석 체크가 시작되었어요! ✔️"
+        fun titleTemplate() = "[출석 체크 시작] ✔️"
         fun bodyTemplate(moitName: String, studyOrder: Int): String {
             return "$moitName ${studyOrder + 1}회차 스터디가 시작되었어요"
         }

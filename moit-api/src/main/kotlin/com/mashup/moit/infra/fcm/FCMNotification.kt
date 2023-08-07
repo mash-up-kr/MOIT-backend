@@ -3,6 +3,7 @@ package com.mashup.moit.infra.fcm
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.NotificationRemindOption
 import com.mashup.moit.domain.notification.generator.RemindFinePushNotificationGenerator
+import com.mashup.moit.domain.notification.generator.ScheduledStudyNotificationGenerator
 import com.mashup.moit.domain.notification.generator.StartAttendanceNotificationGenerator
 import com.mashup.moit.domain.study.Study
 import com.mashup.moit.domain.user.User
@@ -70,8 +71,8 @@ data class ScheduledStudyNotification(
     companion object {
         fun of(moit: Moit, study: Study) = ScheduledStudyNotification(
             moitId = moit.id,
-            title = "NPE",
-            body = "NPE"
+            title = ScheduledStudyNotificationGenerator.titleTemplate(moit.name, moit.scheduleStartTime),
+            body = ScheduledStudyNotificationGenerator.bodyTemplate(study.order)
         )
     }
 }
