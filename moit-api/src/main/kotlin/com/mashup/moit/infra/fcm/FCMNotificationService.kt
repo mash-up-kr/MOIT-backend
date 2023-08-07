@@ -3,13 +3,19 @@ package com.mashup.moit.infra.fcm
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
+import com.mashup.moit.common.exception.MoitException
+import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.domain.moit.NotificationRemindOption
+import com.mashup.moit.domain.notification.UrlSchemeProperties
+import com.mashup.moit.domain.notification.generator.ScheduledStudyNotificationGenerator
+import com.mashup.moit.domain.notification.generator.StartAttendanceNotificationGenerator
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class FCMNotificationService(
-    private val firebaseMessaging: FirebaseMessaging
+    private val firebaseMessaging: FirebaseMessaging,
+    private val urlSchemeProperties: UrlSchemeProperties
 ) {
     private val logger = LoggerFactory.getLogger(FCMNotificationService::class.java)
 
@@ -22,8 +28,19 @@ class FCMNotificationService(
                 .setBody(studyNotification.body)
                 .build()
 
+            val data = when (studyNotification) {
+                is ScheduledStudyNotification ->
+                    mapOf("urlScheme" to ScheduledStudyNotificationGenerator.urlScheme(urlSchemeProperties.studyScheduled, studyNotification.moitId))
+
+                is StudyAttendanceStartNotification ->
+                    mapOf("urlScheme" to StartAttendanceNotificationGenerator.urlScheme(urlSchemeProperties.attendanceStart, studyNotification.moitId))
+
+                else -> throw MoitException.of(MoitExceptionType.SYSTEM_FAIL)
+            }
+
             val message = Message.builder()
                 .setTopic(topic)
+                .putAllData(data)
                 .setNotification(notification)
                 .build()
 
@@ -69,7 +86,7 @@ class FCMNotificationService(
             val notification = Notification.builder()
                 .setTitle(title)
                 .setBody(body)
-                .build();
+                .build()
 
             // data 전송이 함께 필요하다면, putData 로 함께 publish
             val msg = Message.builder()

@@ -2,8 +2,8 @@ package com.mashup.moit.infra.fcm
 
 import com.mashup.moit.domain.moit.Moit
 import com.mashup.moit.domain.moit.NotificationRemindOption
-import com.mashup.moit.domain.notification.RemindFinePushNotificationGenerator
-import com.mashup.moit.domain.notification.StartAttendancePushNotificationGenerator
+import com.mashup.moit.domain.notification.generator.RemindFinePushNotificationGenerator
+import com.mashup.moit.domain.notification.generator.StartAttendanceNotificationGenerator
 import com.mashup.moit.domain.study.Study
 import com.mashup.moit.domain.user.User
 
@@ -36,8 +36,8 @@ data class StudyAttendanceStartNotification(
         // todo edit push message depends on notification level 
         fun of(moit: Moit, study: Study) = StudyAttendanceStartNotification(
             moitId = moit.id,
-            title = StartAttendancePushNotificationGenerator.TITLE_TEMPLATE,
-            body = StartAttendancePushNotificationGenerator.bodyTemplate(moit.name, study.order)
+            title = StartAttendanceNotificationGenerator.titleTemplate(),
+            body = StartAttendanceNotificationGenerator.bodyTemplate(moit.name, study.order)
         )
     }
 }
