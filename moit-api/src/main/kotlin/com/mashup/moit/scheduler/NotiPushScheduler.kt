@@ -49,7 +49,7 @@ class NotiPushScheduler(
     
     @Scheduled(cron = "0 */5 * * * *")
     @Async("pushSchedulerExecutor")
-    fun pushScheduledStudy10AMRemindNotification() {
+    fun pushScheduledStudyRemindNotification() {
         val studies = studyService.findNotPushedStudies(LocalDateTime.now())
 
         val studyMoitMap = studies.associateWith { study ->
