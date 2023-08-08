@@ -130,7 +130,7 @@ class StudyService(
     }
 
     fun findNotPushedStudies(basedTime: LocalDateTime): List<Study> {
-        return studyRepository.findByPushedAndRemindAtBefore(false, basedTime)
+        return studyRepository.findByIsPushedAndRemindAtBefore(false, basedTime)
             .map { it.toDomain() }
     }
 }

@@ -16,5 +16,5 @@ interface StudyRepository : JpaRepository<StudyEntity, Long> {
     fun findAllByStartAtGreaterThanEqualAndStartAtLessThanEqual(minStartAt: LocalDateTime, maxStartAt: LocalDateTime): List<StudyEntity>
     
     // findAll By IsPushedFalse And remindAtBefore
-    fun findByPushedAndRemindAtBefore(isPushed: Boolean, remindAt: LocalDateTime): List<StudyEntity>
+    fun findByIsPushedAndRemindAtBefore(isPushed: Boolean, remindAt: LocalDateTime): List<StudyEntity>
 }
