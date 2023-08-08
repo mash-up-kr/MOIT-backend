@@ -116,3 +116,5 @@ cloud:
 fcm:
   certification: firebase/moit-firebase-adminsdk.json
 
+server:
+  forward-headers-strategy: FRAMEWORK
