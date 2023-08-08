@@ -1,7 +1,6 @@
 package com.mashup.moit.scheduler
 
 import com.mashup.moit.domain.moit.MoitService
-import com.mashup.moit.domain.study.Study
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.event.EventProducer
 import com.mashup.moit.infra.event.ScheduledStudyNotificationPushEvent
@@ -47,21 +46,11 @@ class NotiPushScheduler(
 
         logger.info("Done Push notification for {} studies, at {}.", startedStudy.size, LocalDateTime.now())
     }
-
+    
     @Scheduled(cron = "0 */5 * * * *")
     @Async("pushSchedulerExecutor")
-    fun pushScheduledStudyNotification() {
-        val scheduleContext = LocalDateTime.now()
-        val minContext = scheduleContext.minusMinutes(1)
-
-
-    }
-
-    // 당일 오전 (10시) Option 으로 Noti 설정된 Moit 내 Study Push 
-    @Scheduled(cron = "* * 10 * * *")
-    @Async("pushSchedulerExecutor")
     fun pushScheduledStudy10AMRemindNotification() {
-        val studies = studyService.findStudiesRemind10AMAtToday()
+        val studies = studyService.findNotPushedStudies(LocalDateTime.now())
 
         val studyMoitMap = studies.associateWith { study ->
             moitService.getMoitById(study.moitId)
@@ -78,13 +67,5 @@ class NotiPushScheduler(
 
         studies.forEach { study -> studyService.markAsPushed(study.id) }
         logger.info("Done Push notification for {} scheduled studies, at {}.", studyMoitMap.size, LocalDateTime.now())
-    }
-
-    // schedule 특성상 5분 단위로 시점 = a1 일 떄 , 해당 변수(B)는 a1 보다 크다. 
-    // 5분 단위의 스터디 시작 시간을 찾기 위해서 : a0 < B - 1m < a1 < B 이용
-    private fun getStartStudiesAtScheduleContext(scheduleContext: LocalDateTime, minutes: Long): List<Study> {
-        val minContext = scheduleContext.minusMinutes(minutes)
-
-        return studyService.findStudiesByStartTime(minContext, scheduleContext)
     }
 }

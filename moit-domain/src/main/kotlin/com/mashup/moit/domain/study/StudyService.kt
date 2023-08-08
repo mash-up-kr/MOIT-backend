@@ -129,8 +129,8 @@ class StudyService(
             .map { it.toDomain() }
     }
 
-    fun findStudiesRemind10AMAtToday(): List<Study> {
-        return studyRepository.findAllByStartAtEquals(LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0)))
+    fun findNotPushedStudies(basedTime: LocalDateTime): List<Study> {
+        return studyRepository.findByPushedAndRemindAtBefore(false, basedTime)
             .map { it.toDomain() }
     }
 }
