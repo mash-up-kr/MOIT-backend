@@ -6,6 +6,7 @@ import com.mashup.moit.domain.banner.update.StudyAttendanceStartBannerUpdateRequ
 import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.notification.AttendanceStartNotificationEvent
 import com.mashup.moit.domain.notification.NotificationService
+import com.mashup.moit.domain.notification.RemindFineNotificationEvent
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.event.EventProducer
 import com.mashup.moit.infra.event.FineApproveEvent
@@ -14,6 +15,7 @@ import com.mashup.moit.infra.event.FineCreateEventBulk
 import com.mashup.moit.infra.event.KafkaConsumerGroup
 import com.mashup.moit.infra.event.KafkaEventTopic
 import com.mashup.moit.infra.event.MoitCreateEvent
+import com.mashup.moit.infra.event.RemindFineNotificationPushEvent
 import com.mashup.moit.infra.event.StudyAttendanceEvent
 import com.mashup.moit.infra.event.StudyAttendanceEventBulk
 import com.mashup.moit.infra.event.StudyAttendanceStartNotificationPushEvent
@@ -111,5 +113,14 @@ class KafkaConsumer(
     fun consumeStudyAttendanceStartNotificationPushEvent(event: StudyAttendanceStartNotificationPushEvent) {
         log.debug("consumeStudyAttendanceStartNotificationPushEvent called: {}", event)
         notificationService.save(AttendanceStartNotificationEvent(event.studyIdWithMoitIds, event.flushAt))
+    }
+
+    @KafkaListener(
+        topics = [KafkaEventTopic.REMIND_FINE_NOTIFICATION],
+        groupId = KafkaConsumerGroup.REMIND_FINE_NOTIFICATION_CREATE,
+    )
+    fun consumeRemindFineNotificationPushEvent(event: RemindFineNotificationPushEvent) {
+        log.debug("consumeRemindFineNotificationPushEvent called: {}", event)
+        notificationService.save(RemindFineNotificationEvent(event.fineIds, event.flushAt))
     }
 }

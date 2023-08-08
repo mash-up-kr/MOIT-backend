@@ -12,4 +12,5 @@ data class User(
     val profileImage: Int,
     val email: String,
     val roles: Set<UserRole>,
+    val fcmToken: String?
 )

@@ -53,3 +53,9 @@ data class StudyAttendanceStartNotificationPushEvent(val studyIdWithMoitIds: Set
         return KafkaEventTopic.STUDY_ATTENDANCE_START_NOTIFICATION
     }
 }
+
+data class RemindFineNotificationPushEvent(val fineIds: Set<Long>, val flushAt: LocalDateTime) : MoitEvent {
+    override fun getTopic(): String {
+        return KafkaEventTopic.REMIND_FINE_NOTIFICATION
+    }
+}

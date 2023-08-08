@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.Locale
+import java.util.*
 
 @Service
 @Transactional(readOnly = true)
@@ -82,6 +82,11 @@ class MoitService(
         return moitRepository.findById(moitId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
             .toDomain()
+    }
+
+    fun getMoitsByIds(moitIds: Set<Long>): List<Moit> {
+        return moitRepository.findAllById(moitIds)
+            .map { it.toDomain() }
     }
 
     fun getMoitsByUserId(userId: Long): List<Moit> {

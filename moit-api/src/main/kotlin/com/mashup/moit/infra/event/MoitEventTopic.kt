@@ -9,6 +9,7 @@ object KafkaEventTopic {
     const val FINE_CREATE = "fine_create"
     const val FINE_CREATE_BULK = "fine_create_bulk"
     const val FINE_APPROVE = "fine_approve"
+    const val REMIND_FINE_NOTIFICATION = "remind_fine_notification"
 }
 
 object KafkaConsumerGroup {
@@ -20,4 +21,5 @@ object KafkaConsumerGroup {
     const val FINE_CREATE_BANNER_UPDATE = "fine_create_banner_update"
     const val FINE_CREATE_BANNER_UPDATE_BULK = "fine_create_banner_update_bulk"
     const val FINE_APPROVE_BANNER_UPDATE = "fine_approve_banner_update"
+    const val REMIND_FINE_NOTIFICATION_CREATE = "remind_fine_notification_create"
 }

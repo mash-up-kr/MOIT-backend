@@ -6,4 +6,5 @@ data class UserRegisterRequest(
     val email: String,
     val profileImage: Int,
     val moitInvitationCode: String?,
+    val fcmToken: String?
 )

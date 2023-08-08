@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface FineRepository : JpaRepository<FineEntity, Long> {
     fun findByMoitId(moitId: Long): List<FineEntity>
     fun findAllByMoitIdAndUserIdAndApproveStatusIn(moitId: Long, userId: Long, approveStatuses: Collection<FineApproveStatus>): List<FineEntity>
+    fun findAllByApproveStatusIn(approveStatuses: Collection<FineApproveStatus>): List<FineEntity>
 }

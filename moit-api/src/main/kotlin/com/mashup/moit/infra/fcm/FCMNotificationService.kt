@@ -33,6 +33,27 @@ class FCMNotificationService(
         }
     }
 
+    fun pushRemindFineNotification(fineNotification: FineRemindNotification) {
+        val userFcmToken = fineNotification.userFcmToken
+        runCatching {
+            val notification = Notification.builder()
+                .setTitle(fineNotification.title)
+                .setBody(fineNotification.body)
+                .build()
+
+            val message = Message.builder()
+                .setToken(userFcmToken)
+                .setNotification(notification)
+                .build()
+
+            firebaseMessaging.send(message)
+        }.onSuccess { response ->
+            logger.info("success to send notification : {}", response)
+        }.onFailure { e ->
+            logger.error("Fail to send Remind Fine Noti. userFcmToken : [{}], error: [{}]", userFcmToken, e.toString())
+        }
+    }
+
     fun getMoitTopic(moitId: Long): String {
         return TOPIC_MOIT_PREFIX + moitId
     }
