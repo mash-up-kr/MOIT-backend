@@ -11,6 +11,7 @@ data class AttendanceStartNotificationEvent(
 
 data class RemindFineNotificationEvent(
     val fineIds: Set<Long>,
+    val flushAt: LocalDateTime
 ) : NotificationEvent
 
 data class ScheduledStudyNotificationEvent(
