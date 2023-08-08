@@ -20,7 +20,7 @@ class OpenApiConfig {
             .description(SwaggerConstant.API_DESCRIPTION)
 
         return OpenAPI()
-            .addServersItem(Server().url("/"))
+            .addServersItem(Server().url("/moit"))
             .info(info)
             .addSecurityItem(SecurityRequirement().addList(SwaggerConstant.BEARER_AUTH))
             .components(
