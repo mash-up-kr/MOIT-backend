@@ -5,6 +5,7 @@ import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.fcm.FCMNotificationService
 import com.mashup.moit.infra.fcm.SampleNotificationRequest
+import com.mashup.moit.infra.fcm.ScheduledStudyNotification
 import com.mashup.moit.infra.fcm.StudyAttendanceStartNotification
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -31,7 +32,16 @@ class SampleNotificationController(
         val moit = moitService.getMoitById(moitId)
         val study = studyService.findById(moitId)
 
-        fcmNotificationService.pushStartStudyNotification(StudyAttendanceStartNotification.of(moit, study))
+        fcmNotificationService.pushStudyNotification(StudyAttendanceStartNotification.of(moit, study))
+        return MoitApiResponse.success()
+    }
+
+    @GetMapping("/push/scheduled-study/{moitId}")
+    fun pushScheduledStudy(@PathVariable moitId: Long): MoitApiResponse<Unit> {
+        val moit = moitService.getMoitById(moitId)
+        val study = studyService.findById(moitId)
+
+        fcmNotificationService.pushStudyNotification(ScheduledStudyNotification.of(moit, study))
         return MoitApiResponse.success()
     }
 }

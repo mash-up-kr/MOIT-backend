@@ -43,6 +43,9 @@ class StudyEntity(
     @Column(name = "is_finalized", nullable = false)
     var isFinalized: Boolean = false
 
+    @Column(name = "is_pushed", nullable = false)
+    var isPushed: Boolean = false
+    
     fun toDomain() = Study(
         id = id,
         moitId = moitId,

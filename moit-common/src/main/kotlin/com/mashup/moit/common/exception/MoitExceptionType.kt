@@ -29,5 +29,8 @@ enum class MoitExceptionType(
 
     // MOIT
     ONLY_MOIT_MASTER("해당 유저는 모잇 마스터 권한이 아닙니다.", "M001_ONLY_MOIT_MASTER", 400),
+
+    // NOTIFICATION 
+    INVALID_NOTIFICATION_TYPE("Invalid Notification Type", "N001_INVALID_NOTIFICATION_TYPE", 500),
     ;
 }

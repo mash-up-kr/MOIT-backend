@@ -6,7 +6,9 @@ import com.mashup.moit.domain.moit.MoitRepository
 import com.mashup.moit.domain.moit.NotificationPolicyColumns
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Service
 @Transactional(readOnly = true)
@@ -34,6 +36,14 @@ class StudyService(
         return studyRepository.findById(studyId)
             .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
             .apply { this.isInitialized = true }
+            .toDomain()
+    }
+
+    @Transactional
+    fun markAsPushed(studyId: Long): Study {
+        return studyRepository.findById(studyId)
+            .orElseThrow { MoitException.of(MoitExceptionType.NOT_EXIST) }
+            .apply { this.isPushed = true }
             .toDomain()
     }
 
@@ -116,6 +126,11 @@ class StudyService(
 
     fun findUnfinalizedStudiesByEndAtBefore(endAt: LocalDateTime): List<Study> {
         return studyRepository.findAllByEndAtBeforeAndIsFinalizedFalse(endAt)
+            .map { it.toDomain() }
+    }
+
+    fun findNotPushedStudies(basedTime: LocalDateTime): List<Study> {
+        return studyRepository.findByIsPushedAndRemindAtBefore(false, basedTime)
             .map { it.toDomain() }
     }
 }

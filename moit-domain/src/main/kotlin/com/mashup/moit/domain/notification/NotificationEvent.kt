@@ -13,3 +13,8 @@ data class RemindFineNotificationEvent(
     val fineIds: Set<Long>,
     val flushAt: LocalDateTime
 ) : NotificationEvent
+
+data class ScheduledStudyNotificationEvent(
+    val studyIdWithMoitIds: Set<Pair<Long, Long>>,
+    val flushAt: LocalDateTime
+) : NotificationEvent
