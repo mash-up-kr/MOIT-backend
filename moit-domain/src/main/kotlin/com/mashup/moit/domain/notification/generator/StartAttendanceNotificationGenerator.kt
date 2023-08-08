@@ -39,7 +39,7 @@ class StartAttendanceNotificationGenerator(
 
     override fun generate(event: NotificationEvent): List<NotificationEntity> {
         if (event !is AttendanceStartNotificationEvent) {
-            throw MoitException.of(MoitExceptionType.SYSTEM_FAIL)
+            throw MoitException.of(MoitExceptionType.INVALID_NOTIFICATION_TYPE)
         }
 
         return event.studyIdWithMoitIds

@@ -8,7 +8,6 @@ import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.domain.moit.NotificationRemindOption
 import com.mashup.moit.domain.notification.UrlSchemeProperties
 import com.mashup.moit.domain.notification.generator.ScheduledStudyNotificationGenerator
-import com.mashup.moit.domain.notification.generator.StartAttendanceNotificationGenerator
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -28,15 +27,12 @@ class FCMNotificationService(
                 .setBody(studyNotification.body)
                 .build()
 
-            val data = when (studyNotification) {
-                is ScheduledStudyNotification ->
-                    mapOf("urlScheme" to ScheduledStudyNotificationGenerator.urlScheme(urlSchemeProperties.studyScheduled, studyNotification.moitId))
-
-                is StudyAttendanceStartNotification ->
-                    mapOf("urlScheme" to StartAttendanceNotificationGenerator.urlScheme(urlSchemeProperties.attendanceStart, studyNotification.moitId))
-
-                else -> throw MoitException.of(MoitExceptionType.SYSTEM_FAIL)
+            val urlScheme = when (studyNotification) {
+                is ScheduledStudyNotification -> urlSchemeProperties.studyScheduled
+                is StudyAttendanceStartNotification -> urlSchemeProperties.attendanceStart
+                else -> throw MoitException.of(MoitExceptionType.INVALID_NOTIFICATION_TYPE)
             }
+            val data = mapOf("urlScheme" to ScheduledStudyNotificationGenerator.urlScheme(urlScheme, studyNotification.moitId))
 
             val message = Message.builder()
                 .setTopic(topic)
@@ -48,7 +44,7 @@ class FCMNotificationService(
         }.onSuccess { res ->
             logger.info("success to send notification : {}", res)
         }.onFailure { e ->
-            logger.error("Fail to send scheduled Study Noti. topic-id : [{}], error: [{}]", topic, e.toString())
+            logger.error("Fail to send scheduled Study Noti. topic-id : [{}], error: [{}]", topic, e.printStackTrace())
         }
     }
 

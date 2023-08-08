@@ -41,7 +41,7 @@ class ScheduledStudyNotificationGenerator(
 
     override fun generate(event: NotificationEvent): List<NotificationEntity> {
         if (event !is ScheduledStudyNotificationEvent) {
-            throw MoitException.of(MoitExceptionType.SYSTEM_FAIL)
+            throw MoitException.of(MoitExceptionType.INVALID_NOTIFICATION_TYPE)
         }
 
         return event.studyIdWithMoitIds
