@@ -82,6 +82,9 @@ configure<JibExtension> {
             "-Djasypt.encryptor.password=${jasyptPassword}"
         )
         ports = listOf("8080")
+        environment = mapOf(
+            "TZ" to "Asia/Seoul"
+        )
     }
 }
 
