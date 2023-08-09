@@ -113,7 +113,7 @@ class StudyService(
         when (study.attendanceCode) {
             attendanceCode -> Unit
             null -> throw MoitException.of(MoitExceptionType.NOT_EXIST, "출석 키워드가 등록되지 않았습니다")
-            else -> throw MoitException.of(MoitExceptionType.INVALID_ATTENDANCE_KEYWORD)
+            else -> throw MoitException.of(MoitExceptionType.INVALID_ATTENDANCE_KEYWORD, "올바르지 않은 키워드입니다")
         }
         return study.toDomain()
     }
