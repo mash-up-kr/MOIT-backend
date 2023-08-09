@@ -3,12 +3,15 @@ package com.mashup.moit.domain.notification
 import com.mashup.moit.domain.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 
 @Table(name = "notification")
 @Entity
 data class NotificationEntity(
-    @Column(name = "type", nullable = false)
+    @Column(name = "notification_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     val type: NotificationType,
 
     @Column(name = "user_id", nullable = false)
