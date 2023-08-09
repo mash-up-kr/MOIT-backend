@@ -20,9 +20,9 @@
     <br> 
 </p>
 
-<br>
+<br/>
 
-## 🧐 About <a name = "about"></a>
+## About <a name = "about"></a>
 
 Moit is a study management app created by the team '전자군단'.
 
@@ -30,7 +30,14 @@ The study management app allows users to check in participants quickly and easil
 
 In addition to attendance tracking, Moit also makes it easy to manage fines. You can set up rules and guidelines for attendance, and the app will automatically calculate any fines owed based on those rules. This makes it easy to enforce fines and ensures that participants are held accountable for their attendance.
 
-<br>
+<br/>
+
+## Architecture
+
+![architecture](https://github.com/mash-up-kr/MOIT-backend/assets/37873745/7c9b977f-6fc5-4fc0-8be9-a21ffd93c07c)
+
+
+<br/>
 
 ## License <a name = "license"></a>
 
