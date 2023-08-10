@@ -115,6 +115,6 @@ class NotiPushScheduler(
                 flushAt = LocalDateTime.now()
             )
         )
-        logger.info("Done Push notification for {} fines, at {}", unrequestedFines.size, org.joda.time.LocalDateTime.now())
+        logger.info("Done Push notification for {} fines, at {}", unrequestedFines.size, LocalDateTime.now())
     }
 }
