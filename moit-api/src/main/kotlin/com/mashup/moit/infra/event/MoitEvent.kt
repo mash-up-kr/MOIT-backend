@@ -12,6 +12,12 @@ data class MoitCreateEvent(val moitId: Long) : MoitEvent {
     }
 }
 
+data class MoitJoinEvent(val moitId: Long, val userId: Long) : MoitEvent {
+    override fun getTopic(): String {
+        return KafkaEventTopic.MOIT_JOIN
+    }
+}
+
 data class StudyAttendanceEvent(val attendanceId: Long, val moitId: Long) : MoitEvent {
     override fun getTopic(): String {
         return KafkaEventTopic.STUDY_ATTENDANCE

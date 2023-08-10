@@ -11,5 +11,6 @@ data class Study(
     val remindAt: LocalDateTime?,
     val lateAt: LocalDateTime,
     val absenceAt: LocalDateTime,
-    val firstAttendanceUserId: Long? = null
+    val firstAttendanceUserId: Long? = null,
+    val isInitialized: Boolean,
 )

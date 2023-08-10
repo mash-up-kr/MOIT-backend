@@ -8,6 +8,8 @@ import com.mashup.moit.domain.user.User
 import com.mashup.moit.domain.user.UserService
 import com.mashup.moit.domain.usermoit.UserMoitRole
 import com.mashup.moit.domain.usermoit.UserMoitService
+import com.mashup.moit.infra.event.EventProducer
+import com.mashup.moit.infra.event.MoitJoinEvent
 import com.mashup.moit.security.authentication.getProviderUniqueKey
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.stereotype.Component
@@ -18,6 +20,7 @@ class UserFacade(
     private val userService: UserService,
     private val moitService: MoitService,
     private val userMoitService: UserMoitService,
+    private val eventProducer: EventProducer,
 ) {
 
     fun deleteById(userId: Long) {
@@ -51,7 +54,9 @@ class UserFacade(
         val userId = it.id
         moitInvitationCode?.apply {
             val moit = moitService.getMoitByInvitationCode(this)
-            userMoitService.join(userId, moit.id, UserMoitRole.MEMBER)
+            userMoitService.join(userId, moit.id, UserMoitRole.MEMBER).also {
+                eventProducer.produce(MoitJoinEvent(moitId = moit.id, userId = userId))
+            }
         }
     }
 
