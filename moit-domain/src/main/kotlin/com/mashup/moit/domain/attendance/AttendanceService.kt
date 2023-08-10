@@ -57,7 +57,7 @@ class AttendanceService(
     }
 
     fun existFirstAttendanceByStudyId(studyId: Long): Boolean {
-        return attendanceRepository.existsByStudyIdAndStatus(studyId, AttendanceStatus.ATTENDANCE)
+        return attendanceRepository.existsByStudyIdAndStatusNot(studyId, AttendanceStatus.UNDECIDED)
     }
 
     @Transactional
