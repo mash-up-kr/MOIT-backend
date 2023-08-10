@@ -87,6 +87,11 @@ class SampleNotificationController(
         val study = studyService.findById(fine.studyId)
         val user = userService.findUserById(fine.userId)
 
+        if (user.fcmToken == null) {
+            logger.warn("user-id : {} : Not Exist FCM token. Can't Push Notification. FineId - {}", user.id, fineId)
+            throw MoitException.of(MoitExceptionType.EMPTY_FCM_TOKEN, "해당 유저의 등록된 FCM 토큰이 없습니다")
+        }
+        
         FineRemindNotification.of(user, moit, study)
             ?.let { notification ->
                 fcmNotificationService.pushRemindFineNotification(notification)

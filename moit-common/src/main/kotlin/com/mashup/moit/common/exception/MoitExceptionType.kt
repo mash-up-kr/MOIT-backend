@@ -10,7 +10,8 @@ enum class MoitExceptionType(
     EMPTY_AUTHORIZATION_HEADER("Not Exist Authorization Header", "U001_EMPTY_AUTHORIZATION_HEADER", 400),
     INVALID_USER_AUTH_TOKEN("Invalid JWT Token", "U002_INVALID_TOKEN", 400),
     INVALID_AUTH_PROVIDER("Invalid provider by auth0. Check social section of auth0", "U003_INVALID_AUTH_PROVIDER", 500),
-
+    EMPTY_FCM_TOKEN("Not Exist FCM Token", "U004_EMPTY_FCM_TOKEN",400),
+    
     // COMMON
     NOT_EXIST("존재하지 않습니다.", "C001_NOT_EXIST", 404),
     SYSTEM_FAIL("Internal Server Error.", "C002_SYSTEM_FAIL", 500),
