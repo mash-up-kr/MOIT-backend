@@ -13,6 +13,7 @@ import com.mashup.moit.infra.event.EventProducer
 import com.mashup.moit.infra.event.FineApproveEvent
 import com.mashup.moit.infra.event.FineCreateEvent
 import com.mashup.moit.infra.event.FineCreateEventBulk
+import com.mashup.moit.infra.event.FineEvent
 import com.mashup.moit.infra.event.KafkaConsumerGroup
 import com.mashup.moit.infra.event.KafkaEventTopic
 import com.mashup.moit.infra.event.MoitCreateEvent
@@ -104,32 +105,20 @@ class KafkaConsumer(
     }
 
     @KafkaListener(
-        topics = [KafkaEventTopic.FINE_CREATE],
-        groupId = KafkaConsumerGroup.FINE_CREATE_BANNER_UPDATE,
+        topics = [KafkaEventTopic.FINE],
+        groupId = KafkaConsumerGroup.FINE_EVENT,
     )
-    fun consumeFineCreateEvent(event: FineCreateEvent) {
-        log.debug("consumeFineCreateEvent called: {}", event)
-        bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
-    }
-
-    @KafkaListener(
-        topics = [KafkaEventTopic.FINE_CREATE_BULK],
-        groupId = KafkaConsumerGroup.FINE_CREATE_BANNER_UPDATE_BULK,
-    )
-    fun consumeFineCreateEventBulk(event: FineCreateEventBulk) {
-        log.debug("consumeFineCreateEventBulk called: {}", event)
-        event.fineIds.forEach { fineId ->
-            bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(fineId))
+    fun consumeFineEvent(event: FineEvent) {
+        log.debug("FineEvent called: {}", event)
+        when (event) {
+            is FineApproveEvent -> bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
+            is FineCreateEvent ->  bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
+            is FineCreateEventBulk -> {
+                event.fineIds.forEach { fineId ->
+                    bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(fineId))
+                }
+            }
         }
-    }
-
-    @KafkaListener(
-        topics = [KafkaEventTopic.FINE_APPROVE],
-        groupId = KafkaConsumerGroup.FINE_APPROVE_BANNER_UPDATE,
-    )
-    fun consumeFineApproveEvent(event: FineApproveEvent) {
-        log.debug("consumeFineApproveEvent called: {}", event)
-        bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
     }
 
     @KafkaListener(

@@ -36,21 +36,12 @@ data class StudyInitializeEvent(val studyId: Long) : MoitEvent {
     }
 }
 
-data class FineCreateEvent(val fineId: Long) : MoitEvent {
+data class FineCreateEvent(val fineId: Long): FineEvent()
+data class FineCreateEventBulk(val fineIds: Set<Long>): FineEvent()
+data class FineApproveEvent(val fineId: Long) : FineEvent()
+abstract class FineEvent : MoitEvent {
     override fun getTopic(): String {
-        return KafkaEventTopic.FINE_CREATE
-    }
-}
-
-data class FineCreateEventBulk(val fineIds: Set<Long>) : MoitEvent {
-    override fun getTopic(): String {
-        return KafkaEventTopic.FINE_CREATE_BULK
-    }
-}
-
-data class FineApproveEvent(val fineId: Long) : MoitEvent {
-    override fun getTopic(): String {
-        return KafkaEventTopic.FINE_APPROVE
+        return KafkaEventTopic.FINE
     }
 }
 
