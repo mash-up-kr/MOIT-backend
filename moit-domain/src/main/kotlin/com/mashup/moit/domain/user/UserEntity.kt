@@ -29,6 +29,9 @@ class UserEntity(
     @Convert(converter = UserRoleConverter::class)
     @Column(name = "roles")
     val roles: Set<UserRole>,
+
+    @Column(name = "fcm_token", nullable = true)
+    var fcmToken: String?
 ) : BaseEntity() {
     fun toDomain(): User {
         return User(
@@ -41,6 +44,7 @@ class UserEntity(
             profileImage = profileImage,
             email = email,
             roles = roles,
+            fcmToken = fcmToken
         )
     }
 

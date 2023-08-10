@@ -1,5 +1,6 @@
 ### Moit Create
 POST {{moit-api}}/api/v1/moit
+Authorization: {{authorizationHeader}}
 Content-Type: application/json
 
 {
@@ -24,6 +25,7 @@ Content-Type: application/json
 
 ### Moit Join
 POST {{moit-api}}/api/v1/moit/join
+Authorization: {{authorizationHeader}}
 Content-Type: application/json
 
 {
@@ -33,12 +35,20 @@ Content-Type: application/json
 
 ### My Moits
 GET {{moit-api}}/api/v1/moit
+Authorization: {{authorizationHeader}}
 
 ### Moit Join Users
 GET {{moit-api}}/api/v1/moit/{{moitId}}/users
+Authorization: {{authorizationHeader}}
 
 ### Moit Details 
 GET {{moit-api}}/api/v1/moit/{{moitId}}
+Authorization: {{authorizationHeader}}
 
 ### Moit Attendance 
 GET {{moit-api}}/api/v1/moit/{{moitId}}/attendance
+Authorization: {{authorizationHeader}}
+
+### Moit Delete 
+DELETE {{moit-api}}/api/v1/moit/{{moitId}}
+Authorization: {{authorizationHeader}}

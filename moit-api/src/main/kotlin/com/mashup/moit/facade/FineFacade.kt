@@ -51,9 +51,14 @@ class FineFacade(
     }
 
     fun getFine(fineId: Long, userNickname: String): FineResponse {
-        return FineResponse.of(fineService.getFine(fineId), userNickname)
+        val fine = fineService.getFine(fineId)
+        return FineResponse.of(
+            fine = fineService.getFine(fineId),
+            study = studyService.findById(fine.studyId),
+            userNickname = userNickname,
+        )
     }
-    
+
     fun evaluateFine(userId: Long, moitId: Long, fineId: Long, confirmFine: Boolean) {
         val masterId = userMoitService.findMasterUserByMoitId(moitId).userId
         if (userId != masterId) {
@@ -68,7 +73,12 @@ class FineFacade(
 
     fun addFineCertification(userId: Long, userNickname: String, fineId: Long, finePaymentImage: MultipartFile): FineResponse {
         val finePaymentImageUrl = s3Service.upload(FINE_PAYMENT_IMAGE_DIRECTORY, finePaymentImage)
-        return FineResponse.of(fineService.addFinePaymentImage(userId, fineId, finePaymentImageUrl), userNickname)
+        val fine = fineService.addFinePaymentImage(userId, fineId, finePaymentImageUrl)
+        return FineResponse.of(
+            fine = fine,
+            study = studyService.findById(fine.studyId),
+            userNickname = userNickname,
+        )
     }
 
     companion object {

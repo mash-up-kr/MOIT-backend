@@ -1,5 +1,6 @@
 package com.mashup.moit.domain.notification
 
+import com.mashup.moit.domain.notification.generator.NotificationGenerator
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

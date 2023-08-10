@@ -28,5 +28,5 @@ abstract class BaseEntity {
     lateinit var updatedAt: LocalDateTime
 
     @Column(name = "is_deleted", nullable = false)
-    val isDeleted: Boolean = false
+    var isDeleted: Boolean = false
 }

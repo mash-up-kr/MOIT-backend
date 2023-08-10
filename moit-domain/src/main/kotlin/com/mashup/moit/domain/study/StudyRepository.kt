@@ -11,7 +11,10 @@ interface StudyRepository : JpaRepository<StudyEntity, Long> {
     fun findAllByStartAtBeforeAndIsInitializedFalse(startAt: LocalDateTime): List<StudyEntity>
     fun findAllByMoitIdAndStartAtBeforeOrderByOrderDesc(moitId: Long, startAt: LocalDateTime): List<StudyEntity>
     fun findAllByEndAtBeforeAndIsFinalizedFalse(endAt: LocalDateTime): List<StudyEntity>
-    
+
     // findAll By minDt <= StartAt <= maxDt (cause: Between Index performance degradation)
     fun findAllByStartAtGreaterThanEqualAndStartAtLessThanEqual(minStartAt: LocalDateTime, maxStartAt: LocalDateTime): List<StudyEntity>
+    
+    // findAll By IsPushedFalse And remindAtBefore
+    fun findByIsPushedAndRemindAtBefore(isPushed: Boolean, remindAt: LocalDateTime): List<StudyEntity>
 }

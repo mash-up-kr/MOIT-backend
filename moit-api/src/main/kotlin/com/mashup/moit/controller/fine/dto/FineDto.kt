@@ -68,8 +68,7 @@ data class FineResponseForListView(
     }
 }
 
-
-@Schema(description = "Fine 정보 - Fine payment 추가 시 정보 조회로 반환")
+@Schema(description = "Fine 정보 - Fine 단건 조회")
 data class FineResponse(
     @Schema(description = "Fine id")
     val id: Long,
@@ -87,9 +86,11 @@ data class FineResponse(
     val approveStatus: FineApproveStatus,
     @Schema(description = "Fine 인증 이미지")
     val paymentImageUrl: String?,
+    @Schema(description = "Study 차수")
+    val studyOrder: Int,
 ) {
     companion object {
-        fun of(fine: Fine, userNickname: String) =
+        fun of(fine: Fine, study: Study, userNickname: String) =
             FineResponse(
                 id = fine.id,
                 fineAmount = fine.amount,
@@ -98,7 +99,8 @@ data class FineResponse(
                 attendanceStatus = fine.attendanceStatus,
                 approveAt = fine.approvedAt,
                 approveStatus = fine.approveStatus,
-                paymentImageUrl = fine.paymentImageUrl
+                paymentImageUrl = fine.paymentImageUrl,
+                studyOrder = study.order,
             )
     }
 }

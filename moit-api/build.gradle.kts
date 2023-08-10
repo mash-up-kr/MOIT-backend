@@ -22,6 +22,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     
     // security 
@@ -81,6 +82,9 @@ configure<JibExtension> {
             "-Djasypt.encryptor.password=${jasyptPassword}"
         )
         ports = listOf("8080")
+        environment = mapOf(
+            "TZ" to "Asia/Seoul"
+        )
     }
 }
 

@@ -96,6 +96,7 @@ moit:
       - http://localhost:4173
       - ENC(uXx5O7pACezVpodzx1cbvPVb+4qQefsL8u235ZWRD4hP2IThgOgIla6BJVEupoNI6IB564Isk2I/K7brxrJDJg==)
       - ENC(lworToUh9KWXM1aod0J7cFCe/iblZzRNkR5V+geeZrW3TfgKqT7o2JpbdBO+AV7O8g79HWp0E39Gu2PebYj1mQ==)
+      - ENC(/jAyQYtRBByj4rWxyv/CEK8zd2V5HV3QqxHFQfKsjHou3YoLpgRqeIIJWH5nfCMjg0cys/v6ZeVoXlCmK+c17UDRU+Qx5/DqmEacdIH+FS+odPTL2GihuS05Vj+n6KSt)
 
 cloud:
   aws:
@@ -115,3 +116,5 @@ cloud:
 fcm:
   certification: firebase/moit-firebase-adminsdk.json
 
+server:
+  forward-headers-strategy: FRAMEWORK

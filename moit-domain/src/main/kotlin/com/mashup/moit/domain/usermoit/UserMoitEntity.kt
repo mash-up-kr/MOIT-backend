@@ -6,9 +6,11 @@ import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
+import org.hibernate.annotations.Where
 
 @Table(name = "user_moit")
 @Entity
+@Where(clause = "is_deleted = false")
 class UserMoitEntity(
     @Column(name = "moit_id", nullable = false)
     val moitId: Long,

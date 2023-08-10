@@ -54,8 +54,25 @@ data class FineApproveEvent(val fineId: Long) : MoitEvent {
     }
 }
 
-data class StudyAttendanceStartNotificationPushEvent(val studyIdWithMoitIds: Set<Pair<Long, Long>>, val flushAt: LocalDateTime) : MoitEvent {
+data class StudyAttendanceStartNotificationPushEvent(
+    val studyIdWithMoitIds: Set<Pair<Long, Long>>,
+    override val flushAt: LocalDateTime
+) : NotificationPushEvent(flushAt)
+
+data class RemindFineNotificationPushEvent(
+    val fineIds: Set<Long>,
+    override val flushAt: LocalDateTime
+) : NotificationPushEvent(flushAt)
+
+data class ScheduledStudyNotificationPushEvent(
+    val studyIdWithMoitIds: Set<Pair<Long, Long>>,
+    override val flushAt: LocalDateTime
+) : NotificationPushEvent(flushAt)
+
+abstract class NotificationPushEvent(
+    open val flushAt: LocalDateTime
+) : MoitEvent {
     override fun getTopic(): String {
-        return KafkaEventTopic.STUDY_ATTENDANCE_START_NOTIFICATION
+        return KafkaEventTopic.NOTIFICATION
     }
 }

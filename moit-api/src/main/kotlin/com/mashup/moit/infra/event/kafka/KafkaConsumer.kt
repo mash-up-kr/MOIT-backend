@@ -7,6 +7,7 @@ import com.mashup.moit.domain.banner.update.StudyAttendanceStartBannerUpdateRequ
 import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.notification.AttendanceStartNotificationEvent
 import com.mashup.moit.domain.notification.NotificationService
+import com.mashup.moit.domain.notification.RemindFineNotificationEvent
 import com.mashup.moit.domain.study.StudyService
 import com.mashup.moit.infra.event.EventProducer
 import com.mashup.moit.infra.event.FineApproveEvent
@@ -16,6 +17,9 @@ import com.mashup.moit.infra.event.KafkaConsumerGroup
 import com.mashup.moit.infra.event.KafkaEventTopic
 import com.mashup.moit.infra.event.MoitCreateEvent
 import com.mashup.moit.infra.event.MoitJoinEvent
+import com.mashup.moit.infra.event.NotificationPushEvent
+import com.mashup.moit.infra.event.RemindFineNotificationPushEvent
+import com.mashup.moit.infra.event.ScheduledStudyNotificationPushEvent
 import com.mashup.moit.infra.event.StudyAttendanceEvent
 import com.mashup.moit.infra.event.StudyAttendanceEventBulk
 import com.mashup.moit.infra.event.StudyAttendanceStartNotificationPushEvent
@@ -129,11 +133,15 @@ class KafkaConsumer(
     }
 
     @KafkaListener(
-        topics = [KafkaEventTopic.STUDY_ATTENDANCE_START_NOTIFICATION],
-        groupId = KafkaConsumerGroup.STUDY_ATTENDANCE_START_NOTIFICATION_CREATE,
+        topics = [KafkaEventTopic.NOTIFICATION],
+        groupId = KafkaConsumerGroup.NOTIFICATION_CREATE,
     )
-    fun consumeStudyAttendanceStartNotificationPushEvent(event: StudyAttendanceStartNotificationPushEvent) {
-        log.debug("consumeStudyAttendanceStartNotificationPushEvent called: {}", event)
-        notificationService.save(AttendanceStartNotificationEvent(event.studyIdWithMoitIds, event.flushAt))
+    fun consumeNotificationPushEvent(event: NotificationPushEvent) {
+        log.info("NotificationPushEvent called: {}", event)
+        when (event) {
+            is StudyAttendanceStartNotificationPushEvent -> notificationService.save(AttendanceStartNotificationEvent(event.studyIdWithMoitIds, event.flushAt))
+            is RemindFineNotificationPushEvent -> notificationService.save(RemindFineNotificationEvent(event.fineIds, event.flushAt))
+            is ScheduledStudyNotificationPushEvent -> notificationService.save(AttendanceStartNotificationEvent(event.studyIdWithMoitIds, event.flushAt))
+        }
     }
 }
