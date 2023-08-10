@@ -80,7 +80,7 @@ class SampleNotificationController(
         return MoitApiResponse.success()
     }
 
-    @GetMapping("/push/scheduled-study")
+    @GetMapping("/push/remind-fine")
     fun pushRemindFine(@RequestParam moitId: Long, @RequestParam fineId: Long): MoitApiResponse<Unit> {
         val moit = moitService.getMoitById(moitId)
         val fine = fineService.getFine(fineId)
