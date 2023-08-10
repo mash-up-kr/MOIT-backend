@@ -1,6 +1,8 @@
 package com.mashup.moit.controller.sample
 
 import com.mashup.moit.common.MoitApiResponse
+import com.mashup.moit.common.exception.MoitException
+import com.mashup.moit.common.exception.MoitExceptionType
 import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
@@ -47,7 +49,8 @@ class SampleNotificationController(
     @GetMapping("/push/start-study/{moitId}")
     fun pushStartStudy(@PathVariable moitId: Long): MoitApiResponse<Unit> {
         val moit = moitService.getMoitById(moitId)
-        val study = studyService.findById(moitId)
+        val study = studyService.findUpcomingStudy(moitId)
+            ?: throw MoitException.of(MoitExceptionType.NOT_EXIST, "예정된 스터디가 없습니다.")
 
         fcmNotificationService.pushStudyNotification(StudyAttendanceStartNotification.of(moit, study))
 
@@ -62,7 +65,8 @@ class SampleNotificationController(
     @GetMapping("/push/scheduled-study/{moitId}")
     fun pushScheduledStudy(@PathVariable moitId: Long): MoitApiResponse<Unit> {
         val moit = moitService.getMoitById(moitId)
-        val study = studyService.findById(moitId)
+        val study = studyService.findUpcomingStudy(moitId)
+            ?: throw MoitException.of(MoitExceptionType.NOT_EXIST, "예정된 스터디가 없습니다.")
 
         fcmNotificationService.pushStudyNotification(ScheduledStudyNotification.of(moit, study))
 
