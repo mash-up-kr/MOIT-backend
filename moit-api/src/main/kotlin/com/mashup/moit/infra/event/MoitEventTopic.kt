@@ -3,9 +3,7 @@ package com.mashup.moit.infra.event
 object KafkaEventTopic {
     const val MOIT_CREATE = "moit_create"
     const val MOIT_JOIN = "moit_join"
-    const val STUDY_INITIALIZE = "study_initialize"
-    const val STUDY_ATTENDANCE = "study_attendance"
-    const val STUDY_ATTENDANCE_BULK = "study_attendance_bulk"
+    const val STUDY = "study"
     const val FINE = "fine"
     const val NOTIFICATION = "notification"
 }
@@ -13,9 +11,7 @@ object KafkaEventTopic {
 object KafkaConsumerGroup {
     const val MOIT_CREATE_STUDY_CREATE = "moit_create_study_create"
     const val MOIT_JOIN_ATTENDANCE_INITIALIZE = "moit_join_attendance_initialize"
-    const val STUDY_INITIALIZE_BANNER_UPDATE = "study_initialize_banner_update"
-    const val STUDY_ATTENDANCE_FINE_CREATE = "study_attendance_fine_create"
-    const val STUDY_ATTENDANCE_FINE_CREATE_BULK = "study_attendance_fine_create_bulk"
+    const val STUDY = "study"
     const val FINE_EVENT = "fine"
     const val NOTIFICATION_CREATE = "notification_create"
 }
