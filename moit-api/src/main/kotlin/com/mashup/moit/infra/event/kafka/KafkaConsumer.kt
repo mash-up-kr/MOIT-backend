@@ -87,10 +87,10 @@ class KafkaConsumer(
             }
 
             is StudyAttendanceEventBulk -> {
-                val fineIds = mutableSetOf<Long>()
-                event.attendanceIdWithMoitIds.forEach { (attendanceId, moitId) ->
-                    fineService.create(attendanceId, moitId)?.let { fine -> fineIds.add(fine.id) }
-                }
+                val fineIds = event.attendanceIdWithMoitIds
+                    .mapNotNull { (attendanceId, moitId) -> fineService.create(attendanceId, moitId) }
+                    .map { fine -> fine.id }
+                    .toSet()
                 eventProducer.produce(FineCreateEventBulk(fineIds))
             }
         }
