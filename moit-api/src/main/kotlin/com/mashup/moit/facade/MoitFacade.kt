@@ -108,6 +108,7 @@ class MoitFacade(
     fun getAllAttendances(moitId: Long): MoitStudyListResponse {
         val moit = moitService.getMoitById(moitId)
         val studyWithAttendances = studyService.findAllByMoitIdStartAtBefore(moit.id, LocalDateTime.now())
+            .sortedBy { it.order }
             .mapNotNull { study ->
                 val attendances = attendanceService.findAttendancesByStudyId(study.id)
                 if (attendances.all { attendance -> attendance.status == AttendanceStatus.UNDECIDED }) {
