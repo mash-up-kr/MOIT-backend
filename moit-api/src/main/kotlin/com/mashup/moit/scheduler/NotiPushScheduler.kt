@@ -1,5 +1,6 @@
 package com.mashup.moit.scheduler
 
+import com.mashup.moit.domain.fine.Fine
 import com.mashup.moit.domain.fine.FineService
 import com.mashup.moit.domain.moit.MoitService
 import com.mashup.moit.domain.study.StudyService
@@ -78,37 +79,15 @@ class NotiPushScheduler(
     @Scheduled(cron = "0 30 10 * * *")
     @Async("pushSchedulerExecutor")
     fun pushRemindFineNotification() {
-        val scheduleContext = org.joda.time.LocalDateTime.now()
+        val scheduleContext = LocalDateTime.now()
 
         val unrequestedFines = fineService.getUnrequestedFines()
         logger.info("Remind {} fines! Start Push Notification at {}.", unrequestedFines.size, scheduleContext)
 
-        val unrequestedFineUserMap = userService
-            .findUsersById(
-                unrequestedFines.map { fine -> fine.userId }.distinct()
-            )
-            .associateBy { user -> user.id }
-        val unrequestedFineMoitMap = moitService
-            .getMoitsByIds(
-                unrequestedFines.map { fine -> fine.moitId }.toSet()
-            )
-            .associateBy { moit -> moit.id }
-        val unrequestedFineStudyMap = studyService
-            .findByStudyIds(
-                unrequestedFines.map { fine -> fine.studyId }.distinct()
-            )
-            .associateBy { study -> study.id }
+        val remindNotificationList = createFineRemindNotificationList(unrequestedFines)
 
-        for (fine in unrequestedFines) {
-            val user = unrequestedFineUserMap[fine.userId] ?: continue
-            val moit = unrequestedFineMoitMap[fine.moitId] ?: continue
-            val study = unrequestedFineStudyMap[fine.studyId] ?: continue
-            FineRemindNotification.of(
-                user = user,
-                moit = moit,
-                study = study
-            )?.let { notification -> fcmNotificationService.pushRemindFineNotification(notification) }
-        }
+        remindNotificationList.forEach { notification -> fcmNotificationService.pushRemindFineNotification(notification) }
+
         eventProducer.produce(
             RemindFineNotificationPushEvent(
                 fineIds = unrequestedFines.map { fine -> fine.id }.toSet(),
@@ -116,5 +95,30 @@ class NotiPushScheduler(
             )
         )
         logger.info("Done Push notification for {} fines, at {}", unrequestedFines.size, LocalDateTime.now())
+    }
+
+    private fun createFineRemindNotificationList(unrequestedFines: List<Fine>): List<FineRemindNotification> {
+        val unrequestedFineUserMap = userService.findUsersById(
+            unrequestedFines.map { fine -> fine.userId }.distinct()
+        ).associateBy { user -> user.id }
+
+        val unrequestedFineMoitMap = moitService.getMoitsByIds(
+            unrequestedFines.map { fine -> fine.moitId }.toSet()
+        ).associateBy { moit -> moit.id }
+        val unrequestedFineStudyMap = studyService.findByStudyIds(
+            unrequestedFines.map { fine -> fine.studyId }.distinct()
+        ).associateBy { study -> study.id }
+
+        return unrequestedFines.map { fine ->
+            val user = unrequestedFineUserMap[fine.userId] ?: return@map null
+            val moit = unrequestedFineMoitMap[fine.moitId] ?: return@map null
+            val study = unrequestedFineStudyMap[fine.studyId] ?: return@map null
+
+            FineRemindNotification.of(
+                user = user,
+                moit = moit,
+                study = study
+            )
+        }.filterNotNull()
     }
 }
