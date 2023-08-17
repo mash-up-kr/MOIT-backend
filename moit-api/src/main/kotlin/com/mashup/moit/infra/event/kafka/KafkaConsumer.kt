@@ -13,6 +13,7 @@ import com.mashup.moit.infra.event.EventProducer
 import com.mashup.moit.infra.event.FineApproveEvent
 import com.mashup.moit.infra.event.FineCreateEvent
 import com.mashup.moit.infra.event.FineCreateEventBulk
+import com.mashup.moit.infra.event.FineEvent
 import com.mashup.moit.infra.event.KafkaConsumerGroup
 import com.mashup.moit.infra.event.KafkaEventTopic
 import com.mashup.moit.infra.event.MoitCreateEvent
@@ -23,6 +24,7 @@ import com.mashup.moit.infra.event.ScheduledStudyNotificationPushEvent
 import com.mashup.moit.infra.event.StudyAttendanceEvent
 import com.mashup.moit.infra.event.StudyAttendanceEventBulk
 import com.mashup.moit.infra.event.StudyAttendanceStartNotificationPushEvent
+import com.mashup.moit.infra.event.StudyEvent
 import com.mashup.moit.infra.event.StudyInitializeEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -71,65 +73,44 @@ class KafkaConsumer(
     }
 
     @KafkaListener(
-        topics = [KafkaEventTopic.STUDY_INITIALIZE],
-        groupId = KafkaConsumerGroup.STUDY_INITIALIZE_BANNER_UPDATE,
+        topics = [KafkaEventTopic.STUDY],
+        groupId = KafkaConsumerGroup.STUDY,
     )
-    fun consumeStudyInitializeEvent(event: StudyInitializeEvent) {
-        log.debug("consumeStudyInitializeEvent called: {}", event)
-        bannerService.update(StudyAttendanceStartBannerUpdateRequest(event.studyId))
-    }
+    fun consumeStudyEvent(event: StudyEvent) {
+        log.debug("StudyEvent called: {}", event)
+        when (event) {
+            is StudyInitializeEvent -> bannerService.update(StudyAttendanceStartBannerUpdateRequest(event.studyId))
+            is StudyAttendanceEvent -> {
+                fineService.create(event.attendanceId, event.moitId)?.also {
+                    eventProducer.produce(FineCreateEvent(fineId = it.id))
+                }
+            }
 
-    @KafkaListener(
-        topics = [KafkaEventTopic.STUDY_ATTENDANCE],
-        groupId = KafkaConsumerGroup.STUDY_ATTENDANCE_FINE_CREATE,
-    )
-    fun consumeStudyAttendanceEvent(event: StudyAttendanceEvent) {
-        log.debug("consumeStudyAttendanceEvent called: {}", event)
-        fineService.create(event.attendanceId, event.moitId)?.also {
-            eventProducer.produce(FineCreateEvent(fineId = it.id))
+            is StudyAttendanceEventBulk -> {
+                val fineIds = event.attendanceIdWithMoitIds
+                    .mapNotNull { (attendanceId, moitId) -> fineService.create(attendanceId, moitId) }
+                    .map { fine -> fine.id }
+                    .toSet()
+                eventProducer.produce(FineCreateEventBulk(fineIds))
+            }
         }
     }
 
     @KafkaListener(
-        topics = [KafkaEventTopic.STUDY_ATTENDANCE_BULK],
-        groupId = KafkaConsumerGroup.STUDY_ATTENDANCE_FINE_CREATE_BULK,
+        topics = [KafkaEventTopic.FINE],
+        groupId = KafkaConsumerGroup.FINE_EVENT,
     )
-    fun consumeStudyAttendancesEvent(event: StudyAttendanceEventBulk) {
-        log.debug("consumeStudyAttendancesEventBulk called: {}", event)
-        val fineIds = mutableSetOf<Long>()
-        event.attendanceIdWithMoitIds.forEach { (attendanceId, moitId) ->
-            fineService.create(attendanceId, moitId)?.let { fine -> fineIds.add(fine.id) }
+    fun consumeFineEvent(event: FineEvent) {
+        log.debug("FineEvent called: {}", event)
+        when (event) {
+            is FineApproveEvent -> bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
+            is FineCreateEvent -> bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
+            is FineCreateEventBulk -> {
+                event.fineIds.forEach { fineId ->
+                    bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(fineId))
+                }
+            }
         }
-        eventProducer.produce(FineCreateEventBulk(fineIds))
-    }
-
-    @KafkaListener(
-        topics = [KafkaEventTopic.FINE_CREATE],
-        groupId = KafkaConsumerGroup.FINE_CREATE_BANNER_UPDATE,
-    )
-    fun consumeFineCreateEvent(event: FineCreateEvent) {
-        log.debug("consumeFineCreateEvent called: {}", event)
-        bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
-    }
-
-    @KafkaListener(
-        topics = [KafkaEventTopic.FINE_CREATE_BULK],
-        groupId = KafkaConsumerGroup.FINE_CREATE_BANNER_UPDATE_BULK,
-    )
-    fun consumeFineCreateEventBulk(event: FineCreateEventBulk) {
-        log.debug("consumeFineCreateEventBulk called: {}", event)
-        event.fineIds.forEach { fineId ->
-            bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(fineId))
-        }
-    }
-
-    @KafkaListener(
-        topics = [KafkaEventTopic.FINE_APPROVE],
-        groupId = KafkaConsumerGroup.FINE_APPROVE_BANNER_UPDATE,
-    )
-    fun consumeFineApproveEvent(event: FineApproveEvent) {
-        log.debug("consumeFineApproveEvent called: {}", event)
-        bannerService.update(MoitUnapprovedFineExistBannerUpdateRequest(event.fineId))
     }
 
     @KafkaListener(
