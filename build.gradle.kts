@@ -44,7 +44,14 @@ subprojects {
         testImplementation("io.kotest:kotest-property:$kotestVersion")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:$kotestSpringExtensionVersion")
         testImplementation("io.mockk:mockk:${mockkVersion}")
-
+        
+        testImplementation("org.springframework.boot:spring-boot-testcontainers")
+        testImplementation("org.springframework.kafka:spring-kafka-test")
+        testImplementation("org.testcontainers:junit-jupiter")
+        testImplementation("org.testcontainers:testcontainers")
+        testImplementation("org.testcontainers:kafka")
+        testImplementation("org.awaitility:awaitility")
+        testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
     }
 
     tasks.getByName("bootJar") {
